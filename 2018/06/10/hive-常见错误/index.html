@@ -87,10 +87,12 @@
 <meta property="og:site_name" content="CaoPengFei&#39;s blog">
 <meta property="og:description" content="执行hive cli报以下异常  1234567891011Exception in thread &amp;quot;main&amp;quot; java.lang.RuntimeException: java.lang.RuntimeException: Unable to instantiate org.apache.hadoop.hive.ql.metadata.SessionHiveMetaStor">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-10-10T09:31:00.448Z">
+<meta property="og:image" content="https://i.imgur.com/3E78E6j.png">
+<meta property="og:updated_time" content="2018-10-11T12:40:07.417Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="hive 常见错误">
 <meta name="twitter:description" content="执行hive cli报以下异常  1234567891011Exception in thread &amp;quot;main&amp;quot; java.lang.RuntimeException: java.lang.RuntimeException: Unable to instantiate org.apache.hadoop.hive.ql.metadata.SessionHiveMetaStor">
+<meta name="twitter:image" content="https://i.imgur.com/3E78E6j.png">
 
 
 
@@ -368,6 +370,9 @@
 </ol>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Exception in thread &quot;main&quot; java.lang.RuntimeException: java.lang.RuntimeException: Unable to instantiate org.apache.hadoop.hive.ql.metadata.SessionHiveMetaStoreClient</span><br><span class="line">        at org.apache.hadoop.hive.ql.session.SessionState.start(SessionState.java:444)</span><br><span class="line">        at org.apache.hadoop.hive.cli.CliDriver.run(CliDriver.java:672)</span><br><span class="line">        at org.apache.hadoop.hive.cli.CliDriver.main(CliDriver.java:616)</span><br><span class="line">        at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)</span><br><span class="line">        at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)</span><br><span class="line">        at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)</span><br><span class="line">        at java.lang.reflect.Method.invoke(Method.java:597)</span><br><span class="line">        at org.apache.hadoop.util.RunJar.run(RunJar.java:221)</span><br><span class="line">        at org.apache.hadoop.util.RunJar.main(RunJar.java:136)</span><br><span class="line">Caused by: java.lang.RuntimeException: Unable to instantiate org.apache.hadoop.hive.ql.metadata.SessionHiveMetaStoreClient</span><br></pre></td></tr></table></figure>
 <p>原因：在使用默认的metadata的derby机制时，打开了一个客户端后再次连接就会报该异常。<br>解决办法，将 Metastore Server杀死 然后再重新执行。不过建议使用Mysql代替derby机制。<a href="http://www.lmcpf.com/2018/8/10/hive元数据/">详情见博客</a></p>
+<p>2.使用udf函数打包异常<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Failed to execute goal on project hive-exec: </span><br><span class="line">Could not resolve dependencies for project org.apache.hive:hive-exec:jar:2.3.0: </span><br><span class="line">Could not find </span><br><span class="line">artifact org.pentaho:pentaho-aggdesigner-algorithm:jar:5.1.5-jhyde </span><br><span class="line">in alimaven (http://maven.aliyun.com/nexus/content/groups/public/) -&gt; [Help 1]</span><br></pre></td></tr></table></figure></p>
+<p>原因：jhyde-5.1.5无法下载。<br>解决办法：需要手动下载<a href="https://public.nexus.pentaho.org/content/groups/omni/org/pentaho/pentaho-aggdesigner-algorithm/5.1.5-jhyde/" target="_blank" rel="noopener">下载地址</a><br>选择如图<br><img src="https://i.imgur.com/3E78E6j.png" alt=""></p>
+<p>下载之后，使用本地将该包导入到maven仓库。详情见博客</p>
 
       
     </div>
@@ -545,7 +550,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-count">31</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -556,7 +561,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -567,7 +572,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">38</span>
+                  <span class="site-state-item-count">41</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
