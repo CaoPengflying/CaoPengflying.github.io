@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="CaoPengFei的技术博客">
+<meta name="description" content="#java 8新增的内容现在很多公司都在使用java 8，但是工作一段时间发现很多同事还是没有使用java 8。java 8就跟java 5一样是java版本中里程碑的一个版本。相信没有多久大家都会使用java 8来进行实际开发。java 8中新增的几个重要的功能。（1）lambda表达式（2）streamApi（3）Optional类（4）Annotation在实际开发当中，我目前经常使用的是s">
 <meta name="keywords" content="Java Html Css JavaScript Linux Mysql">
 <meta property="og:type" content="article">
 <meta property="og:title" content="java 8在实际发开中的应用">
 <meta property="og:url" content="http://www.lmcpf.com/2018/11/21/java-8在实际中的应用/index.html">
 <meta property="og:site_name" content="CaoPengFei&#39;s blog">
-<meta property="og:description" content="CaoPengFei的技术博客">
+<meta property="og:description" content="#java 8新增的内容现在很多公司都在使用java 8，但是工作一段时间发现很多同事还是没有使用java 8。java 8就跟java 5一样是java版本中里程碑的一个版本。相信没有多久大家都会使用java 8来进行实际开发。java 8中新增的几个重要的功能。（1）lambda表达式（2）streamApi（3）Optional类（4）Annotation在实际开发当中，我目前经常使用的是s">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-01-05T16:47:54.165Z">
+<meta property="og:updated_time" content="2019-03-11T09:47:07.052Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="java 8在实际发开中的应用">
-<meta name="twitter:description" content="CaoPengFei的技术博客">
+<meta name="twitter:description" content="#java 8新增的内容现在很多公司都在使用java 8，但是工作一段时间发现很多同事还是没有使用java 8。java 8就跟java 5一样是java版本中里程碑的一个版本。相信没有多久大家都会使用java 8来进行实际开发。java 8中新增的几个重要的功能。（1）lambda表达式（2）streamApi（3）Optional类（4）Annotation在实际开发当中，我目前经常使用的是s">
 
 
 
@@ -341,7 +341,26 @@
       
 
       
-        
+        <p>#java 8新增的内容<br>现在很多公司都在使用java 8，但是工作一段时间发现很多同事还是没有使用java 8。java 8就跟java 5一样是java版本中里程碑的一个版本。相信没有多久大家都会使用java 8来进行实际开发。<br>java 8中新增的几个重要的功能。<br>（1）lambda表达式<br>（2）streamApi<br>（3）Optional类<br>（4）Annotation<br>在实际开发当中，我目前经常使用的是streamApi、lambda表达式和Optional类。</p>
+<p>##streamApi 在实际开发中的应用</p>
+<p>streamApi简单来说就是操作集合的一个流。非常的简洁。主要有以下几个用法。<br>（1）类型转换1：可以将一个类的对象集合中的某个属性生成新的集合。<br>比如一个学生类，学生包含学号、姓名、性别、手机号码、qq号。<br>场景：几个学生集合，将其中所有的学号抽取出来生成新的集合。原来的写法只有遍历这个学生集合，拿到他的学号属性添加到学号的集合中。代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt;studentNos = new ArrayList&lt;String&gt;();</span><br><span class="line">        for (Student student : studentList) &#123; </span><br><span class="line">            studentNos.add(student.getStudentNo());</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure></p>
+<p>这样要不断的循环，效率也会低很多。java 8中写法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; studentNos = studentList.stream().map(Student::getStudentNo).collect(Collectors.toList());</span><br></pre></td></tr></table></figure></p>
+<p>（2）类型转换2 ：将List转换为Map。都知道数组的查找效率是O(n)。效率还是比较低的，我们可以把他转化为Map。在知道key的情况下，访问速度就变成了O(1)。速度提升了很多。<br>场景：学生的集合已经获取到，他的学号是主键，我现在想要找出学号为0001的学生的名字。java 8以前的写法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">for (Student student : studentList) &#123;</span><br><span class="line">            if (&quot;0001&quot;.equals(student.getStudentNo()))&#123;</span><br><span class="line">                System.out.println(student.getName());</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure></p>
+<p>java 8的写法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Map&lt;String, String&gt; collect = studentList.stream().collect(Collectors.toMap(Student::getStudentNo, Student::getName));</span><br><span class="line">        System.out.println(collect.get(&quot;0001&quot;));</span><br></pre></td></tr></table></figure></p>
+<p>这是取两个属性字段，当然也可以用对象本省作为value，提供了一个属性方法：<code>Function.identity()</code>。可以获取对象本身。<br>（3）过滤：我们经常需要从一个数组中筛选出来一些数据。<br>场景：找出学生列表中所有性别为男的学生<br>java 8以前的写法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Student&gt;manList = new ArrayList&lt;Student&gt;();</span><br><span class="line">        for (Student student : studentList) &#123;</span><br><span class="line">            if (student.getSex().equals(1))&#123;</span><br><span class="line">                manList.add(student);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure></p>
+<p>java 8以后的写法有个filter方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Student&gt; collect1 = studentList.stream().filter(s -&gt; s.getSex().equals(1)).collect(Collectors.toList());</span><br></pre></td></tr></table></figure></p>
+<p>在filter方法中返回的是boolean类型。这种方式速度也会快很多。<br>（4）排序：按照类里面的某个属性进行排序<br>场景：按照学生的年龄进行排序倒序排序<br>java 8中有多中写法<br>stream写法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">studentList.stream().sorted(Comparator.comparing(Student::getAge).reversed()).collect(Collectors.toList());</span><br></pre></td></tr></table></figure></p>
+<p>(5)去重：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Student&gt; collect2 = studentList.stream().distinct().collect(Collectors.toList());</span><br></pre></td></tr></table></figure></p>
+<p>也可以根据某一属性去重<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">studentList.stream()</span><br><span class="line">           .collect(Collectors.collectingAndThen (Collectors.toCollection(() </span><br><span class="line">-&gt; new TreeSet&lt;&gt;(Comparator.comparingLong(Student::getName))), ArrayList::new));</span><br></pre></td></tr></table></figure></p>
+<p><em>当然也可以求和、求最大值、求最小值。和去重类似</em><br>(6)遍历对象<br>java8 提供了一种多线程的遍历方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">studentList.forEach(s -&gt; &#123;</span><br><span class="line">            </span><br><span class="line">        &#125;);</span><br></pre></td></tr></table></figure></p>
+<p>(7)快速找到集合中想要匹配的数据<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//是否存在学号为0001的人</span><br><span class="line">boolean match = studentList.stream().anyMatch(detail -&gt; &quot;0001&quot;.equals(detail.getStudentNo()));</span><br></pre></td></tr></table></figure></p>
+<p>##Optional对象的应用<br>java8 中的Optional是为了减少空指针异常的。请看一下代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">BigDecimal bigAbmout = Optional.ofNullable(paymentChange.getPaymentChangeMoney()).orElseGet(() -&gt; BigDecimal.ZERO).setScale(2, BigDecimal.ROUND_HALF_UP);</span><br></pre></td></tr></table></figure></p>
+<p>这段代码的意思是当ofNullable的值为null是，我们可以个bigAmount一个默认值为0而不是Null防止后续代码使用bigAmount的时候报空指针异常。<br>还有一个orElse方法，他与orElseGet的区别是，orElseGet传的是一个lambda表达式函数式接口。使用orElse可以写成如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">BigDecimal bigAbmout = Optional.ofNullable(paymentChange.getPaymentChangeMoney()).orElse(BigDecimal.ZERO);</span><br></pre></td></tr></table></figure></p>
+<h2 id="lambda表达式"><a href="#lambda表达式" class="headerlink" title="lambda表达式"></a>lambda表达式</h2><p>我们原来代码中的遇到的函数式接口，我们就可以用lambda来代替，简单的来说，就是new接口的地方。比如MQ发消息，我们传统的做法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">jmsTemplate.send(</span><br><span class="line">new MessageCreator() &#123;    </span><br><span class="line">@Override</span><br><span class="line">    public Message createMessage(Session session) throws JMSException &#123; </span><br><span class="line">       return session.createTextMessage(String.valueOf(id));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>这个函数式接口可以用lambda一行代码轻松实现：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jmsTemplate.send(session -&gt; session.createTextMessage(String.valueOf(id)));</span><br></pre></td></tr></table></figure>
+<p><em>使用lambda表达式前提：该接口是有一个方法，或者抽象类只有一个抽象的方法</em></p>
+
       
     </div>
     
@@ -492,8 +511,17 @@ var jiathis_config={
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -508,7 +536,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">61</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -553,6 +581,22 @@ var jiathis_config={
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#lambda表达式"><span class="nav-number">1.</span> <span class="nav-text">lambda表达式</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
