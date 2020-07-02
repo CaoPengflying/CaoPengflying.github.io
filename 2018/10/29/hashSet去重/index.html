@@ -79,19 +79,19 @@
 
 
 
-<meta name="description" content="#hashSet存储的原理hashSet的存储结构与hashMap基本保持一致。向hashset中插入数据的时候采用的公式是 使用该对象的hashcode值对hashset的大小取余并+1。然后判断该位置是否有对象，如果有就判断equals方法是否相同。如果相同就不插入，如果不相同就换个地方插入。如果该位置没有就插入。这个时候不重复就要看hashCode的值了，在java.lang.Object中">
+<meta name="description" content="hashSet存储的原理hashSet的存储结构与hashMap基本保持一致。向hashset中插入数据的时候采用的公式是 使用该对象的hashcode值对hashset的大小取余并+1。然后判断该位置是否有对象，如果有就判断equals方法是否相同。如果相同就不插入，如果不相同就换个地方插入。如果该位置没有就插入。这个时候不重复就要看hashCode的值了，在java.lang.Object中对">
 <meta name="keywords" content="java基础,hashSet去重、hashset去重原理、hashset去重遇到的问题">
 <meta property="og:type" content="article">
 <meta property="og:title" content="hashSet去重">
 <meta property="og:url" content="http://www.lmcpf.com/2018/10/29/hashSet去重/index.html">
 <meta property="og:site_name" content="CaoPengFei&#39;s blog">
-<meta property="og:description" content="#hashSet存储的原理hashSet的存储结构与hashMap基本保持一致。向hashset中插入数据的时候采用的公式是 使用该对象的hashcode值对hashset的大小取余并+1。然后判断该位置是否有对象，如果有就判断equals方法是否相同。如果相同就不插入，如果不相同就换个地方插入。如果该位置没有就插入。这个时候不重复就要看hashCode的值了，在java.lang.Object中">
+<meta property="og:description" content="hashSet存储的原理hashSet的存储结构与hashMap基本保持一致。向hashset中插入数据的时候采用的公式是 使用该对象的hashcode值对hashset的大小取余并+1。然后判断该位置是否有对象，如果有就判断equals方法是否相同。如果相同就不插入，如果不相同就换个地方插入。如果该位置没有就插入。这个时候不重复就要看hashCode的值了，在java.lang.Object中对">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://i.imgur.com/aOKjzlM.png">
-<meta property="og:updated_time" content="2018-10-29T11:46:15.000Z">
+<meta property="og:updated_time" content="2020-07-02T03:39:04.108Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="hashSet去重">
-<meta name="twitter:description" content="#hashSet存储的原理hashSet的存储结构与hashMap基本保持一致。向hashset中插入数据的时候采用的公式是 使用该对象的hashcode值对hashset的大小取余并+1。然后判断该位置是否有对象，如果有就判断equals方法是否相同。如果相同就不插入，如果不相同就换个地方插入。如果该位置没有就插入。这个时候不重复就要看hashCode的值了，在java.lang.Object中">
+<meta name="twitter:description" content="hashSet存储的原理hashSet的存储结构与hashMap基本保持一致。向hashset中插入数据的时候采用的公式是 使用该对象的hashcode值对hashset的大小取余并+1。然后判断该位置是否有对象，如果有就判断equals方法是否相同。如果相同就不插入，如果不相同就换个地方插入。如果该位置没有就插入。这个时候不重复就要看hashCode的值了，在java.lang.Object中对">
 <meta name="twitter:image" content="https://i.imgur.com/aOKjzlM.png">
 
 
@@ -365,7 +365,8 @@
       
 
       
-        <p>#hashSet存储的原理<br>hashSet的存储结构与hashMap基本保持一致。向hashset中插入数据的时候采用的公式是 使用该对象的hashcode值对hashset的大小取余并+1。然后判断该位置是否有对象，如果有就判断equals方法是否相同。如果相同就不插入，如果不相同就换个地方插入。如果该位置没有就插入。<br>这个时候不重复就要看hashCode的值了，在java.lang.Object中对hashcode的规定是<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1. 在一个应用程序执行期间，如果一个对象的equals方法做比较所用到的信息没有被修改的话，则对该对象调用hashCode方法多次，它必须始终如一地返回同一个整数。</span><br><span class="line"></span><br><span class="line">2. 如果两个对象根据equals(Object o)方法是相等的，则调用这两个对象中任一对象的hashCode方法必须产生相同的整数结果。</span><br><span class="line"></span><br><span class="line">3. 如果两个对象根据equals(Object o)方法是不相等的，则调用这两个对象中任一个对象的hashCode方法，不要求产生不同的整数结果。但如果能不同，则可能提高散列表的性能。</span><br></pre></td></tr></table></figure></p>
+        <h1 id="hashSet存储的原理"><a href="#hashSet存储的原理" class="headerlink" title="hashSet存储的原理"></a>hashSet存储的原理</h1><p>hashSet的存储结构与hashMap基本保持一致。向hashset中插入数据的时候采用的公式是 使用该对象的hashcode值对hashset的大小取余并+1。然后判断该位置是否有对象，如果有就判断equals方法是否相同。如果相同就不插入，如果不相同就换个地方插入。如果该位置没有就插入。<br>这个时候不重复就要看hashCode的值了，在java.lang.Object中对hashcode的规定是</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1. 在一个应用程序执行期间，如果一个对象的equals方法做比较所用到的信息没有被修改的话，则对该对象调用hashCode方法多次，它必须始终如一地返回同一个整数。</span><br><span class="line"></span><br><span class="line">2. 如果两个对象根据equals(Object o)方法是相等的，则调用这两个对象中任一对象的hashCode方法必须产生相同的整数结果。</span><br><span class="line"></span><br><span class="line">3. 如果两个对象根据equals(Object o)方法是不相等的，则调用这两个对象中任一个对象的hashCode方法，不要求产生不同的整数结果。但如果能不同，则可能提高散列表的性能。</span><br></pre></td></tr></table></figure>
 <p>所以hashSet实现了不重复。也就是说如果使用hashset对集合进行去重时，一定要确保他的hashCode码一致，如果利用生成对象的后设置值，那么他们的hashCode码不一致，这个时候无法去重。代码如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">import java.io.Serializable;  </span><br><span class="line">import java.util.HashSet;  </span><br><span class="line">import java.util.Set;  </span><br><span class="line">  </span><br><span class="line">public class HashSetMisunderstanding &#123;  </span><br><span class="line">    public static void main(String[] args) &#123;  </span><br><span class="line">        new HashSetMisunderstanding().judgeList();  </span><br><span class="line">    &#125;  </span><br><span class="line">    public void judgeList()&#123;  </span><br><span class="line">        Set&lt;A&gt; list = new HashSet&lt;A&gt;();//这里创建一个hashset集合  </span><br><span class="line">        for(int i=1;i&lt;4;i++)&#123;  </span><br><span class="line">            A a = new A(1,1);//循环中创建新的对象A来存储相同的数据  </span><br><span class="line">            list.add(a);  </span><br><span class="line">        &#125;  </span><br><span class="line">        for(int i=2;i&lt;6;i++)&#123;  </span><br><span class="line">            A a= new A(1,1);  </span><br><span class="line">            if(list.add(a))&#123;//判断是否能存储进去  </span><br><span class="line">                System.out.println(&quot;添加成功-&gt;&quot;+i);  </span><br><span class="line">            &#125;  </span><br><span class="line">        &#125;  </span><br><span class="line">        for(A a:list)&#123;  </span><br><span class="line">            System.out.println(a.toString());//打印出相应的值 看看是否唯一  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">      </span><br><span class="line">    class A implements Serializable&#123;  </span><br><span class="line">        private static final long serialVersionUID = 1L;  </span><br><span class="line">        private Integer mi;  </span><br><span class="line">        private Integer bi;  </span><br><span class="line">          </span><br><span class="line">        public A() &#123;  </span><br><span class="line">            super();  </span><br><span class="line">        &#125;  </span><br><span class="line">        public A(Integer mi, Integer bi) &#123;  </span><br><span class="line">            super();  </span><br><span class="line">            this.mi = mi;  </span><br><span class="line">            this.bi = bi;  </span><br><span class="line">        &#125;  </span><br><span class="line">        public Integer getMi() &#123;  </span><br><span class="line">            return mi;  </span><br><span class="line">        &#125;  </span><br><span class="line">        public Integer getBi() &#123;  </span><br><span class="line">            return bi;  </span><br><span class="line">        &#125;  </span><br><span class="line">        public void setMi(Integer mi) &#123;  </span><br><span class="line">            this.mi = mi;  </span><br><span class="line">        &#125;  </span><br><span class="line">        public void setBi(Integer bi) &#123;  </span><br><span class="line">            this.bi = bi;  </span><br><span class="line">        &#125;  </span><br><span class="line">        @Override  </span><br><span class="line">        public String toString() &#123;  </span><br><span class="line">              </span><br><span class="line">            return (mi==null?mi:mi.toString())+&quot;--&quot;+(bi==null?bi:bi.toString());  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>结果如图所示：<br><img src="https://i.imgur.com/aOKjzlM.png" alt=""><br>将New对象的位置更改成外面，就可以去重。</p>
 
@@ -527,8 +528,17 @@ var jiathis_config={
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -554,7 +564,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-count">26</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -565,7 +575,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">85</span>
+                  <span class="site-state-item-count">84</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -588,6 +598,22 @@ var jiathis_config={
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#hashSet存储的原理"><span class="nav-number">1.</span> <span class="nav-text">hashSet存储的原理</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
