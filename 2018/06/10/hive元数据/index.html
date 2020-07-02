@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="hadoop,hive,mysql," />
+  <meta name="keywords" content="hadoop,mysql,hive," />
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="#hive元数据hive元数据指的是hive中的一些基本元素，包括hive表中的数据库名字，表名，字段类型，字段名称等。实际上hive中的数据表的内容就是保存在hive原数据中，如果元数据删除掉，则原有的hive中的数据表断开连接后，再次进入时数据就会丢失了。 #metadadtahive存储metadata 默认的是Derby机制，Derby作为内嵌的元数据库，可以简单测试。比如我们在hive上">
-<meta name="keywords" content="hadoop,hive,mysql">
+<meta name="description" content="hive元数据hive元数据指的是hive中的一些基本元素，包括hive表中的数据库名字，表名，字段类型，字段名称等。实际上hive中的数据表的内容就是保存在hive原数据中，如果元数据删除掉，则原有的hive中的数据表断开连接后，再次进入时数据就会丢失了。 metadadtahive存储metadata 默认的是Derby机制，Derby作为内嵌的元数据库，可以简单测试。比如我们在hive上创建">
+<meta name="keywords" content="hadoop,mysql,hive">
 <meta property="og:type" content="article">
 <meta property="og:title" content="hive元数据">
 <meta property="og:url" content="http://www.lmcpf.com/2018/06/10/hive元数据/index.html">
 <meta property="og:site_name" content="CaoPengFei&#39;s blog">
-<meta property="og:description" content="#hive元数据hive元数据指的是hive中的一些基本元素，包括hive表中的数据库名字，表名，字段类型，字段名称等。实际上hive中的数据表的内容就是保存在hive原数据中，如果元数据删除掉，则原有的hive中的数据表断开连接后，再次进入时数据就会丢失了。 #metadadtahive存储metadata 默认的是Derby机制，Derby作为内嵌的元数据库，可以简单测试。比如我们在hive上">
+<meta property="og:description" content="hive元数据hive元数据指的是hive中的一些基本元素，包括hive表中的数据库名字，表名，字段类型，字段名称等。实际上hive中的数据表的内容就是保存在hive原数据中，如果元数据删除掉，则原有的hive中的数据表断开连接后，再次进入时数据就会丢失了。 metadadtahive存储metadata 默认的是Derby机制，Derby作为内嵌的元数据库，可以简单测试。比如我们在hive上创建">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-10-10T09:31:01.683Z">
+<meta property="og:updated_time" content="2019-11-07T05:37:05.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="hive元数据">
-<meta name="twitter:description" content="#hive元数据hive元数据指的是hive中的一些基本元素，包括hive表中的数据库名字，表名，字段类型，字段名称等。实际上hive中的数据表的内容就是保存在hive原数据中，如果元数据删除掉，则原有的hive中的数据表断开连接后，再次进入时数据就会丢失了。 #metadadtahive存储metadata 默认的是Derby机制，Derby作为内嵌的元数据库，可以简单测试。比如我们在hive上">
+<meta name="twitter:description" content="hive元数据hive元数据指的是hive中的一些基本元素，包括hive表中的数据库名字，表名，字段类型，字段名称等。实际上hive中的数据表的内容就是保存在hive原数据中，如果元数据删除掉，则原有的hive中的数据表断开连接后，再次进入时数据就会丢失了。 metadadtahive存储metadata 默认的是Derby机制，Derby作为内嵌的元数据库，可以简单测试。比如我们在hive上创建">
 
 
 
@@ -363,10 +363,14 @@
       
 
       
-        <p>#hive元数据<br>hive元数据指的是hive中的一些基本元素，包括hive表中的数据库名字，表名，字段类型，字段名称等。<br>实际上hive中的数据表的内容就是保存在hive原数据中，如果元数据删除掉，则原有的hive中的数据表断开连接后，再次进入时数据就会丢失了。</p>
-<p>#metadadta<br>hive存储metadata 默认的是Derby机制，Derby作为内嵌的元数据库，可以简单测试。比如我们在hive上创建了数据表之后会在Hive目录下生成 要给derby文件和metastore_db目录。这里面就是Hive中的基本元素。但是使用Derby也就是能做一下测试，他存在很大的弊端。</p>
-<p>   1.在同一个目录下同时只能有一个hive客户端能使用数据库</p>
-<p>   2.切换目录启动新的shell，无法查看之前创建的表，不能实现表数据的共享</p>
+        <h1 id="hive元数据"><a href="#hive元数据" class="headerlink" title="hive元数据"></a>hive元数据</h1><p>hive元数据指的是hive中的一些基本元素，包括hive表中的数据库名字，表名，字段类型，字段名称等。<br>实际上hive中的数据表的内容就是保存在hive原数据中，如果元数据删除掉，则原有的hive中的数据表断开连接后，再次进入时数据就会丢失了。</p>
+<h1 id="metadadta"><a href="#metadadta" class="headerlink" title="metadadta"></a>metadadta</h1><p>hive存储metadata 默认的是Derby机制，Derby作为内嵌的元数据库，可以简单测试。比如我们在hive上创建了数据表之后会在Hive目录下生成 要给derby文件和metastore_db目录。这里面就是Hive中的基本元素。但是使用Derby也就是能做一下测试，他存在很大的弊端。</p>
+<ol>
+<li><p>在同一个目录下同时只能有一个hive客户端能使用数据库</p>
+</li>
+<li><p>切换目录启动新的shell，无法查看之前创建的表，不能实现表数据的共享</p>
+</li>
+</ol>
 <p>所以我们把metadata改成存储在mysql上面</p>
 <p>#保存metadata到mysql<br>首先删除Hive文件夹下的 derby文件和metastore_db目录</p>
 <p>配置hive-site.xml文件（没有则重新创建）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;</span><br><span class="line">&lt;?xml-stylesheet type=&quot;text/xsl&quot; href=&quot;configuration.xsl&quot;?&gt;</span><br><span class="line">&lt;configuration&gt;</span><br><span class="line">  &lt;property&gt;</span><br><span class="line">    &lt;name&gt;javax.jdo.option.ConnectionURL&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;jdbc:mysql://bigdata-hpsk01.huadian.com/db_metaStore?createDatabaseIfNotExist=true&lt;/value&gt;</span><br><span class="line">  &lt;/property&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">    &lt;name&gt;javax.jdo.option.ConnectionDriverName&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;com.mysql.jdbc.Driver&lt;/value&gt;</span><br><span class="line">  &lt;/property&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">    &lt;name&gt;javax.jdo.option.ConnectionUserName&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;root&lt;/value&gt;</span><br><span class="line">  &lt;/property&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">    &lt;name&gt;javax.jdo.option.ConnectionPassword&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;123456&lt;/value&gt;</span><br><span class="line">  &lt;/property&gt;</span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure></p>
@@ -428,9 +432,9 @@
           
             <a href="/tags/hadoop/" rel="tag"># hadoop</a>
           
-            <a href="/tags/hive/" rel="tag"># hive</a>
-          
             <a href="/tags/mysql/" rel="tag"># mysql</a>
+          
+            <a href="/tags/hive/" rel="tag"># hive</a>
           
         </div>
       
@@ -453,8 +457,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/06/10/hive其他配置/" rel="prev" title="hive其他配置">
-                hive其他配置 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/06/10/Go操作Mysql最佳实践/" rel="prev" title="Go操作Mysql最佳实践">
+                Go操作Mysql最佳实践 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -533,8 +537,17 @@ var jiathis_config={
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -549,7 +562,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">61</span>
+                  <span class="site-state-item-count">76</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -560,7 +573,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-count">23</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -571,7 +584,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">66</span>
+                  <span class="site-state-item-count">85</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -595,6 +608,22 @@ var jiathis_config={
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#hive元数据"><span class="nav-number">1.</span> <span class="nav-text">hive元数据</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#metadadta"><span class="nav-number">2.</span> <span class="nav-text">metadadta</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
 
       
 
@@ -608,7 +637,7 @@ var jiathis_config={
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

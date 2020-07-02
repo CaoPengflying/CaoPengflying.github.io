@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="hadoop,zookeeper,habase," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="zookeeper启动闪退下载好zookeeper后想启动zookeeper，如果是windows直接运行%zookeeer安装目录%/bin/zkServer.cmd即可，运行的时候可能会出现闪退的问题。 首先要定位到问题，闪退的原因可能有几种。找到闪退的原因然后对症下药。 实际上这个zkServer.cmd是一个脚本文件，脚本里面有个命令pause。可以让程序暂停到这里不往下运行。类似于前端的">
+<meta name="keywords" content="hadoop,zookeeper,habase">
+<meta property="og:type" content="article">
+<meta property="og:title" content="zookeeper启动闪退">
+<meta property="og:url" content="http://www.lmcpf.com/2019/04/17/zookeeper启动闪退/index.html">
+<meta property="og:site_name" content="CaoPengFei&#39;s blog">
+<meta property="og:description" content="zookeeper启动闪退下载好zookeeper后想启动zookeeper，如果是windows直接运行%zookeeer安装目录%/bin/zkServer.cmd即可，运行的时候可能会出现闪退的问题。 首先要定位到问题，闪退的原因可能有几种。找到闪退的原因然后对症下药。 实际上这个zkServer.cmd是一个脚本文件，脚本里面有个命令pause。可以让程序暂停到这里不往下运行。类似于前端的">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-04-17T08:53:39.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="zookeeper启动闪退">
+<meta name="twitter:description" content="zookeeper启动闪退下载好zookeeper后想启动zookeeper，如果是windows直接运行%zookeeer安装目录%/bin/zkServer.cmd即可，运行的时候可能会出现闪退的问题。 首先要定位到问题，闪退的原因可能有几种。找到闪退的原因然后对症下药。 实际上这个zkServer.cmd是一个脚本文件，脚本里面有个命令pause。可以让程序暂停到这里不往下运行。类似于前端的">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.lmcpf.com/2019/04/17/zookeeper启动闪退/"/>
+
+
+
+
+
+  <title>zookeeper启动闪退 | CaoPengFei's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">CaoPengFei's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">前车之鉴，后车之师。分享是一种乐趣！！</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.lmcpf.com/2019/04/17/zookeeper启动闪退/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="CaoPengFei">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CaoPengFei's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">zookeeper启动闪退</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-17T15:53:58+08:00">
+                2019-04-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/大数据/" itemprop="url" rel="index">
+                    <span itemprop="name">大数据</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/04/17/zookeeper启动闪退/" class="leancloud_visitors" data-flag-title="zookeeper启动闪退">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="zookeeper启动闪退"><a href="#zookeeper启动闪退" class="headerlink" title="zookeeper启动闪退"></a>zookeeper启动闪退</h1><p>下载好zookeeper后想启动zookeeper，如果是windows直接运行<code>%zookeeer安装目录%/bin/zkServer.cmd</code>即可，运行的时候可能会出现闪退的问题。</p>
+<p>首先要定位到问题，闪退的原因可能有几种。找到闪退的原因然后对症下药。</p>
+<p>实际上这个zkServer.cmd是一个脚本文件，脚本里面有个命令pause。可以让程序暂停到这里不往下运行。类似于前端的debgger。和后端的断点debug启动服务。</p>
+<p>打开zkServer.cmd文件在内容最后加上pause</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@echo</span> off</span><br><span class="line"><span class="function">REM Licensed to the Apache Software <span class="title">Foundation</span> <span class="params">(ASF)</span> under one or more</span></span><br><span class="line"><span class="function">REM contributor license agreements.  See the NOTICE file distributed with</span></span><br><span class="line"><span class="function">REM <span class="keyword">this</span> work <span class="keyword">for</span> additional information regarding copyright ownership.</span></span><br><span class="line"><span class="function">REM The ASF licenses <span class="keyword">this</span> file to You under the Apache License, Version 2.0</span></span><br><span class="line"><span class="function"><span class="title">REM</span> <span class="params">(the <span class="string">"License"</span>)</span></span>; you may not use <span class="keyword">this</span> file except in compliance with</span><br><span class="line">REM the License.  You may obtain a copy of the License at</span><br><span class="line">REM</span><br><span class="line">REM     http:<span class="comment">//www.apache.org/licenses/LICENSE-2.0</span></span><br><span class="line">REM</span><br><span class="line">REM Unless required by applicable law or agreed to in writing, software</span><br><span class="line">REM distributed under the License is distributed on an <span class="string">"AS IS"</span> BASIS,</span><br><span class="line">REM WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span><br><span class="line">REM See the License <span class="keyword">for</span> the specific language governing permissions and</span><br><span class="line">REM limitations under the License.</span><br><span class="line"></span><br><span class="line">setlocal</span><br><span class="line">call <span class="string">"%~dp0zkEnv.cmd"</span></span><br><span class="line"></span><br><span class="line">set ZOOMAIN=org.apache.zookeeper.server.quorum.QuorumPeerMain</span><br><span class="line">echo on</span><br><span class="line">call %JAVA% <span class="string">"-Dzookeeper.log.dir=%ZOO_LOG_DIR%"</span> <span class="string">"-Dzookeeper.root.logger=%ZOO_LOG4J_PROP%"</span> -cp <span class="string">"%CLASSPATH%"</span> %ZOOMAIN% <span class="string">"%ZOOCFG%"</span> %*</span><br><span class="line">pause # 在该位置加上这个pause</span><br><span class="line">endlocal</span><br></pre></td></tr></table></figure>
+<p>重新启动<code>zkServer.cmd</code></p>
+<p>定位问题。我遇到的问题有两种情况</p>
+<ol>
+<li>找不到zoo.cfg文件</li>
+</ol>
+<p>​    在下载zookeeper后，在<code>%zookeeper安装目录%/conf</code>目录下有一个zoo.sample.cfg文件，这个文件就是给你一个模板，告诉你zookeeper应该怎么配置。你可以直接把zoo.sample.cfg文件改名为zoo.cfg再重启zkServer.cmd，问题解决</p>
+<p>​    在zoo.cfg中配置了高可用的一些属性</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"># Zookeeper 服务器之间或客户端与服务器之间维持心跳的时间间隔，也就是每个 tickTime 时# 间就会发送一个心跳。tickTime以毫秒为单位。</span><br><span class="line">tickTime=<span class="number">2000</span></span><br><span class="line">    </span><br><span class="line"># Leader-Follower初始通信时限</span><br><span class="line"># 集群中的follower服务器(F)与leader服务器(L)之间初始连接时能容忍的最多心跳数#（tickTime的数量）。</span><br><span class="line">initLimit=<span class="number">10</span></span><br><span class="line">    </span><br><span class="line">#Leader-Follower同步通信时限</span><br><span class="line">#集群中的follower服务器与leader服务器之间请求和应答之间能容忍的最多心跳数（tickTime的数量）。</span><br><span class="line">syncLimit=<span class="number">5</span></span><br><span class="line">    </span><br><span class="line">#数据文件目录</span><br><span class="line">#Zookeeper保存数据的目录，默认情况下，Zookeeper将写数据的日志文件也保存在这个目录里。</span><br><span class="line">dataDir=E:/zookeeper/data</span><br><span class="line"># 客户端连接端口</span><br><span class="line"># 客户端连接 Zookeeper 服务器的端口，Zookeeper 会监听这个端口，接受客户端的访问请求。</span><br><span class="line">clientPort=<span class="number">2181</span></span><br><span class="line"></span><br><span class="line">一个数据节点中包含镜像的个数，实际上zookeeper他是为了实现服务的高可用性，默认会有<span class="number">3</span>个节点，zookeeper集群有一个特性：集群中只要有过半机器正常，就可以对外开放，默认有三个机器，这样有一台机器挂掉时，这个集群还是能够使用的一般设置为奇数个原因是<span class="number">3</span>个和<span class="number">4</span>个节点的容忍度是一样的可以省一台机器。</span><br><span class="line"># The number of snapshots to retain in dataDir</span><br><span class="line">#autopurge.snapRetainCount=3</span><br><span class="line"># Purge task interval in hours</span><br><span class="line"># Set to "0" to disable auto purge feature</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li><p>jdk没有配置，或者jdk路径出错。</p>
+<p>zookeeper是一个java进程依赖于jdk，可以查看一下<code>%zk安装目录%/bin/zkEnv.cmd</code>文件。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@echo</span> off</span><br><span class="line"><span class="function">REM Licensed to the Apache Software <span class="title">Foundation</span> <span class="params">(ASF)</span> under one or more</span></span><br><span class="line"><span class="function">REM contributor license agreements.  See the NOTICE file distributed with</span></span><br><span class="line"><span class="function">REM <span class="keyword">this</span> work <span class="keyword">for</span> additional information regarding copyright ownership.</span></span><br><span class="line"><span class="function">REM The ASF licenses <span class="keyword">this</span> file to You under the Apache License, Version 2.0</span></span><br><span class="line"><span class="function"><span class="title">REM</span> <span class="params">(the <span class="string">"License"</span>)</span></span>; you may not use <span class="keyword">this</span> file except in compliance with</span><br><span class="line">REM the License.  You may obtain a copy of the License at</span><br><span class="line">REM</span><br><span class="line">REM     http:<span class="comment">//www.apache.org/licenses/LICENSE-2.0</span></span><br><span class="line">REM</span><br><span class="line">REM Unless required by applicable law or agreed to in writing, software</span><br><span class="line">REM distributed under the License is distributed on an <span class="string">"AS IS"</span> BASIS,</span><br><span class="line">REM WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span><br><span class="line">REM See the License <span class="keyword">for</span> the specific language governing permissions and</span><br><span class="line">REM limitations under the License.</span><br><span class="line"></span><br><span class="line">set ZOOCFGDIR=%~dp0%..\conf</span><br><span class="line">set ZOO_LOG_DIR=%~dp0%..</span><br><span class="line">set ZOO_LOG4J_PROP=INFO,CONSOLE</span><br><span class="line"></span><br><span class="line">REM <span class="keyword">for</span> sanity sake assume Java <span class="number">1.6</span></span><br><span class="line">REM see: http:<span class="comment">//java.sun.com/javase/6/docs/technotes/tools/windows/java.html</span></span><br><span class="line"></span><br><span class="line">REM add the zoocfg dir to classpath</span><br><span class="line">set CLASSPATH=%ZOOCFGDIR%</span><br><span class="line"></span><br><span class="line">REM make it work in the release</span><br><span class="line">SET CLASSPATH=%~dp0..\*;%~dp0..\lib\*;%CLASSPATH%</span><br><span class="line"></span><br><span class="line">REM make it work <span class="keyword">for</span> developers</span><br><span class="line">SET CLASSPATH=%~dp0..\build\classes;%~dp0..\build\lib\*;%CLASSPATH%</span><br><span class="line">这个地方就是配置启动zk找到的配置文件，默认去conf下的zoo.cfg文件，也就是出现闪退第一种情况去查找这个文件改名为zoo.cfg的原因</span><br><span class="line">set ZOOCFG=%ZOOCFGDIR%\zoo.cfg</span><br><span class="line"></span><br><span class="line"><span class="meta">@REM</span> setup java environment variables</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">if</span> not defined <span class="title">JAVA_HOME</span> <span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">  echo Error: JAVA_HOME is not set.</span></span></span><br><span class="line"><span class="function"><span class="params">  goto :eof</span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">set JAVA_HOME</span>=%JAVA_HOME:<span class="string">"=%</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">if not exist "</span>%JAVA_HOME%<span class="string">"\bin\java.exe (</span></span><br><span class="line"><span class="string">  echo Error: JAVA_HOME is incorrectly set.</span></span><br><span class="line"><span class="string">  goto :eof</span></span><br><span class="line"><span class="string">)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">set JAVA="</span>%JAVA_HOME%<span class="string">"\bin\java</span></span><br><span class="line"><span class="string">找到环境变量，看看有没有配置这个"</span>JAVA_HOME<span class="string">"环境变量，注意这个值中的目录文件，在系统的环境变量中值不要有\</span></span><br><span class="line"><span class="string">    我的环境变量的值是C:\Program Files\Java\jdk1.8.0_151</span></span><br><span class="line"><span class="string">    如果你在这个后面有一个\那么zk去找环境变量的时候就会报错不要有\</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+<div>
+
+<div>
+
+    <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+
+</div>
+
+</div>
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创，您的支持将鼓励我继续创作</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="CaoPengFei 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="CaoPengFei 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/hadoop/" rel="tag"># hadoop</a>
+          
+            <a href="/tags/zookeeper/" rel="tag"># zookeeper</a>
+          
+            <a href="/tags/habase/" rel="tag"># habase</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/08/推荐算法/" rel="next" title="推荐算法">
+                <i class="fa fa-chevron-left"></i> 推荐算法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/04/23/mq使用心得/" rel="prev" title="">
+                 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">CaoPengFei</p>
+              <p class="site-description motion-element" itemprop="description">CaoPengFei的技术博客</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">76</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">85</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#zookeeper启动闪退"><span class="nav-number">1.</span> <span class="nav-text">zookeeper启动闪退</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">CaoPengFei</span>
+
+  
+</div>
+
+
+  <div class="powered-by">CaoPengflying</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">博客 &mdash; </div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("QvYPT7ysHmIcKhVJCaBfoul8-gzGzoHsz", "3tXLKBWxENoj3lseRo7fjJ1d");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+<!-- 页面点击小红心 --> 
+<script type="text/javascript" src="/js/src/love.js"></script>
+</html>

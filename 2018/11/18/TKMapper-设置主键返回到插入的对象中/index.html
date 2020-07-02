@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="CaoPengFei的技术博客">
+<meta name="description" content="介绍tkMapper是mybatis的一个工具，他简化了数据库的单表操作。开发人员不需要编写sql，不需要去配置文件书写sql语句。只要写好实体类就可以支持对应的增删改查的方法。 使用Insert的时候，有时候需要将插入成功后原对象中没有主键问题在使用mybatis的时候可以采用 selectKey的标签即可。使用了这个tkMapper同样可以有两种方式1.重新创建一个baseMapper，书写一">
 <meta name="keywords" content="Java Html Css JavaScript Linux Mysql">
 <meta property="og:type" content="article">
 <meta property="og:title" content="TKMapper 设置主键返回到插入的对象中">
 <meta property="og:url" content="http://www.lmcpf.com/2018/11/18/TKMapper-设置主键返回到插入的对象中/index.html">
 <meta property="og:site_name" content="CaoPengFei&#39;s blog">
-<meta property="og:description" content="CaoPengFei的技术博客">
+<meta property="og:description" content="介绍tkMapper是mybatis的一个工具，他简化了数据库的单表操作。开发人员不需要编写sql，不需要去配置文件书写sql语句。只要写好实体类就可以支持对应的增删改查的方法。 使用Insert的时候，有时候需要将插入成功后原对象中没有主键问题在使用mybatis的时候可以采用 selectKey的标签即可。使用了这个tkMapper同样可以有两种方式1.重新创建一个baseMapper，书写一">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-01-04T16:28:04.353Z">
+<meta property="og:updated_time" content="2019-03-21T09:09:53.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="TKMapper 设置主键返回到插入的对象中">
-<meta name="twitter:description" content="CaoPengFei的技术博客">
+<meta name="twitter:description" content="介绍tkMapper是mybatis的一个工具，他简化了数据库的单表操作。开发人员不需要编写sql，不需要去配置文件书写sql语句。只要写好实体类就可以支持对应的增删改查的方法。 使用Insert的时候，有时候需要将插入成功后原对象中没有主键问题在使用mybatis的时候可以采用 selectKey的标签即可。使用了这个tkMapper同样可以有两种方式1.重新创建一个baseMapper，书写一">
 
 
 
@@ -341,7 +341,10 @@
       
 
       
-        
+        <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>tkMapper是mybatis的一个工具，他简化了数据库的单表操作。开发人员不需要编写sql，不需要去配置文件书写sql语句。只要写好实体类就可以支持对应的增删改查的方法。</p>
+<h2 id="使用Insert的时候，有时候需要将插入成功后原对象中没有主键问题"><a href="#使用Insert的时候，有时候需要将插入成功后原对象中没有主键问题" class="headerlink" title="使用Insert的时候，有时候需要将插入成功后原对象中没有主键问题"></a>使用Insert的时候，有时候需要将插入成功后原对象中没有主键问题</h2><p>在使用mybatis的时候可以采用 selectKey的标签即可。使用了这个tkMapper同样可以<br>有两种方式<br>1.重新创建一个baseMapper，书写一个方法。如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">public interface InsertOrderPaymentMapper&lt;T&gt;&#123;</span><br><span class="line">    @Options(useGeneratedKeys = true, keyProperty = &quot;paymentId&quot;)</span><br><span class="line">    @InsertProvider(type = SpecialProvider.class, method = &quot;dynamicSQL&quot;)</span><br><span class="line">    int insertUseGeneratedKeys(T record);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>自定义mapper继承刚刚书写的mapper，加上注解，就可以在生成主键后将主键返回到原有对象中。<br>2.在原有的实体类上增加注解<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@Id</span><br><span class="line">@Column(name = &quot;payment_id&quot;)</span><br><span class="line">@GeneratedValue(strategy = GenerationType.IDENTITY)</span><br><span class="line">private Integer paymentId;//</span><br></pre></td></tr></table></figure></p>
+
       
     </div>
     
@@ -492,8 +495,17 @@ var jiathis_config={
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -508,7 +520,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">61</span>
+                  <span class="site-state-item-count">76</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -519,7 +531,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-count">23</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -530,7 +542,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">66</span>
+                  <span class="site-state-item-count">85</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -554,6 +566,22 @@ var jiathis_config={
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用Insert的时候，有时候需要将插入成功后原对象中没有主键问题"><span class="nav-number">2.</span> <span class="nav-text">使用Insert的时候，有时候需要将插入成功后原对象中没有主键问题</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
 
       
 
@@ -567,7 +595,7 @@ var jiathis_config={
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

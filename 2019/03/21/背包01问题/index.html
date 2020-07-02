@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="数据结构, 算法," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="背包01问题是一个经典的算法。 问题是这样描述的：一个背包最大容量为9kg，现在有5个物品，每个物品都有自己的重量，请问背包最后最多能装多少重量的物品。5个物品的重量分别是2,2,4,8,6 解决这个问题可以用多种算法、贪心法、回溯法、动态规划。  贪心法：依次那物品，每次挑选最优的情况，这样认为最后就是得到的最优解。这样的解决思路可能会有问题，并不能保证每次都是正确的。对于这个问题是这样解决：">
+<meta name="keywords" content="数据结构, 算法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="背包01问题">
+<meta property="og:url" content="http://www.lmcpf.com/2019/03/21/背包01问题/index.html">
+<meta property="og:site_name" content="CaoPengFei&#39;s blog">
+<meta property="og:description" content="背包01问题是一个经典的算法。 问题是这样描述的：一个背包最大容量为9kg，现在有5个物品，每个物品都有自己的重量，请问背包最后最多能装多少重量的物品。5个物品的重量分别是2,2,4,8,6 解决这个问题可以用多种算法、贪心法、回溯法、动态规划。  贪心法：依次那物品，每次挑选最优的情况，这样认为最后就是得到的最优解。这样的解决思路可能会有问题，并不能保证每次都是正确的。对于这个问题是这样解决：">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-03-29T10:17:12.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="背包01问题">
+<meta name="twitter:description" content="背包01问题是一个经典的算法。 问题是这样描述的：一个背包最大容量为9kg，现在有5个物品，每个物品都有自己的重量，请问背包最后最多能装多少重量的物品。5个物品的重量分别是2,2,4,8,6 解决这个问题可以用多种算法、贪心法、回溯法、动态规划。  贪心法：依次那物品，每次挑选最优的情况，这样认为最后就是得到的最优解。这样的解决思路可能会有问题，并不能保证每次都是正确的。对于这个问题是这样解决：">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.lmcpf.com/2019/03/21/背包01问题/"/>
+
+
+
+
+
+  <title>背包01问题 | CaoPengFei's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">CaoPengFei's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">前车之鉴，后车之师。分享是一种乐趣！！</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.lmcpf.com/2019/03/21/背包01问题/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="CaoPengFei">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CaoPengFei's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">背包01问题</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-21T20:57:20+08:00">
+                2019-03-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/03/21/背包01问题/" class="leancloud_visitors" data-flag-title="背包01问题">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>背包01问题是一个经典的算法。</p>
+<p>问题是这样描述的：一个背包最大容量为9kg，现在有5个物品，每个物品都有自己的重量，请问背包最后最多能装多少重量的物品。5个物品的重量分别是2,2,4,8,6</p>
+<p>解决这个问题可以用多种算法、贪心法、回溯法、动态规划。</p>
+<ol>
+<li><p>贪心法：依次那物品，每次挑选最优的情况，这样认为最后就是得到的最优解。这样的解决思路可能会有问题，并不能保证每次都是正确的。对于这个问题是这样解决：</p>
+<p>第一次取重量最小的 2， 这时背包重量为2没有超过9再次挑选</p>
+<p>第二次取重量最小的2， 这时重量为4 没有超过9再次挑选</p>
+<p>第三次取重量最小的4，这时重量为8没有超过9再次挑选</p>
+<p>第四次取重量最小的6，这时重量为14超出重量所以最终结果为8</p>
+</li>
+<li><p>回溯法：也是穷举法，将所有可能的组合全部拼接出来，然后取符合条件的值。这样的解决思路一定能得到最优解，但是效率可能会比较低。回溯法会用到递归，很难用语言描述清楚，在这里献上代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 回溯算法实现。注意：我把输入的变量都定义成了成员变量。</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">int</span> maxW = Integer.MIN_VALUE; <span class="comment">// 结果放到 maxW 中</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">int</span>[] weight = &#123;<span class="number">2</span>，<span class="number">2</span>，<span class="number">4</span>，<span class="number">6</span>，<span class="number">3</span>&#125;;  <span class="comment">// 物品重量</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">int</span> n = <span class="number">5</span>; <span class="comment">// 物品个数</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">int</span> w = <span class="number">9</span>; <span class="comment">// 背包承受的最大重量</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">f</span><span class="params">(<span class="keyword">int</span> i, <span class="keyword">int</span> cw)</span> </span>&#123; <span class="comment">// 调用 f(0, 0)</span></span><br><span class="line">  <span class="keyword">if</span> (cw == w || i == n) &#123; <span class="comment">// cw==w 表示装满了，i==n 表示物品都考察完了</span></span><br><span class="line">    <span class="keyword">if</span> (cw &gt; maxW) maxW = cw;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  f(i+<span class="number">1</span>, cw); <span class="comment">// 选择不装第 i 个物品</span></span><br><span class="line">  <span class="keyword">if</span> (cw + weight[i] &lt;= w) &#123;</span><br><span class="line">    f(i+<span class="number">1</span>,cw + weight[i]); <span class="comment">// 选择装第 i 个物品</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol start="3">
+<li><p>动态规划：传说中的上帝视角，可以知道每次选择的结果，并且知道下次选择的结果。实际上他跟回溯法有些类似，但是不用递归实现。对于这个问题：每个物品都有两种选择放入包中，和不放入包中，这个决策会影响第二次放置物品，然后根据第一种情况推出第二种情况的所有所有取值，再推出第三种选择，最终得到所有的情况。献上代码:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">OneAndTwoPackage</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> WEIGHT_MAX = <span class="number">20</span>;<span class="comment">//最大重量</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span>[] weightList = &#123;<span class="number">7</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">6</span>,<span class="number">1</span>&#125;; <span class="comment">//每个物品的重量</span></span><br><span class="line">        System.out.println(dynamicPlanOne(weightList, <span class="number">5</span>));</span><br><span class="line">        System.out.println(dynamicPlanTwo(weightList, <span class="number">5</span>));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> weightList  物品重量</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> num 物品个数</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">dynamicPlanOne</span><span class="params">(<span class="keyword">int</span>[] weightList, <span class="keyword">int</span> num)</span></span>&#123;</span><br><span class="line">        <span class="comment">//解决这个问题的思路就是</span></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 每个物品都有两种选择，后一种基于前一种的可能会有更多的选择，将所有的可能列举并记录总重量</span></span><br><span class="line"><span class="comment">         * 第一个 有两种可能  放 总重量为2 不放为0</span></span><br><span class="line"><span class="comment">         * 第二个 有三种可能 放 2,4  不放0,2 总共为0,2,4</span></span><br><span class="line"><span class="comment">         * 第三个  有5种可能         放 4,6,8 不放 0,2,4</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">boolean</span>[][] weightFlag = <span class="keyword">new</span> <span class="keyword">boolean</span>[num][WEIGHT_MAX+<span class="number">1</span>];<span class="comment">//初始化所有的标记默认为false</span></span><br><span class="line">        weightFlag[<span class="number">0</span>][<span class="number">0</span>] = <span class="keyword">true</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; num; i++) &#123;</span><br><span class="line">            <span class="comment">//寻找上一层可能，如果是第一层则将放置该物品的下标设置为true</span></span><br><span class="line">            <span class="comment">//如果不是第一层，则将该层已经设置为true的下标设为true 并把值取出与上一层的位置加和设置为true</span></span><br><span class="line">            <span class="keyword">if</span> (<span class="number">0</span> &lt;= i-<span class="number">1</span>)&#123;</span><br><span class="line">                <span class="keyword">boolean</span>[] preWeight = weightFlag[i-<span class="number">1</span>];</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> i1 = <span class="number">0</span>; i1 &lt;= WEIGHT_MAX; i1++) &#123;</span><br><span class="line">                    <span class="keyword">if</span> (preWeight[i1])&#123;</span><br><span class="line">                        <span class="comment">//不放</span></span><br><span class="line">                        weightFlag[i][i1] = <span class="keyword">true</span>;</span><br><span class="line">                        <span class="comment">//放</span></span><br><span class="line">                        <span class="keyword">int</span> weight = weightList[i] + i1;</span><br><span class="line">                        <span class="keyword">if</span> (weight &lt;= WEIGHT_MAX)</span><br><span class="line">                        weightFlag[i][weight] = <span class="keyword">true</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">                weightFlag[i][weightList[i]] = <span class="keyword">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//最后一层，的最大值即为最大重量</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = WEIGHT_MAX; j &gt;=<span class="number">0</span> ; j--) &#123;</span><br><span class="line">                <span class="keyword">if</span> (weightFlag[num-<span class="number">1</span>][j])&#123;</span><br><span class="line">                   <span class="keyword">return</span> j;</span><br><span class="line">                &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 一维数组</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> weightList</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> num</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">dynamicPlanTwo</span><span class="params">(<span class="keyword">int</span>[] weightList, <span class="keyword">int</span> num)</span></span>&#123;</span><br><span class="line">        <span class="keyword">boolean</span>[] weightFlg = <span class="keyword">new</span> <span class="keyword">boolean</span>[WEIGHT_MAX+<span class="number">1</span>];<span class="comment">//所有重量的分层</span></span><br><span class="line">        weightFlg[<span class="number">0</span>] = <span class="keyword">true</span>;<span class="comment">//不放的时候为0</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; num; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (i-<span class="number">1</span> &lt; <span class="number">0</span>)&#123; <span class="comment">//第一层放与不放</span></span><br><span class="line">                weightFlg[weightList[i]] = <span class="keyword">true</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="comment">//一定要从大到小计算，不然会出现重复计算的情况</span></span><br><span class="line">                <span class="comment">/**</span></span><br><span class="line"><span class="comment">                 * 比如：第二个物品的重量为2</span></span><br><span class="line"><span class="comment">                 * 第一个物品不放第二个物品放则重量为2 所以将2位置设置为true</span></span><br><span class="line"><span class="comment">                 * 继续循环重量，现在第二个位置的值是true，+2又将4位置的重量设置为true这样是不符合道理的</span></span><br><span class="line"><span class="comment">                 * 倒序的话，依次往前走设置的值都在后面，遍历是向前所以不会重复</span></span><br><span class="line"><span class="comment">                 */</span></span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> weightMax = WEIGHT_MAX; weightMax &gt; <span class="number">0</span>; weightMax--) &#123;</span><br><span class="line">                    <span class="keyword">if</span> (weightFlg[weightMax])&#123;</span><br><span class="line">                        <span class="keyword">if</span> (weightMax+weightList[i] &lt;= WEIGHT_MAX)&#123;</span><br><span class="line">                            weightFlg[weightMax+weightList[i]] = <span class="keyword">true</span>;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = weightFlg.length - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">            <span class="keyword">if</span> (weightFlg[i])&#123;</span><br><span class="line">                <span class="keyword">return</span> i;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+<div>
+
+<div>
+
+    <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+
+</div>
+
+</div>
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创，您的支持将鼓励我继续创作</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="CaoPengFei 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="CaoPengFei 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/数据结构-算法/" rel="tag"># 数据结构, 算法</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/20/tk.mybatis.mapper.provider.base.BaseInsertProvider.init()/" rel="next" title="tk.mybatis.mapper.provider.base.BaseInsertProvider.<init>()">
+                <i class="fa fa-chevron-left"></i> tk.mybatis.mapper.provider.base.BaseInsertProvider.<init>()
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/03/21/单模式字符串匹配算法/" rel="prev" title="单模式字符串匹配算法">
+                单模式字符串匹配算法 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">CaoPengFei</p>
+              <p class="site-description motion-element" itemprop="description">CaoPengFei的技术博客</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">76</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">85</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">CaoPengFei</span>
+
+  
+</div>
+
+
+  <div class="powered-by">CaoPengflying</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">博客 &mdash; </div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("QvYPT7ysHmIcKhVJCaBfoul8-gzGzoHsz", "3tXLKBWxENoj3lseRo7fjJ1d");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+<!-- 页面点击小红心 --> 
+<script type="text/javascript" src="/js/src/love.js"></script>
+</html>

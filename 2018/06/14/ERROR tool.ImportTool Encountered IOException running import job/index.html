@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="异常信息 12ERROR tool.ImportTool: Encountered IOException running import job: java.io.IOException: java.lang.ClassNotFoundException: org.apache.hadoop.hive.conf.HiveConf 问题原因：在sqoop中找不到依赖 解决办法：1.临时导入包1exp">
+<meta name="description" content="异常信息 12ERROR tool.ImportTool: Encountered IOException running import job: java.io.IOException: java.lang.ClassNotFoundException: org.apache.hadoop.hive.conf.HiveConf 问题原因：在sqoop中找不到依赖 解决办法：1.临时导入包 1ex">
 <meta name="keywords" content="hive， sqoop,sqoop mysql导入数据到hdfs失败">
 <meta property="og:type" content="article">
 <meta property="og:title" content="cdh版sqoop导入数据失败">
 <meta property="og:url" content="http://www.lmcpf.com/2018/06/14/ERROR tool.ImportTool Encountered IOException running import job/index.html">
 <meta property="og:site_name" content="CaoPengFei&#39;s blog">
-<meta property="og:description" content="异常信息 12ERROR tool.ImportTool: Encountered IOException running import job: java.io.IOException: java.lang.ClassNotFoundException: org.apache.hadoop.hive.conf.HiveConf 问题原因：在sqoop中找不到依赖 解决办法：1.临时导入包1exp">
+<meta property="og:description" content="异常信息 12ERROR tool.ImportTool: Encountered IOException running import job: java.io.IOException: java.lang.ClassNotFoundException: org.apache.hadoop.hive.conf.HiveConf 问题原因：在sqoop中找不到依赖 解决办法：1.临时导入包 1ex">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-10-14T12:07:25.570Z">
+<meta property="og:updated_time" content="2019-03-29T09:08:10.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="cdh版sqoop导入数据失败">
-<meta name="twitter:description" content="异常信息 12ERROR tool.ImportTool: Encountered IOException running import job: java.io.IOException: java.lang.ClassNotFoundException: org.apache.hadoop.hive.conf.HiveConf 问题原因：在sqoop中找不到依赖 解决办法：1.临时导入包1exp">
+<meta name="twitter:description" content="异常信息 12ERROR tool.ImportTool: Encountered IOException running import job: java.io.IOException: java.lang.ClassNotFoundException: org.apache.hadoop.hive.conf.HiveConf 问题原因：在sqoop中找不到依赖 解决办法：1.临时导入包 1ex">
 
 
 
@@ -364,10 +364,11 @@
 
       
         <p>异常信息</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ERROR tool.ImportTool: Encountered IOException running import job: </span><br><span class="line">java.io.IOException: java.lang.ClassNotFoundException: org.apache.hadoop.hive.conf.HiveConf</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ERROR tool.ImportTool: Encountered IOException running <span class="keyword">import</span> job: </span><br><span class="line">java.io.IOException: java.lang.ClassNotFoundException: org.apache.hadoop.hive.conf.HiveConf</span><br></pre></td></tr></table></figure>
 <p>问题原因：在sqoop中找不到依赖</p>
-<p>解决办法：<br>1.临时导入包<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export HADOOP_CLASSPATH=$&#123;HADOOP_CLASSPATH&#125;:/opt/modules/cdh/hive-1.1.0-cdh5.7.6/lib/*</span><br></pre></td></tr></table></figure></p>
-<p>2.永久解决，将依赖建立软连接<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ln -s /opt/cdh5.7.6/hive-1.1.0-cdh5.7.6/conf/hive-site.xml  /opt/cdh5.7.6/hadoop-2.6.0-cdh5.7.6/etc/hadoop/hive-site.xml</span><br></pre></td></tr></table></figure></p>
+<p>解决办法：<br>1.临时导入包</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export HADOOP_CLASSPATH=$&#123;HADOOP_CLASSPATH&#125;:/opt/modules/cdh/hive-<span class="number">1.1</span>.0-cdh5.7.6/lib<span class="comment">/*</span></span><br></pre></td></tr></table></figure>
+<p>2.永久解决，将依赖建立软连接<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ln -s /opt/cdh5.7.6/hive-<span class="number">1.1</span>.0-cdh5.7.6/conf/hive-site.xml  /opt/cdh5.7.6/hadoop-<span class="number">2.6</span>.0-cdh5.7.6/etc/hadoop/hive-site.xml</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -543,7 +544,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">61</span>
+                  <span class="site-state-item-count">76</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -554,7 +555,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-count">23</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -565,7 +566,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">66</span>
+                  <span class="site-state-item-count">85</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -602,7 +603,7 @@ var jiathis_config={
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="CaoPengFei的技术博客">
+<meta name="description" content="Junit单元测试-TDD单元测试是什么?单元测试，有单元和测试两个词组成。单元就是最小单位，测试就验证正确性。合起来就是针对程序的最小单位进行正确性检验的测试工作。 为什么要单元测试? 减少bug 快速定位bug 提高代码质量 减少调试时间  ……. 一个机器，由各种细小的零件组成，如果其中某件零件坏了，机器运行故障。必须保证每个零件都按设计图要求的规格，机器才能正常运行。各种零件都是可拆卸并且">
 <meta name="keywords" content="测试驱动开发,junit的用法">
 <meta property="og:type" content="article">
-<meta property="og:title" content="TDD Junit单元测试">
+<meta property="og:title" content="Junit单元测试-TDD">
 <meta property="og:url" content="http://www.lmcpf.com/2018/12/13/TDD-Junit单元测试/index.html">
 <meta property="og:site_name" content="CaoPengFei&#39;s blog">
-<meta property="og:description" content="CaoPengFei的技术博客">
+<meta property="og:description" content="Junit单元测试-TDD单元测试是什么?单元测试，有单元和测试两个词组成。单元就是最小单位，测试就验证正确性。合起来就是针对程序的最小单位进行正确性检验的测试工作。 为什么要单元测试? 减少bug 快速定位bug 提高代码质量 减少调试时间  ……. 一个机器，由各种细小的零件组成，如果其中某件零件坏了，机器运行故障。必须保证每个零件都按设计图要求的规格，机器才能正常运行。各种零件都是可拆卸并且">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-01-04T16:27:07.917Z">
+<meta property="og:updated_time" content="2020-06-22T03:13:25.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="TDD Junit单元测试">
-<meta name="twitter:description" content="CaoPengFei的技术博客">
+<meta name="twitter:title" content="Junit单元测试-TDD">
+<meta name="twitter:description" content="Junit单元测试-TDD单元测试是什么?单元测试，有单元和测试两个词组成。单元就是最小单位，测试就验证正确性。合起来就是针对程序的最小单位进行正确性检验的测试工作。 为什么要单元测试? 减少bug 快速定位bug 提高代码质量 减少调试时间  ……. 一个机器，由各种细小的零件组成，如果其中某件零件坏了，机器运行故障。必须保证每个零件都按设计图要求的规格，机器才能正常运行。各种零件都是可拆卸并且">
 
 
 
@@ -126,7 +126,7 @@
 
 
 
-  <title>TDD Junit单元测试 | CaoPengFei's blog</title>
+  <title>Junit单元测试-TDD | CaoPengFei's blog</title>
   
 
 
@@ -280,7 +280,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">TDD Junit单元测试</h1>
+          <h1 class="post-title" itemprop="name headline">Junit单元测试-TDD</h1>
         
 
         <div class="post-meta">
@@ -332,7 +332,7 @@
 
           
           
-             <span id="/2018/12/13/TDD-Junit单元测试/" class="leancloud_visitors" data-flag-title="TDD Junit单元测试">
+             <span id="/2018/12/13/TDD-Junit单元测试/" class="leancloud_visitors" data-flag-title="Junit单元测试-TDD">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -363,7 +363,43 @@
       
 
       
-        
+        <h1 id="Junit单元测试-TDD"><a href="#Junit单元测试-TDD" class="headerlink" title="Junit单元测试-TDD"></a>Junit单元测试-TDD</h1><h2 id="单元测试是什么"><a href="#单元测试是什么" class="headerlink" title="单元测试是什么?"></a>单元测试是什么?</h2><p>单元测试，有单元和测试两个词组成。单元就是最小单位，测试就验证正确性。合起来就是针对程序的最小单位进行正确性检验的测试工作。</p>
+<h2 id="为什么要单元测试"><a href="#为什么要单元测试" class="headerlink" title="为什么要单元测试?"></a>为什么要单元测试?</h2><ol>
+<li>减少bug</li>
+<li>快速定位bug</li>
+<li>提高代码质量</li>
+<li>减少调试时间</li>
+</ol>
+<p>…….</p>
+<p>一个机器，由各种细小的零件组成，如果其中某件零件坏了，机器运行故障。必须保证每个零件都按设计图要求的规格，机器才能正常运行。各种零件都是可拆卸并且可维修。</p>
+<p>在实际开发当中，很多开发人员在开发灵感强的时候会从头一直写到最下面，都在一个方法里面，这样就不是各种零件可拆卸并且可维修了，每次有bug，都要把整个程序都要检查一遍，这样的成本就很高。单元测试的意义有好多，从结果上看就是为了写出清洁的代码(高质量，bug少，阅读性高)，也就是说在写代码过程中，只要是方便单元测试的，都是清洁的代码。</p>
+<h2 id="那些人在写单元测试"><a href="#那些人在写单元测试" class="headerlink" title="那些人在写单元测试?"></a>那些人在写单元测试?</h2><ol>
+<li>大牛(好的开源项目)</li>
+<li>保住面子(不被测试同学天天追bug)</li>
+<li>领导要求</li>
+</ol>
+<h2 id="如何写单元测试（Junit）"><a href="#如何写单元测试（Junit）" class="headerlink" title="如何写单元测试（Junit）"></a>如何写单元测试（Junit）</h2><p>java框架中可以使用Junit做单元测试，非常简单。使用maven(gradle)构建java项目，会有专门写单元测试的目录。src -&gt; test -&gt; java</p>
+<ol>
+<li>引入junit jar包。spring-boot已经集成了junit。可以直接使用spring-boot官方提供的test包</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">org.springframework.boot:spring-boot-starter-test</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>书写单元测试类</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SpringBootTest</span></span><br><span class="line"><span class="meta">@RunWith</span>(SpringRunner.class)</span><br><span class="line"><span class="meta">@Transactional</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JunitApplicationTests</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testHello</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"hello junit"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>此时书写内容就和写正常业务逻辑代码一样了，需要某个service，可以直接在这里使用spring 进行注入然后调用其方法，测试代码结果。</p>
+<ol start="3">
+<li>使用断言</li>
+</ol>
+<p>上述代码中在测试中使用<code>System.out.println</code>进行输出结果，这种是不符合单元测试规范的，每次需要肉眼去看结果，我们可以使用断言进行判断结果是否符合预期。这样就可以全局跑单测，在版本迭代时全局运行后，没有错误就说明是正常的，可以发版。</p>
+<p>常用api:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">assertEquals(String message, Object expected, Object actual);</span><br><span class="line">assertNotEquals(String message, Object expected, Object actual);</span><br><span class="line">assertTrue(String message, <span class="keyword">boolean</span> condition);</span><br><span class="line">assertFalse(String message, <span class="keyword">boolean</span> condition);</span><br><span class="line">assertNull(String message, Object object);</span><br><span class="line">assertNotNull(String message, Object object);</span><br><span class="line">assertSame(String message, Object expected, Object actual);</span><br><span class="line">assertNotSame(String message, Object expected, Object actual);</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>mock server</li>
+</ol>
+<p>单测中调用a服务的方法，可能a中有调用b服务的方法，我们在单测中想只关注a服务的方法，这个时候可以对b服务的方法进行mock(创建一个虚拟的对象来方便进行测试)。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RunWith</span>(SpringRunner.class)</span><br><span class="line"><span class="meta">@SpringBootTest</span></span><br><span class="line"><span class="meta">@WebAppConfiguration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JunitApplicationTest</span> </span>&#123;</span><br><span class="line">    <span class="meta">@MockBean</span></span><br><span class="line">    <span class="keyword">private</span> LinkedList  mockedList;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">detail</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="comment">//使用方法调用，参数匹配时，返回期待值</span></span><br><span class="line">        <span class="comment">//这里有一个限制就是，如果在调用方法时需要传入多个参数，其中一个参数使用了argument matcher，那么所有的参数必须都是matcher。不可以matcher和实际的参数混着用。</span></span><br><span class="line">     	when(mockedList.get(anyInt())).thenReturn(<span class="string">"element"</span>);</span><br><span class="line">        Object o = mockedList.get(<span class="number">0</span>);</span><br><span class="line">        Assert.assertSame(<span class="string">"返回值相同"</span>,o,<span class="string">"element"</span>);</span><br><span class="line">        <span class="comment">//调用方法时抛出异常</span></span><br><span class="line">        doThrow(<span class="keyword">new</span> RuntimeException()).when(mockedList).clear();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
       
     </div>
     
@@ -522,8 +558,17 @@ var jiathis_config={
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -538,7 +583,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">61</span>
+                  <span class="site-state-item-count">76</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -549,7 +594,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-count">23</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -560,7 +605,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">66</span>
+                  <span class="site-state-item-count">85</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -584,6 +629,22 @@ var jiathis_config={
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Junit单元测试-TDD"><span class="nav-number">1.</span> <span class="nav-text">Junit单元测试-TDD</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#单元测试是什么"><span class="nav-number">1.1.</span> <span class="nav-text">单元测试是什么?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么要单元测试"><span class="nav-number">1.2.</span> <span class="nav-text">为什么要单元测试?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#那些人在写单元测试"><span class="nav-number">1.3.</span> <span class="nav-text">那些人在写单元测试?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何写单元测试（Junit）"><span class="nav-number">1.4.</span> <span class="nav-text">如何写单元测试（Junit）</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
 
       
 
@@ -597,7 +658,7 @@ var jiathis_config={
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

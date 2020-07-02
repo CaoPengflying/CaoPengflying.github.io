@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="mq,消息队列," />
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="CaoPengFei的技术博客">
-<meta name="keywords" content="Java Html Css JavaScript Linux Mysql">
+<meta name="description" content="MQ在实际开发中的应用什么是MQMQ(Message Queue)，消息队列中间件。 MQ出现的目的：  MQ 通过将消息的发送和接收分离来实现应用程序的异步和解偶。提高系统的吞吐量，尤其是MQ出了个事务性MQ，可以防止MQ发送失败的情况。 MQ的目的是为了实现通讯。我们在分布式系统中，A模块和B模块想要实现通讯，要么是HTTP，要么是TCP，使用两种协议进行通讯。这种对于开发人员是不友好的，HT">
+<meta name="keywords" content="mq,消息队列">
 <meta property="og:type" content="article">
 <meta property="og:title" content="mq在实际开发中应用">
 <meta property="og:url" content="http://www.lmcpf.com/2018/11/20/mq在实际开发中应用/index.html">
 <meta property="og:site_name" content="CaoPengFei&#39;s blog">
-<meta property="og:description" content="CaoPengFei的技术博客">
+<meta property="og:description" content="MQ在实际开发中的应用什么是MQMQ(Message Queue)，消息队列中间件。 MQ出现的目的：  MQ 通过将消息的发送和接收分离来实现应用程序的异步和解偶。提高系统的吞吐量，尤其是MQ出了个事务性MQ，可以防止MQ发送失败的情况。 MQ的目的是为了实现通讯。我们在分布式系统中，A模块和B模块想要实现通讯，要么是HTTP，要么是TCP，使用两种协议进行通讯。这种对于开发人员是不友好的，HT">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-01-04T16:27:17.764Z">
+<meta property="og:updated_time" content="2020-06-22T10:23:06.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="mq在实际开发中应用">
-<meta name="twitter:description" content="CaoPengFei的技术博客">
+<meta name="twitter:description" content="MQ在实际开发中的应用什么是MQMQ(Message Queue)，消息队列中间件。 MQ出现的目的：  MQ 通过将消息的发送和接收分离来实现应用程序的异步和解偶。提高系统的吞吐量，尤其是MQ出了个事务性MQ，可以防止MQ发送失败的情况。 MQ的目的是为了实现通讯。我们在分布式系统中，A模块和B模块想要实现通讯，要么是HTTP，要么是TCP，使用两种协议进行通讯。这种对于开发人员是不友好的，HT">
 
 
 
@@ -303,6 +303,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java中间件/" itemprop="url" rel="index">
+                    <span itemprop="name">java中间件</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -341,7 +363,28 @@
       
 
       
-        
+        <h1 id="MQ在实际开发中的应用"><a href="#MQ在实际开发中的应用" class="headerlink" title="MQ在实际开发中的应用"></a>MQ在实际开发中的应用</h1><h2 id="什么是MQ"><a href="#什么是MQ" class="headerlink" title="什么是MQ"></a>什么是MQ</h2><p>MQ(Message Queue)，消息队列中间件。</p>
+<p>MQ出现的目的：</p>
+<ol>
+<li>MQ 通过将消息的发送和接收分离来实现应用程序的异步和解偶。提高系统的吞吐量，尤其是MQ出了个事务性MQ，可以防止MQ发送失败的情况。</li>
+<li>MQ的目的是为了实现通讯。我们在分布式系统中，A模块和B模块想要实现通讯，要么是HTTP，要么是TCP，使用两种协议进行通讯。这种对于开发人员是不友好的，HTTP 协议很难实现两端通讯——模块 A 可以调用 B，B 也可以主动调用 A，如果要做到这个两端都要背上 WebServer，而且还不支持长连接（HTTP 2.0 的库根本找不到）。TCP 就更加原始了，粘包、心跳、私有的协议。MQ做的事情是构建一个简单通讯模型，这个模型中包含了生产者-消费者。让开发人员无须去关注底层的通信协议</li>
+</ol>
+<p>说法1是在使用MQ结果的角度去分析，MQ出生的原因，说法2是从原始的原因去说明MQ产出的原因。</p>
+<h2 id="MQ的分类"><a href="#MQ的分类" class="headerlink" title="MQ的分类"></a>MQ的分类</h2><h3 id="有Broker的MQ"><a href="#有Broker的MQ" class="headerlink" title="有Broker的MQ"></a>有Broker的MQ</h3><p>Broker，叫做中转站。所有的消息都通过它进行中转，生产者把消息发送给他就结束自己的任务，然后Broker则负责把消息主动推送给消费者，或者消费者轮询查询broker消费消息。</p>
+<p>目前有Broker的MQ,有两种风格</p>
+<ol>
+<li>重Topic</li>
+</ol>
+<p>kafka,ActiveMQ属于这个风格，生产者会发送key和数据给到Broker，由Broker比较key之后决定给哪个消费者进行消费。这种风格的topic某种意义上就是一个queue,</p>
+<ol start="2">
+<li>轻Topic</li>
+</ol>
+<p>这种风格的代表是RabbitMQ，生产者发送 key 和数据，消费者定义订阅的队列，Broker 收到数据之后会通过一定的逻辑计算出 key 对应的队列然后把数据交给队列，这种模式下解耦了 key 和 queue，在这种架构中 queue 是非常轻量级的（在 RabbitMQ 中它的上限取决于你的内存），消费者关心的只是自己的 queue；生产者不必关心数据最终给谁只要指定 key 就行了，中间的那层映射在 AMQP 中叫 exchange（交换机）。</p>
+<p>两者的区别</p>
+<p>Queue: 一个发布者发布消息，下面的接收者按队列顺序接收，比如发布了 10 个消息，两个接收者 A,B 那就是 A,B <strong>总共</strong> 会收到 10 条消息，不重复。</p>
+<p>Topic:一个发布者发布消息，有两个接收者 A,B 来订阅，那么发布了 10 条消息，A,B <strong>各收到</strong> 10 条消息。</p>
+<h3 id="无Broker的MQ"><a href="#无Broker的MQ" class="headerlink" title="无Broker的MQ"></a>无Broker的MQ</h3><p>无Broker的MQ代表就是ZeroMQ。他实现了点对点之间进行通信。</p>
+<h2 id="docker部署RocketMQ"><a href="#docker部署RocketMQ" class="headerlink" title="docker部署RocketMQ"></a>docker部署RocketMQ</h2>
       
     </div>
     
@@ -392,6 +435,14 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/mq/" rel="tag"># mq</a>
+          
+            <a href="/tags/消息队列/" rel="tag"># 消息队列</a>
+          
+        </div>
       
 
       
@@ -492,8 +543,17 @@ var jiathis_config={
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -508,7 +568,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">61</span>
+                  <span class="site-state-item-count">76</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -519,7 +579,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-count">23</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -530,7 +590,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">66</span>
+                  <span class="site-state-item-count">85</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -554,6 +614,22 @@ var jiathis_config={
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#MQ在实际开发中的应用"><span class="nav-number">1.</span> <span class="nav-text">MQ在实际开发中的应用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是MQ"><span class="nav-number">1.1.</span> <span class="nav-text">什么是MQ</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MQ的分类"><span class="nav-number">1.2.</span> <span class="nav-text">MQ的分类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#有Broker的MQ"><span class="nav-number">1.2.1.</span> <span class="nav-text">有Broker的MQ</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#无Broker的MQ"><span class="nav-number">1.2.2.</span> <span class="nav-text">无Broker的MQ</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#docker部署RocketMQ"><span class="nav-number">1.3.</span> <span class="nav-text">docker部署RocketMQ</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
 
       
 
@@ -567,7 +643,7 @@ var jiathis_config={
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
