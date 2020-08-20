@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="edas," />
+  <meta name="keywords" content="java基础,oom," />
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="EDAS学习总结edas是一个企业级的分布式应用服务。它以阿里巴巴中间件多款成熟的分布式产品作为核心组件，提供企业级分布式高可用服务。 他现在全面支持：spring-cloud   dobble  hsf 我的理解他是一个去中心化的一个服务，任何一个服务都可以是服务提供者，也可以是服务调用者。 edas可以分成三个部分。服务提供者、配置中心、服务调用者。他的工作流程分为以下几步：  服务提供者在配">
-<meta name="keywords" content="edas">
+<meta name="description" content="Java发生OOM怎么办？当java中出现了oom，首先应该定位是那个区域发生了oom。java.lang.OutOfMemoryError异常后面会跟着不同的值，对应不同的区域发生oom 堆发生oom1Exception in thread &quot;main&quot; java.lang.OutOfMemoryError: Java heap space 使用 参数 以下参数，可以在发生oom时保存下来堆栈信">
+<meta name="keywords" content="java基础,oom">
 <meta property="og:type" content="article">
-<meta property="og:title" content="EDAS学习总结">
-<meta property="og:url" content="http://www.lmcpf.com/2019/04/04/EDAS学习总结/index.html">
+<meta property="og:title" content="Java发生OOM怎么办">
+<meta property="og:url" content="http://www.lmcpf.com/2018/10/29/Java发生OOM怎么办？/index.html">
 <meta property="og:site_name" content="CaoPengFei&#39;s blog">
-<meta property="og:description" content="EDAS学习总结edas是一个企业级的分布式应用服务。它以阿里巴巴中间件多款成熟的分布式产品作为核心组件，提供企业级分布式高可用服务。 他现在全面支持：spring-cloud   dobble  hsf 我的理解他是一个去中心化的一个服务，任何一个服务都可以是服务提供者，也可以是服务调用者。 edas可以分成三个部分。服务提供者、配置中心、服务调用者。他的工作流程分为以下几步：  服务提供者在配">
+<meta property="og:description" content="Java发生OOM怎么办？当java中出现了oom，首先应该定位是那个区域发生了oom。java.lang.OutOfMemoryError异常后面会跟着不同的值，对应不同的区域发生oom 堆发生oom1Exception in thread &quot;main&quot; java.lang.OutOfMemoryError: Java heap space 使用 参数 以下参数，可以在发生oom时保存下来堆栈信">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-07-02T03:33:52.718Z">
+<meta property="og:updated_time" content="2020-08-01T04:34:42.556Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="EDAS学习总结">
-<meta name="twitter:description" content="EDAS学习总结edas是一个企业级的分布式应用服务。它以阿里巴巴中间件多款成熟的分布式产品作为核心组件，提供企业级分布式高可用服务。 他现在全面支持：spring-cloud   dobble  hsf 我的理解他是一个去中心化的一个服务，任何一个服务都可以是服务提供者，也可以是服务调用者。 edas可以分成三个部分。服务提供者、配置中心、服务调用者。他的工作流程分为以下几步：  服务提供者在配">
+<meta name="twitter:title" content="Java发生OOM怎么办">
+<meta name="twitter:description" content="Java发生OOM怎么办？当java中出现了oom，首先应该定位是那个区域发生了oom。java.lang.OutOfMemoryError异常后面会跟着不同的值，对应不同的区域发生oom 堆发生oom1Exception in thread &quot;main&quot; java.lang.OutOfMemoryError: Java heap space 使用 参数 以下参数，可以在发生oom时保存下来堆栈信">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://www.lmcpf.com/2019/04/04/EDAS学习总结/"/>
+  <link rel="canonical" href="http://www.lmcpf.com/2018/10/29/Java发生OOM怎么办？/"/>
 
 
 
 
 
-  <title>EDAS学习总结 | CaoPengFei's blog</title>
+  <title>Java发生OOM怎么办 | CaoPengFei's blog</title>
   
 
 
@@ -263,7 +263,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.lmcpf.com/2019/04/04/EDAS学习总结/">
+    <link itemprop="mainEntityOfPage" href="http://www.lmcpf.com/2018/10/29/Java发生OOM怎么办？/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="CaoPengFei">
@@ -280,7 +280,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">EDAS学习总结</h1>
+          <h1 class="post-title" itemprop="name headline">Java发生OOM怎么办</h1>
         
 
         <div class="post-meta">
@@ -292,8 +292,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-04T17:28:23+08:00">
-                2019-04-04
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-29T19:30:24+08:00">
+                2018-10-29
               </time>
             
 
@@ -315,8 +315,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/微服务/" itemprop="url" rel="index">
-                    <span itemprop="name">微服务</span>
+                  <a href="/categories/javaBase/" itemprop="url" rel="index">
+                    <span itemprop="name">javaBase</span>
                   </a>
                 </span>
 
@@ -332,7 +332,7 @@
 
           
           
-             <span id="/2019/04/04/EDAS学习总结/" class="leancloud_visitors" data-flag-title="EDAS学习总结">
+             <span id="/2018/10/29/Java发生OOM怎么办？/" class="leancloud_visitors" data-flag-title="Java发生OOM怎么办">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -363,37 +363,20 @@
       
 
       
-        <h1 id="EDAS学习总结"><a href="#EDAS学习总结" class="headerlink" title="EDAS学习总结"></a>EDAS学习总结</h1><p>edas是一个企业级的分布式应用服务。它以阿里巴巴中间件多款成熟的分布式产品作为核心组件，提供企业级分布式高可用服务。</p>
-<p>他现在全面支持：spring-cloud   dobble  hsf</p>
-<p>我的理解他是一个去中心化的一个服务，任何一个服务都可以是服务提供者，也可以是服务调用者。</p>
-<p>edas可以分成三个部分。服务提供者、配置中心、服务调用者。他的工作流程分为以下几步：</p>
+        <h1 id="Java发生OOM怎么办？"><a href="#Java发生OOM怎么办？" class="headerlink" title="Java发生OOM怎么办？"></a>Java发生OOM怎么办？</h1><p>当java中出现了oom，首先应该定位是那个区域发生了oom。java.lang.OutOfMemoryError异常后面会跟着不同的值，对应不同的区域发生oom</p>
+<h2 id="堆发生oom"><a href="#堆发生oom" class="headerlink" title="堆发生oom"></a>堆发生oom</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Exception in thread <span class="string">"main"</span> java.lang.OutOfMemoryError: Java heap space</span><br></pre></td></tr></table></figure>
+<p>使用 参数 以下参数，可以在发生oom时保存下来堆栈信息，生成一个hprof文件。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">+HeapDumpOnOutOfMemoryError</span><br></pre></td></tr></table></figure>
+<p>使用快照分析器，Java自带jvisualvm，或者其他插件，可以查看到泄露的对象到GC Root的引用链。那就可以定位到内存泄漏的位置，然后去解决问题。</p>
+<p>如果不是因为内存泄漏，确实是内存不够用，那可以考虑增加堆内存的大小。或者检查下代码中对象生命周期过长，持有状态时间过长的情况，尝试减小内存消耗。</p>
+<h2 id="虚拟栈和本地方法栈oom"><a href="#虚拟栈和本地方法栈oom" class="headerlink" title="虚拟栈和本地方法栈oom"></a>虚拟栈和本地方法栈oom</h2><p>java虚拟机定义了两种情况会在栈发生oom</p>
 <ol>
-<li>服务提供者在配置中心注册服务，会告诉配置中心自己的ip列表，以及能提供对应的功能</li>
-<li>配置中心就得到了一个功能可以通过访问哪些Ip列表获取结果</li>
-<li>服务调用者到配置中心获取自己想要的功能，检测到之后会跟服务提供者建立一个长连接。这个时候如果配置中心关掉，实际上是不影响服务者与调用者之间的工作的，只不过新来的服务不能启动而已，原来的服务还是能够正常使用的。</li>
+<li>线程请求的栈深度大于虚拟机允许的最大深度(本地以java 8为准，深度达到10000时发生了异常)，一般不会出现问题</li>
+<li>虚拟机在扩展栈时，无法申请到内存空间。</li>
 </ol>
-<h2 id="edas提供了很多好用的功能"><a href="#edas提供了很多好用的功能" class="headerlink" title="edas提供了很多好用的功能"></a>edas提供了很多好用的功能</h2><h3 id="子账户权限限制"><a href="#子账户权限限制" class="headerlink" title="子账户权限限制"></a>子账户权限限制</h3><p>一个集群上有很多模块，每个模块一般对应两个应用一个controller层，一个service层。开发人员有时需要查看云服务器的运行状态，有时还要获取日志。但是又不能让每个开发看到全部的模块，edas提供了一个父子账户的功能，付款账户为父账户可以绑定一个父账户，子账户可以设置很多，新建的子账户是没有资源权限和应用权限的。父账户可以为子账户指定其查看的资源和权限</p>
-<h3 id="日志监控"><a href="#日志监控" class="headerlink" title="日志监控"></a>日志监控</h3><p>edas主要分为3个可观察的日志。</p>
-<ol>
-<li>注册中心的日志，一个新的服务被注册到edas中时，edas会生成服务创建的日志</li>
-<li>tomcat日志，edas集成了tomcat，启动项目的日志也在edas中可见</li>
-<li>hsf日志，在项目运行期间出现了error或者exception，日志信息会在hsf中找到。</li>
-</ol>
-<p>当我们开发时，如果遇到该服务找不到，就可以按照这个原因去查找，可能该服务就没有注册到edas中，或者消费者配置的提供者信息没有匹配上就肯定找不到对应的服务</p>
-<p>如果自己服务在线上出了异常可以去hsf日志中去观察java抛出的异常信息。</p>
-<p>当然这个日志是非常庞大的数据量，为了性能，edas本身默认采集的是10%或者50%的日志比例，当然这个比例是可以配置的，也就是说线上出错时，可能该日志就是被漏掉了，可以设置成100%这样所有的日志都会采集</p>
-<p>这个日志采集也可以按照某种特定格式来输出，他会拥有元数据为<strong>arms</strong>提供数据支持，arms可以采集这些日志然后形成大数据的数据分析。个人感觉这个<strong>arms</strong>就是一套已经开发好的BI项目，大数据项目。</p>
-<h3 id="EDAS服务回滚"><a href="#EDAS服务回滚" class="headerlink" title="EDAS服务回滚"></a>EDAS服务回滚</h3><p>项目上线后，经常会出现测试没测到，线上服务异常情况。edas可以马上回滚到之前发布的版本，非常的方便</p>
-<h3 id="限流降级"><a href="#限流降级" class="headerlink" title="限流降级"></a>限流降级</h3><ol>
-<li>限流为了保护服务的安全性，edas提供了限流降级的功能。限流可以针对某一个应用甚至某一个接口，以实现对服务的流量限制，确保服务稳定运行。可以从qps进行规则过滤</li>
-<li>降级，一个服务可能会依赖其他服务，比如A -&gt; B 就是A调用B服务的一个功能，B服务的这个功能需要依赖C服务，B服务的流量级别高于C服务的流量级别，这个时候A调用B服务会采用C服务的流量级别从而确保整个流程的稳定。</li>
-</ol>
-<h3 id="性能调优"><a href="#性能调优" class="headerlink" title="性能调优"></a>性能调优</h3><p>edas运行一段时间后，很可能会速度变慢。变慢的原因可能有几种</p>
-<ol>
-<li>服务内容业务缓慢，这个需要自己就去调整业务代码，更产品确认，提升性能</li>
-<li>edas运行过久，日志数量庞大导致性能变低。可以直接采用动态扩容，买更多的机器，肯定效率提升了，也可以重启edas，日志就被清除。也可以提高提升性能</li>
-<li>还有就是jvm堆、栈、持久代等内存大小的设置，防止Jvm占用内存过高，系统自动杀死jvm进程现象具体配置百度一下</li>
-</ol>
+<p>每个线程都有独有的栈空间，所以在多线程的情况下，也是会发生oom的。如果时是因为多线程导致栈oom。可以采取减少最大堆内存，和减小栈的容量来解决。</p>
+<h2 id="方法区和运行常量区oom"><a href="#方法区和运行常量区oom" class="headerlink" title="方法区和运行常量区oom"></a>方法区和运行常量区oom</h2><p>此类异常也是非常常见的，尤其时现在字节码技术的使用。cglib等。动态生成大量的class文件，需要特别注意类的回收情况</p>
+<h2 id="本机内存oom"><a href="#本机内存oom" class="headerlink" title="本机内存oom"></a>本机内存oom</h2><p>java当中有一些unsafe的包下面的类，是直接在本机中申请内存的。这类异常明显的特正时Heap Dump文件中不会有明显的异常，并且hprof文件很小。那可以考虑是因为本机内存溢出。</p>
 
       
     </div>
@@ -448,7 +431,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/edas/" rel="tag"># edas</a>
+            <a href="/tags/java基础/" rel="tag"># java基础</a>
+          
+            <a href="/tags/oom/" rel="tag"># oom</a>
           
         </div>
       
@@ -461,8 +446,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/04/03/title mybatis 执行插入语句事务未提交就执行update语句无效/" rel="next" title="mybatis 执行插入语句事务未提交就执行update语句无效">
-                <i class="fa fa-chevron-left"></i> mybatis 执行插入语句事务未提交就执行update语句无效
+              <a href="/2018/10/29/hashSet去重/" rel="next" title="hashSet去重">
+                <i class="fa fa-chevron-left"></i> hashSet去重
               </a>
             
           </div>
@@ -471,8 +456,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/04/08/推荐算法/" rel="prev" title="推荐算法">
-                推荐算法 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/10/29/Java中常见的Exception/" rel="prev" title="Java中常见的Exception">
+                Java中常见的Exception <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -576,7 +561,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">76</span>
+                  <span class="site-state-item-count">78</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -598,7 +583,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">84</span>
+                  <span class="site-state-item-count">85</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -631,7 +616,7 @@ var jiathis_config={
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#EDAS学习总结"><span class="nav-number">1.</span> <span class="nav-text">EDAS学习总结</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#edas提供了很多好用的功能"><span class="nav-number">1.1.</span> <span class="nav-text">edas提供了很多好用的功能</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#子账户权限限制"><span class="nav-number">1.1.1.</span> <span class="nav-text">子账户权限限制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#日志监控"><span class="nav-number">1.1.2.</span> <span class="nav-text">日志监控</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#EDAS服务回滚"><span class="nav-number">1.1.3.</span> <span class="nav-text">EDAS服务回滚</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#限流降级"><span class="nav-number">1.1.4.</span> <span class="nav-text">限流降级</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#性能调优"><span class="nav-number">1.1.5.</span> <span class="nav-text">性能调优</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Java发生OOM怎么办？"><span class="nav-number">1.</span> <span class="nav-text">Java发生OOM怎么办？</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#堆发生oom"><span class="nav-number">1.1.</span> <span class="nav-text">堆发生oom</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#虚拟栈和本地方法栈oom"><span class="nav-number">1.2.</span> <span class="nav-text">虚拟栈和本地方法栈oom</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方法区和运行常量区oom"><span class="nav-number">1.3.</span> <span class="nav-text">方法区和运行常量区oom</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#本机内存oom"><span class="nav-number">1.4.</span> <span class="nav-text">本机内存oom</span></a></li></ol></li></ol></div>
             
 
           </div>

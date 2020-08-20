@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="synchronized和volatile两个关键字的区别synchronized同步锁这是线程同步锁，确保代码中只有一个线程能修改。 volatile共享变量修饰词，使用volatile修饰过后的变量，会拥有可见性，即在一个线程将该值修改后，立刻写入到主存中，其他的线程读取就能读到修改后的值。volatile修饰过后，可以避免代码的重排序问题 两者的区别synchronized修饰过后的会防止多">
+<meta name="description" content="synchronized和volatile两个关键字的区别synchronized同步锁这是线程同步锁，确保代码中只有一个线程能修改。 volatile共享变量修饰词，使用volatile修饰过后的变量，会拥有可见性，即在一个线程将该值修改后，立刻写入到主存中，其他的线程读取就能读到修改后的值。volatile修饰过后，可以避免代码的重排序问题（重排序，指令重排序，把代码编译成指令后，cpu不保证">
 <meta name="keywords" content="synchronized,volatile">
 <meta property="og:type" content="article">
 <meta property="og:title" content="synchronized和volatile两个关键字的区别">
 <meta property="og:url" content="http://www.lmcpf.com/2018/10/29/synchronized和volatile两个关键字的区别/index.html">
 <meta property="og:site_name" content="CaoPengFei&#39;s blog">
-<meta property="og:description" content="synchronized和volatile两个关键字的区别synchronized同步锁这是线程同步锁，确保代码中只有一个线程能修改。 volatile共享变量修饰词，使用volatile修饰过后的变量，会拥有可见性，即在一个线程将该值修改后，立刻写入到主存中，其他的线程读取就能读到修改后的值。volatile修饰过后，可以避免代码的重排序问题 两者的区别synchronized修饰过后的会防止多">
+<meta property="og:description" content="synchronized和volatile两个关键字的区别synchronized同步锁这是线程同步锁，确保代码中只有一个线程能修改。 volatile共享变量修饰词，使用volatile修饰过后的变量，会拥有可见性，即在一个线程将该值修改后，立刻写入到主存中，其他的线程读取就能读到修改后的值。volatile修饰过后，可以避免代码的重排序问题（重排序，指令重排序，把代码编译成指令后，cpu不保证">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-07-02T03:36:27.335Z">
+<meta property="og:updated_time" content="2020-07-13T01:28:31.610Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="synchronized和volatile两个关键字的区别">
-<meta name="twitter:description" content="synchronized和volatile两个关键字的区别synchronized同步锁这是线程同步锁，确保代码中只有一个线程能修改。 volatile共享变量修饰词，使用volatile修饰过后的变量，会拥有可见性，即在一个线程将该值修改后，立刻写入到主存中，其他的线程读取就能读到修改后的值。volatile修饰过后，可以避免代码的重排序问题 两者的区别synchronized修饰过后的会防止多">
+<meta name="twitter:description" content="synchronized和volatile两个关键字的区别synchronized同步锁这是线程同步锁，确保代码中只有一个线程能修改。 volatile共享变量修饰词，使用volatile修饰过后的变量，会拥有可见性，即在一个线程将该值修改后，立刻写入到主存中，其他的线程读取就能读到修改后的值。volatile修饰过后，可以避免代码的重排序问题（重排序，指令重排序，把代码编译成指令后，cpu不保证">
 
 
 
@@ -364,7 +364,7 @@
 
       
         <h1 id="synchronized和volatile两个关键字的区别"><a href="#synchronized和volatile两个关键字的区别" class="headerlink" title="synchronized和volatile两个关键字的区别"></a>synchronized和volatile两个关键字的区别</h1><h2 id="synchronized同步锁"><a href="#synchronized同步锁" class="headerlink" title="synchronized同步锁"></a>synchronized同步锁</h2><p>这是线程同步锁，确保代码中只有一个线程能修改。</p>
-<h2 id="volatile"><a href="#volatile" class="headerlink" title="volatile"></a>volatile</h2><p>共享变量修饰词，使用volatile修饰过后的变量，会拥有可见性，即在一个线程将该值修改后，立刻写入到主存中，其他的线程读取就能读到修改后的值。<br>volatile修饰过后，可以避免代码的重排序问题</p>
+<h2 id="volatile"><a href="#volatile" class="headerlink" title="volatile"></a>volatile</h2><p>共享变量修饰词，使用volatile修饰过后的变量，会拥有可见性，即在一个线程将该值修改后，立刻写入到主存中，其他的线程读取就能读到修改后的值。<br>volatile修饰过后，可以避免代码的重排序问题（重排序，指令重排序，把代码编译成指令后，cpu不保证代码的顺序运行，只保证代码准确。代码可能将不同的代码交给不同的电路去执行，会拆分整体的代码结构）。重排序不会影响单线程，但是会影响多线程的准确性。实现volatile的原理时，在生成字节码时加入了lock操作，将修改同步给内存，意味着所有的之前的操作都已经完成，相当于增加了一个内存屏障。</p>
 <h2 id="两者的区别"><a href="#两者的区别" class="headerlink" title="两者的区别"></a>两者的区别</h2><p>synchronized修饰过后的会防止多线程执行同一段代码，他的效率会很低。在某种情况下可以使用volatile修饰，他的效率会高一些，但是他不能解决代码的原子性，如果变量的新值要依赖于旧值这个时候volatile就不能用了，如果不依赖则可以使用</p>
 <p>多线程的问题：<br>1.原子性：对基本数据类型的读取和赋值都是原子性操作<br>2.可见性：线程1中修改了共享变量的数据后，在线程2中可以立刻读取到线程1的结果<br>3.有序性：当代码中的指令没有相互依赖时，他们的执行顺序可能会发生改变。但是不影响单进程程序的执行，却会影响到多线程并发执行的正确性。</p>
 
@@ -551,7 +551,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">76</span>
+                  <span class="site-state-item-count">78</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -573,7 +573,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">84</span>
+                  <span class="site-state-item-count">85</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

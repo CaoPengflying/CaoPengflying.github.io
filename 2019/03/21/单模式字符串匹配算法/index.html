@@ -79,23 +79,23 @@
 
 
 
-<meta name="description" content="学习编程过程中，都会编程一个问题，就是在一个字符串中，找到子串是否存在如果存在返回下标。 其实这就是单模式字符串匹配。这里有很多算法。比如BF算法、RK算法、BM算法和KMP算法。 ##BF算法该算法也叫做暴力匹配算法，这是最常见的算法。首先声明几个关键字，主串 子串。比如在字符串A中查找字符串B。则A为主串、B为子串。BF算法的实现思路：&amp;emsp;&amp;emsp; 从主串的下标0开始依次匹配子串，">
+<meta name="description" content="学习编程过程中，都会编程一个问题，就是在一个字符串中，找到子串是否存在如果存在返回下标。 其实这就是单模式字符串匹配。这里有很多算法。比如BF算法、RK算法、BM算法和KMP算法。 BF算法该算法也叫做暴力匹配算法，这是最常见的算法。首先声明几个关键字，主串 子串。比如在字符串A中查找字符串B。则A为主串、B为子串。BF算法的实现思路：&amp;emsp;&amp;emsp; 从主串的下标0开始依次匹配子串，如果">
 <meta name="keywords" content="Java Html Css JavaScript Linux Mysql">
 <meta property="og:type" content="article">
 <meta property="og:title" content="单模式字符串匹配算法">
 <meta property="og:url" content="http://www.lmcpf.com/2019/03/21/单模式字符串匹配算法/index.html">
 <meta property="og:site_name" content="CaoPengFei&#39;s blog">
-<meta property="og:description" content="学习编程过程中，都会编程一个问题，就是在一个字符串中，找到子串是否存在如果存在返回下标。 其实这就是单模式字符串匹配。这里有很多算法。比如BF算法、RK算法、BM算法和KMP算法。 ##BF算法该算法也叫做暴力匹配算法，这是最常见的算法。首先声明几个关键字，主串 子串。比如在字符串A中查找字符串B。则A为主串、B为子串。BF算法的实现思路：&amp;emsp;&amp;emsp; 从主串的下标0开始依次匹配子串，">
+<meta property="og:description" content="学习编程过程中，都会编程一个问题，就是在一个字符串中，找到子串是否存在如果存在返回下标。 其实这就是单模式字符串匹配。这里有很多算法。比如BF算法、RK算法、BM算法和KMP算法。 BF算法该算法也叫做暴力匹配算法，这是最常见的算法。首先声明几个关键字，主串 子串。比如在字符串A中查找字符串B。则A为主串、B为子串。BF算法的实现思路：&amp;emsp;&amp;emsp; 从主串的下标0开始依次匹配子串，如果">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://i.imgur.com/gfjKPsY.png">
 <meta property="og:image" content="https://i.imgur.com/asf5kNR.png">
 <meta property="og:image" content="https://i.imgur.com/blC6lkt.png">
 <meta property="og:image" content="https://i.imgur.com/yMIsGby.png">
 <meta property="og:image" content="https://i.imgur.com/aytDrNQ.png">
-<meta property="og:updated_time" content="2019-03-21T10:58:56.000Z">
+<meta property="og:updated_time" content="2020-07-13T01:30:03.687Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="单模式字符串匹配算法">
-<meta name="twitter:description" content="学习编程过程中，都会编程一个问题，就是在一个字符串中，找到子串是否存在如果存在返回下标。 其实这就是单模式字符串匹配。这里有很多算法。比如BF算法、RK算法、BM算法和KMP算法。 ##BF算法该算法也叫做暴力匹配算法，这是最常见的算法。首先声明几个关键字，主串 子串。比如在字符串A中查找字符串B。则A为主串、B为子串。BF算法的实现思路：&amp;emsp;&amp;emsp; 从主串的下标0开始依次匹配子串，">
+<meta name="twitter:description" content="学习编程过程中，都会编程一个问题，就是在一个字符串中，找到子串是否存在如果存在返回下标。 其实这就是单模式字符串匹配。这里有很多算法。比如BF算法、RK算法、BM算法和KMP算法。 BF算法该算法也叫做暴力匹配算法，这是最常见的算法。首先声明几个关键字，主串 子串。比如在字符串A中查找字符串B。则A为主串、B为子串。BF算法的实现思路：&amp;emsp;&amp;emsp; 从主串的下标0开始依次匹配子串，如果">
 <meta name="twitter:image" content="https://i.imgur.com/gfjKPsY.png">
 
 
@@ -349,13 +349,12 @@
       
         <p>学习编程过程中，都会编程一个问题，就是在一个字符串中，找到子串是否存在如果存在返回下标。</p>
 <p>其实这就是单模式字符串匹配。这里有很多算法。比如BF算法、RK算法、BM算法和KMP算法。</p>
-<p>##BF算法<br>该算法也叫做暴力匹配算法，这是最常见的算法。<br>首先声明几个关键字，主串 子串。比如在字符串A中查找字符串B。则A为主串、B为子串。<br>BF算法的实现思路：<br>&emsp;&emsp; 从主串的下标0开始依次匹配子串，如果有存在不相同的字符则从主串的下一个下标，继续重新匹配字符串B。</p>
+<h2 id="BF算法"><a href="#BF算法" class="headerlink" title="BF算法"></a>BF算法</h2><p>该算法也叫做暴力匹配算法，这是最常见的算法。<br>首先声明几个关键字，主串 子串。比如在字符串A中查找字符串B。则A为主串、B为子串。<br>BF算法的实现思路：<br>&emsp;&emsp; 从主串的下标0开始依次匹配子串，如果有存在不相同的字符则从主串的下一个下标，继续重新匹配字符串B。</p>
 <p><img src="https://i.imgur.com/gfjKPsY.png" alt=""><br>这样依次去查找，假设主串的长度是n, 子串的长度是m。那么这个算法的时间复杂度就是O(n×m)。遍历主串为(n-m)次，每次遍历又要经历m次比较。实际耗费的时间就是（n-m）× m 可以写成 O(n×m)</p>
-<p>##RK算法<br>我们每次去依次比较子串中的字符，会非常的耗时，RK算法利用了hash算法。每一个字符串对应唯一一个键。也就是说在查找前将子串的hash值求出来，然后依次求出主串的hash值，因为这个值是个整数，直接比较其大小就可以判断是否两个字符串相同。<br>他的时间复杂度是生成hash值要成n-m+1次， 然后判断是否相同用了（n-m）次。<br>总共的时间就是O(n-m+1+n-m) 也就是O(n)次。这种思路可以经常采用。利用hash算法查找能够很快的提高效率。</p>
-<p>##BM算法</p>
-<p>BM是对BF算法的优化，BF算法去查找下一个是否相符合是在主串的下标+1的方式。但是如果是我们人查找的话并不会每次都移动1，而会根据情况来移动。如图所示<br><img src="https://i.imgur.com/asf5kNR.png" alt=""><br>移动的原理是，将子串的最后一位开是比较，如果最后一位不相同，我们将这个子串称为坏字符。并且主串中的字符在子串中没有出现，则子串直接移动到主串的i+m+1位置。<br>但如果包含了，就不能移动到坏字符之后了，不然可能会错过符合的字符如图<br><img src="https://i.imgur.com/blC6lkt.png" alt=""><br>那该怎么移动呢，把坏字符对应的子串中的字符下标记作 si，把重复出现的坏字符下标记作xi,如果没出现就为-1。移动的位置就是si-xi。<br>但是这样可能出现的情况是负数。这个时候又引入一个新的规则，叫做好后缀规则。<br>他的原理是当找到了坏字符之后，坏字符后面的字符串叫做好后缀，可以然后再子串中找出相同的后缀的字符，并使用他们的位置对齐。如图：</p>
+<h2 id="RK算法"><a href="#RK算法" class="headerlink" title="RK算法"></a>RK算法</h2><p>我们每次去依次比较子串中的字符，会非常的耗时，RK算法利用了hash算法。每一个字符串对应唯一一个键。也就是说在查找前将子串的hash值求出来，然后依次求出主串的hash值，因为这个值是个整数，直接比较其大小就可以判断是否两个字符串相同。<br>他的时间复杂度是生成hash值要成n-m+1次， 然后判断是否相同用了（n-m）次。<br>总共的时间就是O(n-m+1+n-m) 也就是O(n)次。这种思路可以经常采用。利用hash算法查找能够很快的提高效率。</p>
+<h2 id="BM算法"><a href="#BM算法" class="headerlink" title="BM算法"></a>BM算法</h2><p>BM是对BF算法的优化，BF算法去查找下一个是否相符合是在主串的下标+1的方式。但是如果是我们人查找的话并不会每次都移动1，而会根据情况来移动。如图所示<br><img src="https://i.imgur.com/asf5kNR.png" alt=""><br>移动的原理是，将子串的最后一位开是比较，如果最后一位不相同，我们将这个子串称为坏字符。并且主串中的字符在子串中没有出现，则子串直接移动到主串的i+m+1位置。<br>但如果包含了，就不能移动到坏字符之后了，不然可能会错过符合的字符如图<br><img src="https://i.imgur.com/blC6lkt.png" alt=""><br>那该怎么移动呢，把坏字符对应的子串中的字符下标记作 si，把重复出现的坏字符下标记作xi,如果没出现就为-1。移动的位置就是si-xi。<br>但是这样可能出现的情况是负数。这个时候又引入一个新的规则，叫做好后缀规则。<br>他的原理是当找到了坏字符之后，坏字符后面的字符串叫做好后缀，可以然后再子串中找出相同的后缀的字符，并使用他们的位置对齐。如图：</p>
 <p><img src="https://i.imgur.com/yMIsGby.png" alt=""></p>
-<p>##KMP算法<br>KMP和BM算法有点相似，KMP算法有一个新概念叫做好前缀，结合坏字符和好前缀，找出移动的位置。这里运用了一个很好的思维，就是提前将子串的所有可能的好前缀全部求出来，存到数组中。如图<br><img src="https://i.imgur.com/aytDrNQ.png" alt=""><br>这个移动的位置其实是可以提前算出的，假设已经存好了好前缀移动的次数，那么这个KMp算法就很好实现了。KMP算法的关键就是给你一个子串，如何算出每个子串各个好前缀需要移动的次数。</p>
+<h2 id="KMP算法"><a href="#KMP算法" class="headerlink" title="KMP算法"></a>KMP算法</h2><p>KMP和BM算法有点相似，KMP算法有一个新概念叫做好前缀，结合坏字符和好前缀，找出移动的位置。这里运用了一个很好的思维，就是提前将子串的所有可能的好前缀全部求出来，存到数组中。如图<br><img src="https://i.imgur.com/aytDrNQ.png" alt=""><br>这个移动的位置其实是可以提前算出的，假设已经存好了好前缀移动的次数，那么这个KMp算法就很好实现了。KMP算法的关键就是给你一个子串，如何算出每个子串各个好前缀需要移动的次数。</p>
 
       
     </div>
@@ -417,8 +416,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/03/20/tk.mybatis.mapper.provider.base.BaseInsertProvider.init()/" rel="next" title="tk.mybatis.mapper.provider.base.BaseInsertProvider.<init>()">
-                <i class="fa fa-chevron-left"></i> tk.mybatis.mapper.provider.base.BaseInsertProvider.<init>()
+              <a href="/2019/03/21/背包01问题/" rel="next" title="背包01问题">
+                <i class="fa fa-chevron-left"></i> 背包01问题
               </a>
             
           </div>
@@ -427,8 +426,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/03/21/背包01问题/" rel="prev" title="背包01问题">
-                背包01问题 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/04/03/title mybatis 执行插入语句事务未提交就执行update语句无效/" rel="prev" title="mybatis 执行插入语句事务未提交就执行update语句无效">
+                mybatis 执行插入语句事务未提交就执行update语句无效 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -507,8 +506,17 @@ var jiathis_config={
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -523,7 +531,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">76</span>
+                  <span class="site-state-item-count">78</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -545,7 +553,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">84</span>
+                  <span class="site-state-item-count">85</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -568,6 +576,22 @@ var jiathis_config={
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#BF算法"><span class="nav-number">1.</span> <span class="nav-text">BF算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RK算法"><span class="nav-number">2.</span> <span class="nav-text">RK算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BM算法"><span class="nav-number">3.</span> <span class="nav-text">BM算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#KMP算法"><span class="nav-number">4.</span> <span class="nav-text">KMP算法</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
