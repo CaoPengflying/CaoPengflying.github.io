@@ -83,8 +83,8 @@
 <meta name="keywords" content="hadoop,mysql,hive">
 <meta property="og:type" content="article">
 <meta property="og:title" content="hive 常见错误">
-<meta property="og:url" content="http://www.lmcpf.com/2018/06/10/hive-常见错误/index.html">
-<meta property="og:site_name" content="CaoPengFei&#39;s blog">
+<meta property="og:url" content="https://caopengflying.gitee.io/blog/2018/06/10/hive-常见错误/index.html">
+<meta property="og:site_name" content="caopengflying&#39;s blog">
 <meta property="og:description" content="执行hive cli报以下异常  1234567891011Exception in thread &amp;quot;main&amp;quot; java.lang.RuntimeException: java.lang.RuntimeException: Unable to instantiate org.apache.hadoop.hive.ql.metadata.SessionHiveMetaStor">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://i.imgur.com/3E78E6j.png">
@@ -122,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="http://www.lmcpf.com/2018/06/10/hive-常见错误/"/>
+  <link rel="canonical" href="https://caopengflying.gitee.io/blog/2018/06/10/hive-常见错误/"/>
 
 
 
 
 
-  <title>hive 常见错误 | CaoPengFei's blog</title>
+  <title>hive 常见错误 | caopengflying's blog</title>
   
 
 
@@ -158,12 +158,12 @@
     <div class="custom-logo-site-title">
       <a href="/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">CaoPengFei's blog</span>
+        <span class="site-title">caopengflying's blog</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
       
-        <p class="site-subtitle">前车之鉴，后车之师。分享是一种乐趣！！</p>
+        <p class="site-subtitle">编程，学的是思维，写的是人生。</p>
       
   </div>
 
@@ -265,16 +265,16 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.lmcpf.com/2018/06/10/hive-常见错误/">
+    <link itemprop="mainEntityOfPage" href="https://caopengflying.gitee.io/blog/2018/06/10/hive-常见错误/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="CaoPengFei">
+      <meta itemprop="name" content="caopengflying">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CaoPengFei's blog">
+      <meta itemprop="name" content="caopengflying's blog">
     </span>
 
     
@@ -369,10 +369,10 @@
 <li>执行hive cli报以下异常</li>
 </ol>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Exception in thread &quot;main&quot; java.lang.RuntimeException: java.lang.RuntimeException: Unable to instantiate org.apache.hadoop.hive.ql.metadata.SessionHiveMetaStoreClient</span><br><span class="line">        at org.apache.hadoop.hive.ql.session.SessionState.start(SessionState.java:444)</span><br><span class="line">        at org.apache.hadoop.hive.cli.CliDriver.run(CliDriver.java:672)</span><br><span class="line">        at org.apache.hadoop.hive.cli.CliDriver.main(CliDriver.java:616)</span><br><span class="line">        at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)</span><br><span class="line">        at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)</span><br><span class="line">        at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)</span><br><span class="line">        at java.lang.reflect.Method.invoke(Method.java:597)</span><br><span class="line">        at org.apache.hadoop.util.RunJar.run(RunJar.java:221)</span><br><span class="line">        at org.apache.hadoop.util.RunJar.main(RunJar.java:136)</span><br><span class="line">Caused by: java.lang.RuntimeException: Unable to instantiate org.apache.hadoop.hive.ql.metadata.SessionHiveMetaStoreClient</span><br></pre></td></tr></table></figure>
-<p>原因：在使用默认的metadata的derby机制时，打开了一个客户端后再次连接就会报该异常。<br>解决办法，将 Metastore Server杀死 然后再重新执行。不过建议使用Mysql代替derby机制。<a href="http://www.lmcpf.com/2018/8/10/hive元数据/">详情见博客</a></p>
+<p>原因：在使用默认的metadata的derby机制时，打开了一个客户端后再次连接就会报该异常。<br>解决办法，将 Metastore Server杀死 然后再重新执行。不过建议使用Mysql代替derby机制。<a href="http://www.lmcpf.com/2018/8/10/hive元数据/" target="_blank" rel="noopener">详情见博客</a></p>
 <p>2.使用udf函数打包异常<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Failed to execute goal on project hive-exec: </span><br><span class="line">Could not resolve dependencies for project org.apache.hive:hive-exec:jar:2.3.0: </span><br><span class="line">Could not find </span><br><span class="line">artifact org.pentaho:pentaho-aggdesigner-algorithm:jar:5.1.5-jhyde </span><br><span class="line">in alimaven (http://maven.aliyun.com/nexus/content/groups/public/) -&gt; [Help 1]</span><br></pre></td></tr></table></figure></p>
 <p>原因：jhyde-5.1.5无法下载。<br>解决办法：需要手动下载<a href="https://public.nexus.pentaho.org/content/groups/omni/org/pentaho/pentaho-aggdesigner-algorithm/5.1.5-jhyde/" target="_blank" rel="noopener">下载地址</a><br>选择如图<br><img src="https://i.imgur.com/3E78E6j.png" alt=""></p>
-<p>下载之后，使用本地将该包导入到maven仓库。<a href="http://www.lmcpf.com/2018/10/11/手动添加jar到maven本地仓库/#more">详情见博客</a></p>
+<p>下载之后，使用本地将该包导入到maven仓库。<a href="http://www.lmcpf.com/2018/10/11/手动添加jar到maven本地仓库/#more" target="_blank" rel="noopener">详情见博客</a></p>
 
       
     </div>
@@ -401,14 +401,14 @@
 
     
       <div id="wechat" style="display: inline-block">
-        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="CaoPengFei 微信支付"/>
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="caopengflying 微信支付"/>
         <p>微信支付</p>
       </div>
     
 
     
       <div id="alipay" style="display: inline-block">
-        <img id="alipay_qr" src="/images/alipay.jpg" alt="CaoPengFei 支付宝"/>
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="caopengflying 支付宝"/>
         <p>支付宝</p>
       </div>
     
@@ -539,7 +539,7 @@ var jiathis_config={
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
-              <p class="site-author-name" itemprop="name">CaoPengFei</p>
+              <p class="site-author-name" itemprop="name">caopengflying</p>
               <p class="site-description motion-element" itemprop="description">CaoPengFei的技术博客</p>
           </div>
 
@@ -613,7 +613,7 @@ var jiathis_config={
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">CaoPengFei</span>
+  <span class="author" itemprop="copyrightHolder">caopengflying</span>
 
   
 </div>
