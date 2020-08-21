@@ -83,7 +83,7 @@
 <meta name="keywords" content="hive udf,udf函数步骤">
 <meta property="og:type" content="article">
 <meta property="og:title" content="hive实现UDF函数">
-<meta property="og:url" content="https://caopengflying.gitee.io/2018/06/11/hive实现UDF函数/index.html">
+<meta property="og:url" content="http://www.lmcpf.com/2018/06/11/hive实现UDF函数/index.html">
 <meta property="og:site_name" content="caopengflying&#39;s blog">
 <meta property="og:description" content="1.导包  -》 maven依赖123456789101112131415&amp;lt;dependency&amp;gt;	&amp;lt;groupId&amp;gt;org.apache.hive&amp;lt;/groupId&amp;gt;	&amp;lt;artifactId&amp;gt;hive-service&amp;lt;/artifactId&amp;gt;	&amp;lt;version&amp;gt;$&amp;#123;hive.version&amp;#125;&amp;lt;/ve">
 <meta property="og:locale" content="zh-Hans">
@@ -120,7 +120,7 @@
 
 
 
-  <link rel="canonical" href="https://caopengflying.gitee.io/2018/06/11/hive实现UDF函数/"/>
+  <link rel="canonical" href="http://www.lmcpf.com/2018/06/11/hive实现UDF函数/"/>
 
 
 
@@ -263,7 +263,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://caopengflying.gitee.io/2018/06/11/hive实现UDF函数/">
+    <link itemprop="mainEntityOfPage" href="http://www.lmcpf.com/2018/06/11/hive实现UDF函数/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="caopengflying">
@@ -364,7 +364,7 @@
 
       
         <p>1.导包  -》 maven依赖<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">	&lt;groupId&gt;org.apache.hive&lt;/groupId&gt;</span><br><span class="line">	&lt;artifactId&gt;hive-service&lt;/artifactId&gt;</span><br><span class="line">	&lt;version&gt;$&#123;hive.version&#125;&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">	&lt;groupId&gt;org.apache.hive&lt;/groupId&gt;</span><br><span class="line">	&lt;artifactId&gt;hive-exec&lt;/artifactId&gt;</span><br><span class="line">	&lt;version&gt;$&#123;hive.version&#125;&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">	&lt;groupId&gt;org.apache.hive&lt;/groupId&gt;</span><br><span class="line">	&lt;artifactId&gt;hive-jdbc&lt;/artifactId&gt;</span><br><span class="line">	&lt;version&gt;$&#123;hive.version&#125;&lt;/version&gt;</span><br><span class="line"> &lt;/dependency&gt;</span><br></pre></td></tr></table></figure></p>
-<p><em>在这里有个坑，就是有一个包5.1.5-jhyde，不能导入成功。需要手动的下载。<a href="http://www.lmcpf.com/2018/06/10/hive-常见错误/#more" target="_blank" rel="noopener">解决办法</a></em></p>
+<p><em>在这里有个坑，就是有一个包5.1.5-jhyde，不能导入成功。需要手动的下载。<a href="http://www.lmcpf.com/2018/06/10/hive-常见错误/#more">解决办法</a></em></p>
 <p>2.编写utf类，文档声明，所有的udf必须从UDF这里继承并且还要实现里面的一个或多个方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;p&gt;</span><br><span class="line"> * Requirements for all classes extending this UDF are:</span><br><span class="line"> * &lt;ul&gt;</span><br><span class="line"> * &lt;li&gt;Implement one or more methods named &#123;@code evaluate&#125; which will be called by Hive (the exact</span><br><span class="line"> * way in which Hive resolves the method to call can be configured by setting a custom &#123;@link</span><br><span class="line"> * UDFMethodResolver&#125;). The following are some examples:</span><br><span class="line"> * &lt;ul&gt;</span><br><span class="line"> * &lt;li&gt;&#123;@code public int evaluate();&#125;&lt;/li&gt;</span><br><span class="line"> * &lt;li&gt;&#123;@code public int evaluate(int a);&#125;&lt;/li&gt;</span><br><span class="line"> * &lt;li&gt;&#123;@code public double evaluate(int a, double b);&#125;&lt;/li&gt;</span><br><span class="line"> * &lt;li&gt;&#123;@code public String evaluate(String a, int b, Text c);&#125;&lt;/li&gt;</span><br><span class="line"> * &lt;li&gt;&#123;@code public Text evaluate(String a);&#125;&lt;/li&gt;</span><br><span class="line"> * &lt;li&gt;&#123;@code public String evaluate(List&lt;Integer&gt; a);&#125; (Note that Hive Arrays are represented as</span><br><span class="line"> * &#123;@link java.util.List Lists&#125; in Hive.</span><br><span class="line"> * So an &#123;@code ARRAY&lt;int&gt;&#125; column would be passed in as a &#123;@code List&lt;Integer&gt;&#125;.)&lt;/li&gt;</span><br><span class="line"> * &lt;/ul&gt;</span><br></pre></td></tr></table></figure></p>
 <p><em>建议evaluate方法中的 返回值类型和参数类型都使用hadoop中的类型</em></p>
 <p>3.打包并上传到linux服务器上</p>
