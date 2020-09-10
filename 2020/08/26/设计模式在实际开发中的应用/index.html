@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="设计模式," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="设计模式在实际开发中的应用什么是设计模式​        设计模式和设计原则类似，也是由程序员的前辈们总结出来，写出高质量代码的总结。 设计模式的说明及实际应用创建者模式1. 单例模式​         同一个类型的对象，在全局范围内只有一个。 ​         单例模式的用途：（1）解决线程安全的问题。在并发当中我们常采用锁去解决线程安全问题。在java中有synchizoned的关键字，他是">
+<meta name="keywords" content="设计模式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="设计模式在实际开发中的应用">
+<meta property="og:url" content="http://www.lmcpf.com/2020/08/26/设计模式在实际开发中的应用/index.html">
+<meta property="og:site_name" content="caopengflying&#39;s blog">
+<meta property="og:description" content="设计模式在实际开发中的应用什么是设计模式​        设计模式和设计原则类似，也是由程序员的前辈们总结出来，写出高质量代码的总结。 设计模式的说明及实际应用创建者模式1. 单例模式​         同一个类型的对象，在全局范围内只有一个。 ​         单例模式的用途：（1）解决线程安全的问题。在并发当中我们常采用锁去解决线程安全问题。在java中有synchizoned的关键字，他是">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-08-31T08:54:38.735Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="设计模式在实际开发中的应用">
+<meta name="twitter:description" content="设计模式在实际开发中的应用什么是设计模式​        设计模式和设计原则类似，也是由程序员的前辈们总结出来，写出高质量代码的总结。 设计模式的说明及实际应用创建者模式1. 单例模式​         同一个类型的对象，在全局范围内只有一个。 ​         单例模式的用途：（1）解决线程安全的问题。在并发当中我们常采用锁去解决线程安全问题。在java中有synchizoned的关键字，他是">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.lmcpf.com/2020/08/26/设计模式在实际开发中的应用/"/>
+
+
+
+
+
+  <title>设计模式在实际开发中的应用 | caopengflying's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">caopengflying's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">编程，学的是思维，写的是人生。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.lmcpf.com/2020/08/26/设计模式在实际开发中的应用/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="caopengflying">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="caopengflying's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">设计模式在实际开发中的应用</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-08-26T21:10:00+08:00">
+                2020-08-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/设计模式/" itemprop="url" rel="index">
+                    <span itemprop="name">设计模式</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2020/08/26/设计模式在实际开发中的应用/" class="leancloud_visitors" data-flag-title="设计模式在实际开发中的应用">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="设计模式在实际开发中的应用"><a href="#设计模式在实际开发中的应用" class="headerlink" title="设计模式在实际开发中的应用"></a>设计模式在实际开发中的应用</h2><h2 id="什么是设计模式"><a href="#什么是设计模式" class="headerlink" title="什么是设计模式"></a>什么是设计模式</h2><p>​        设计模式和设计原则类似，也是由程序员的前辈们总结出来，写出高质量代码的总结。</p>
+<h2 id="设计模式的说明及实际应用"><a href="#设计模式的说明及实际应用" class="headerlink" title="设计模式的说明及实际应用"></a>设计模式的说明及实际应用</h2><h3 id="创建者模式"><a href="#创建者模式" class="headerlink" title="创建者模式"></a>创建者模式</h3><h4 id="1-单例模式"><a href="#1-单例模式" class="headerlink" title="1. 单例模式"></a>1. 单例模式</h4><p>​         同一个类型的对象，在全局范围内只有一个。</p>
+<p>​         单例模式的用途：（1）解决线程安全的问题。在并发当中我们常采用锁去解决线程安全问题。在java中有synchizoned的关键字，他是对象级别的锁，如果一个类型拥有多个对象，他是不能够解决多个对象对于同一个内容操作时的安全的。</p>
+<p>​        （2）某些类在其类型上讲，本来就应该只有一个，比如一些配置类。</p>
+<p>​        单例模式的类型：（1）懒汉式；（2）饿汉式；（3）线程安全的懒汉式；（4）内部类；（5）枚举；</p>
+<p>​        但是有些人认为，单例模式是反设计模式，反设计原则的一种模式，它存在一些缺点：（1）没有满足oop的特点。（2）隐藏了内部实现，没有了构造函数。（3）代码可测性不好。</p>
+<p>​        当前时代是一个高可用的时代，一个项目会部署多个节点，传统的单例模式只能在一个节点中保证唯一。但是集群中并不唯一。所以衍生出了集群单例模式，理论就是将对象存储到外部的共享区域中。然后在获取的时候在共享区域中获取。</p>
+<p>​        从单例模式后面也有了多例模式，多例模式就是说对象数量固定的模式。单对象模式，同一个类型的对象相同的名字只有一个。</p>
+<h4 id="2-工厂模式"><a href="#2-工厂模式" class="headerlink" title="2. 工厂模式"></a>2. 工厂模式</h4><p>​        工厂模式包括简单工厂模式，工厂方法模式，抽象工厂模式。常用的就是前两种。</p>
+<p>​        简单工厂模式：为了让类的职责更加单一，我们将创建某个类型的对象的工作交给其工厂。尤其是复杂的创建过程，均通过工厂模式来创建。</p>
+<p>​        工厂方法模式：创建工厂的工厂，常用于去掉这种多个if -else 的嵌套。工厂的工厂提供一个map，在开始的时候就将所有类型的工厂全部初始化掉，这样可以根据工厂的名字来获取工厂，然后就可以通过工厂来创建对象。当然这种模式均要面向接口编程。</p>
+<h4 id="3-建造者模式"><a href="#3-建造者模式" class="headerlink" title="3. 建造者模式"></a>3. 建造者模式</h4><p>​        我们在创建一个对象由两种最简单的方式。通过构造函数给对象的属性赋值，通过set方法给对象的属性赋值。当我们遇到一个类有很多个属性，如果使用构造函数会很长，并且容易出错，用set方法又不能加上组合校验，所以此时就有了建造者模式。通过建造者提前准备好所有的属性并且通过一个build的方法来创建对象。</p>
+<p>​        有使用过TkMapper和Mybatis-plus的同学知道，当我们在构建一个查询的条件时，经常会有一些组合，可以通过一个查询的建造者通过他的andEq().andIn()等方法来组合设置值。这个就是采用了建造者模式。</p>
+<h4 id="4-原型模式"><a href="#4-原型模式" class="headerlink" title="4. 原型模式"></a>4. 原型模式</h4><p>​        当创建一个对象的成本很高时，而同一个类型的不同对象之间的差别不大。可以采用深拷贝或者浅拷贝复制的方式来创建对象。这样的模式就是原型模式。</p>
+<h3 id="结构型模式"><a href="#结构型模式" class="headerlink" title="结构型模式"></a>结构型模式</h3><h4 id="1-代理模式"><a href="#1-代理模式" class="headerlink" title="1. 代理模式"></a>1. 代理模式</h4><p>​        代理模式中有两种角色，代理对象和原对象。代理对象拥有原对象所有的功能，并增加一些其他的功能。并且保证原功能不变。手写的代理模式一般有两种，继承和组合。</p>
+<p>​        继承：继承原类型，然后注入新的属性，重写父类方法并调用parent的方法，然后在调用前和调用后都可以增加代理的内容。</p>
+<p>​        组合：将原对象作为参数传入到新的类型中，将原对象的方法全部复制一遍，然后调用原对象的方法，并可以增加代理内容。</p>
+<p>​        但是在实际开发当中，为每个类都书写代理对象和写入到原对象中区别不大，然后提出了一个动态代理，不需要知道原对象的类型，方法，参数，就可以生成代理对象。java中就提供了动态代理，采用的是反射技术。java的代理是必须基于接口才能代理。cglib提供了无需接口就可以产生动态代理。强大的Spring框架中的AOP也是采用的动态代理技术。</p>
+<p>​        我们实际开发当中在使用代理模式最常用的一个应用场景就是，在业务系统中开发一些非功能性需求，比如：监控、统计、鉴权、限流、事务、幂等、日志。将业务和非功能性需求解藕。在rpc远程服务中也有使用代理模式，在实现缓存的时候也可以使用代理模式。</p>
+<h4 id="3-适配器模式"><a href="#3-适配器模式" class="headerlink" title="3. 适配器模式"></a>3. 适配器模式</h4><p>​        适配器模式我们一般就是举例电脑外接接口，比如mac只有雷霆接口,还想使用mac连接显示器，而显示器是hdmi的高清接口，这个时候两个并不能一起工作，怎么办呢，买一个转接口，这就叫为mac加一个适配，让他和hdmi的显示器能够联合在一起工作。</p>
+<p>​        一般情况下，适配器模式作为一种补偿模式，也就是在设计开始的时候有一些没有考虑到，就是有缺陷，但是后期又想要兼容一起工作。</p>
+<p>​        1). 封装有缺陷的接口设计</p>
+<p>​        引入了sdk，但是引入之后影响到代码的可测性，为了隔离设计上的缺陷，我们要在原接口的基础上进行封装。</p>
+<p>​        2). 统一多个类的接口设计</p>
+<p>​        某个功能的实现依赖多个外部系统（或者说类）。通过适配器模式，将它们的接口适配为统一的接口定义，然后我们就可以使用多态的特性来复用代码逻辑。具体我还是举个例子来解释一下。</p>
+<p>​        3). 替换依赖的外部系统</p>
+<p>​        当我们把项目中依赖的一个外部系统替换为另一个外部系统的时候，利用适配器模式，可以减少对代码的改动。</p>
+<h4 id="4-外观模式"><a href="#4-外观模式" class="headerlink" title="4. 外观模式"></a>4. 外观模式</h4><p>​        外观模式也叫门面模式，该模式主要应用在接口设计方面。我们在实际开发当中接口的颗粒度问题是都要权衡的。比如说生成一个订单，一般都会涉及几个操作，商品出库，会员积分，导购提成等。这些其实都是独立的接口，此时我们对外提供一般都是一个接口，然后该接口里面容纳了3个操作，这个从设计模式角度讲就是门面模式，他让你的接口变得不那么”单一”，同时也会降低接口的复用性。但是他让接口调用变得更加的容易。并且能解决了一些问题</p>
+<p>​        1). 事物一致性，通过后端的整合接口，可以利用spring的事物注解，解决多个操作的事物问题。</p>
+<p>​        2). 性能问题， 客户端和服务端之间的访问的网络通信成本比较高，我们在后端内部之间调用会降低很多这种通信成本。</p>
+<p>​        3). 接口易用性，可以让前端更加专注的做页面的渲染和交互的工作，让其从业务中抽离出来。</p>
+<h4 id="5-组合模式"><a href="#5-组合模式" class="headerlink" title="5. 组合模式"></a>5. 组合模式</h4><p>​        组合模式是对业务场景中的一种数据结构和算法的抽象，将一个数据以对象的方式组合起来，对外展示一种类型。比如实际业务中的人员组织架构，一个leader下面有多个组员，这个组员同时也是一个leader，他下面也有组员。这样就是一个树形结构。我们会人员这个类型中加上一个List&lt;人员&gt;表示其组员。这就是典型的组合模式的应用。</p>
+<h4 id="6-享元模式"><a href="#6-享元模式" class="headerlink" title="6. 享元模式"></a>6. 享元模式</h4><p>​        享元模式的设计意图，是为了节省内存去共享一些对象。前提是这些对象必须是固定的，不变的。因为共享之后不能因为修改一处其他的也跟着一起修改了，这样就会出现业务问题了。</p>
+<p>​        使用享元模式实现文本编辑器。文本编辑器内容是由一个个字符组成。每个字符都有其独特的样式。颜色，尺寸等。但是一般情况下，一个文本当中颜色和尺寸都是重复的。我们在抽象字符的时候，一个字符类型，有颜色，尺寸，值三个字段。这样当文本中有成千上万个对象时，那就有了成千上万个颜色和尺寸这样的对象。他们当中很多都是重复的。这里我们可以使用享元模式进行设计，把尺寸和颜色抽象出来放到一个类型中，然后使用工厂类为其创建多例模式。这样当有重复的时候直接去引用对象即可，无需占用新的空间和创建对象。</p>
+<p>​        享元模式在java中有两个典型的应用。Integer的装箱和拆箱，字符串。</p>
+<p>​        1). Integer,在java默认将-128 - 127的数存储到了内存当中，这个也是经常在面试题中看到的。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Integer i1 = <span class="number">56</span>;Integer i2 = <span class="number">56</span>;Integer i3 = <span class="number">129</span>;Integer i4 = <span class="number">129</span>;</span><br><span class="line">System.out.println(i1 == i2);</span><br><span class="line">System.out.println(i3 == i4);</span><br></pre></td></tr></table></figure>
+<p>​        第一行会打印出来true, 第二个是false。Integer有一个内部类，IntegerCache相当于一个工厂，自动创建了这些对象。</p>
+<p>​        2). 字符串</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">String s1 = <span class="string">"caopengflying"</span>;String s2 = <span class="string">"caopengflying"</span>;String s3 = <span class="keyword">new</span> String(<span class="string">"caopengflying"</span>);</span><br><span class="line">System.out.println(s1 == s2);</span><br><span class="line">System.out.println(s1 == s3);</span><br></pre></td></tr></table></figure>
+<p>​        第一个会打印true,第二个是false。同样的也是字符串也采用了享元模式。在java的内存中有字符常量池，他与Integer的区别是，他在第一次用的时候才会存储到内存中，不会在初始化时就创建。</p>
+<p>​        享元模式是为了节省空间而有的设计模式，但是他也有一个缺点，就是对jvm的垃圾回收不友好，因为这些共享对象都是强引用的对象，并不能很好的进行垃圾回收。所以在使用设计模式，一定要注意是否可以使用享元模式，不要到最后得不偿失了。</p>
+<h3 id="行为型模式"><a href="#行为型模式" class="headerlink" title="行为型模式"></a>行为型模式</h3><ol>
+<li>观察者模式</li>
+</ol>
+<p>​        </p>
+
+      
+    </div>
+    
+    
+    
+
+    
+<div>
+
+<div>
+
+    <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+
+</div>
+
+</div>
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创，您的支持将鼓励我继续创作</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="caopengflying 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="caopengflying 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/设计模式/" rel="tag"># 设计模式</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/08/20/EDAS学习总结/" rel="next" title="EDAS学习总结">
+                <i class="fa fa-chevron-left"></i> EDAS学习总结
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/08/26/设计原则在实际开发中的应用/" rel="prev" title="设计原则在实际开发中的应用">
+                设计原则在实际开发中的应用 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">caopengflying</p>
+              <p class="site-description motion-element" itemprop="description">CaoPengFei的技术博客</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">78</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">28</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">87</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#设计模式在实际开发中的应用"><span class="nav-number">1.</span> <span class="nav-text">设计模式在实际开发中的应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是设计模式"><span class="nav-number">2.</span> <span class="nav-text">什么是设计模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设计模式的说明及实际应用"><span class="nav-number">3.</span> <span class="nav-text">设计模式的说明及实际应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建者模式"><span class="nav-number">3.1.</span> <span class="nav-text">创建者模式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-单例模式"><span class="nav-number">3.1.1.</span> <span class="nav-text">1. 单例模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-工厂模式"><span class="nav-number">3.1.2.</span> <span class="nav-text">2. 工厂模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-建造者模式"><span class="nav-number">3.1.3.</span> <span class="nav-text">3. 建造者模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-原型模式"><span class="nav-number">3.1.4.</span> <span class="nav-text">4. 原型模式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#结构型模式"><span class="nav-number">3.2.</span> <span class="nav-text">结构型模式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-代理模式"><span class="nav-number">3.2.1.</span> <span class="nav-text">1. 代理模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-适配器模式"><span class="nav-number">3.2.2.</span> <span class="nav-text">3. 适配器模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-外观模式"><span class="nav-number">3.2.3.</span> <span class="nav-text">4. 外观模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-组合模式"><span class="nav-number">3.2.4.</span> <span class="nav-text">5. 组合模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-享元模式"><span class="nav-number">3.2.5.</span> <span class="nav-text">6. 享元模式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#行为型模式"><span class="nav-number">3.3.</span> <span class="nav-text">行为型模式</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">caopengflying</span>
+
+  
+</div>
+
+
+  <div class="powered-by">CaoPengflying</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">博客 &mdash; </div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("QvYPT7ysHmIcKhVJCaBfoul8-gzGzoHsz", "3tXLKBWxENoj3lseRo7fjJ1d");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+<!-- 页面点击小红心 --> 
+<script type="text/javascript" src="/js/src/love.js"></script>
+</html>

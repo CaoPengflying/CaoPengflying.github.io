@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="设计模式," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="设计原则在实际开发中的应用什么是设计原则？​        我们实际开发当中，经常会思考，”代码怎么写才是更好”这个问题，其实这个问题在有程序员这个工作的时候就已经出现了。前辈们也一直在思考，慢慢的提出了一些”好代码”的形容词。比如说：可扩展性，可读性，可维护性等。并且总结出了一些好代码的特点，这些特点就是现在所说的设计原则。也就是说我们遵从设计原则目的是开发出扩展性高，可读性好，可维护性强的代码">
+<meta name="keywords" content="设计模式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="设计原则在实际开发中的应用">
+<meta property="og:url" content="http://www.lmcpf.com/2020/08/26/设计原则在实际开发中的应用/index.html">
+<meta property="og:site_name" content="caopengflying&#39;s blog">
+<meta property="og:description" content="设计原则在实际开发中的应用什么是设计原则？​        我们实际开发当中，经常会思考，”代码怎么写才是更好”这个问题，其实这个问题在有程序员这个工作的时候就已经出现了。前辈们也一直在思考，慢慢的提出了一些”好代码”的形容词。比如说：可扩展性，可读性，可维护性等。并且总结出了一些好代码的特点，这些特点就是现在所说的设计原则。也就是说我们遵从设计原则目的是开发出扩展性高，可读性好，可维护性强的代码">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-08-26T14:35:05.978Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="设计原则在实际开发中的应用">
+<meta name="twitter:description" content="设计原则在实际开发中的应用什么是设计原则？​        我们实际开发当中，经常会思考，”代码怎么写才是更好”这个问题，其实这个问题在有程序员这个工作的时候就已经出现了。前辈们也一直在思考，慢慢的提出了一些”好代码”的形容词。比如说：可扩展性，可读性，可维护性等。并且总结出了一些好代码的特点，这些特点就是现在所说的设计原则。也就是说我们遵从设计原则目的是开发出扩展性高，可读性好，可维护性强的代码">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.lmcpf.com/2020/08/26/设计原则在实际开发中的应用/"/>
+
+
+
+
+
+  <title>设计原则在实际开发中的应用 | caopengflying's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">caopengflying's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">编程，学的是思维，写的是人生。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.lmcpf.com/2020/08/26/设计原则在实际开发中的应用/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="caopengflying">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="caopengflying's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">设计原则在实际开发中的应用</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-08-26T21:10:00+08:00">
+                2020-08-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/设计模式/" itemprop="url" rel="index">
+                    <span itemprop="name">设计模式</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2020/08/26/设计原则在实际开发中的应用/" class="leancloud_visitors" data-flag-title="设计原则在实际开发中的应用">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="设计原则在实际开发中的应用"><a href="#设计原则在实际开发中的应用" class="headerlink" title="设计原则在实际开发中的应用"></a>设计原则在实际开发中的应用</h2><h2 id="什么是设计原则？"><a href="#什么是设计原则？" class="headerlink" title="什么是设计原则？"></a>什么是设计原则？</h2><p>​        我们实际开发当中，经常会思考，”代码怎么写才是更好”这个问题，其实这个问题在有程序员这个工作的时候就已经出现了。前辈们也一直在思考，慢慢的提出了一些”好代码”的形容词。比如说：可扩展性，可读性，可维护性等。并且总结出了一些好代码的特点，这些特点就是现在所说的设计原则。也就是说我们遵从设计原则目的是开发出扩展性高，可读性好，可维护性强的代码。</p>
+<h2 id="设计原则有哪些"><a href="#设计原则有哪些" class="headerlink" title="设计原则有哪些"></a>设计原则有哪些</h2><h3 id="1-开闭原则"><a href="#1-开闭原则" class="headerlink" title="1. 开闭原则"></a>1. 开闭原则</h3><p>​        对于扩展开放，对于修改关闭。这里是一个颗粒度的问题，一个动作到底是修改的还是扩展的，从不同的角度能得到不同的结果。这个原则是我们平时开发最常使用的，我们接手其他同事的代码，当有新需求变动时，都是在原代码的基础上进行改动的。个人认为，修改的源代码不影响原业务，并且是易于测试的都是遵守开闭原则。</p>
+<h3 id="2-单一职能原则"><a href="#2-单一职能原则" class="headerlink" title="2. 单一职能原则"></a>2. 单一职能原则</h3><p>​        同样的，单一职能原则也是有颗粒度的。实际开发中有同事会把一个业务的代码都写到一个类的一个方法当中，认为这个方法完成了这件事，他是单一职能的。但是一件事也可以拆分成很多个小事，每个小事也都是单一职能，这样看原来的一件事就不是单一职责了。所以在实际开发当中，需要我们合理的去拆分业务。</p>
+<h3 id="3-里氏替换原则"><a href="#3-里氏替换原则" class="headerlink" title="3. 里氏替换原则"></a>3. 里氏替换原则</h3><p>​        里氏替换原则是面向对象当中特有的，它涉及到了父子类的关系。所有的父类都可以用子类去替换，并且保证原有程序的逻辑行为不变，并且正确性不遭受破坏，就是里氏替换原则。</p>
+<h3 id="4-最小知识原则（迪米特法则）"><a href="#4-最小知识原则（迪米特法则）" class="headerlink" title="4. 最小知识原则（迪米特法则）"></a>4. 最小知识原则（迪米特法则）</h3><p>​        最小知识原则在实际开发当中经常违反的，比如说a项目当中用了一个HttpUtil的工具类（一个开源的jar包），b项目是从a项目迁移过来但是不需要用到httpUtil的工具类，我们一般都不会删除这个jar包，其实此时就是违反了最小知识原则。还有就是在搭建项目的时候我们习惯把一些常用的东西都一次性导入进来，其实应该采用需要用什么导入什么，这样才是符合迪米特法则的。</p>
+<h3 id="5-接口隔离原则"><a href="#5-接口隔离原则" class="headerlink" title="5. 接口隔离原则"></a>5. 接口隔离原则</h3><p>​        接口隔离原则指的是客户端不应该强迫依赖它不需要的接口。”接口”这个词，可以从不同的角度理解。比如微服务中的接口，如果a服务开放出来的接口在b服务中只调用了部分接口，那么此时应该将a服务中的接口隔离开来，让b服务只能看到自己需要的接口。接口隔离原则和单一职能原则有点类似，只是观察的角度或者说侧重的角度不同。他更加注重于接口的设计。</p>
+<h3 id="6-依赖倒置原则"><a href="#6-依赖倒置原则" class="headerlink" title="6. 依赖倒置原则"></a>6. 依赖倒置原则</h3><p>​        依赖倒置原则就是让框架帮助我们去控制流程，而不是程序员去控制流程。spring框架就是典型的依赖倒置原则的框架。</p>
+<h3 id="7-DRY原则"><a href="#7-DRY原则" class="headerlink" title="7. DRY原则"></a>7. DRY原则</h3><p>​        don’t repeat yourself。不要重复自己，也就是不要写重复的代码。注意代码是为了实现业务，如果是不同的业务即使代码重复了，也是不违反DRY原则的，不要过分的去抽象剥离代码。</p>
+<h2 id="如何写出符合原则的代码"><a href="#如何写出符合原则的代码" class="headerlink" title="如何写出符合原则的代码"></a>如何写出符合原则的代码</h2><p>​        没有人能一次性写出完美的代码，初次书写只能是大体符合，只有不断的去重构，才能写出更符合原则的代码。重构并不是说项目重新搭建，一点一滴的优化都叫重构，甚至于将错误的注释删除，并修改成好的注释都是重构。重构是随时随刻的在进行的，如果一旦有稍微大一点的改动，都需要书写单元测试，不然的后果可能是灾难性的。</p>
+<h2 id="如何编写单元测试"><a href="#如何编写单元测试" class="headerlink" title="如何编写单元测试"></a>如何编写单元测试</h2><p>​        实际开发当中，写单元测试的人并不多。但是写单元测试绝对是一个好的习惯，这将决定着你代码是否能越写越好，目前阶段我个人认为只有易于测试的代码才能称得上是好代码，因为接受过几个别人的代码，每次再修改时都要补上基本的单元测试。单元测试也有不同的颗粒度，1.正常的数据逻辑，验证单元测试是否能通过。2. 边界值的单元测试。基本上做到第一点就可以了。如果能覆盖全边界值的单元测试，那只能说是优秀。测试不需要来给你提bug了。甚至你的公司已经不需要测试岗位了。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+<div>
+
+<div>
+
+    <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+
+</div>
+
+</div>
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创，您的支持将鼓励我继续创作</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="caopengflying 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="caopengflying 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/设计模式/" rel="tag"># 设计模式</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/08/26/设计模式在实际开发中的应用/" rel="next" title="设计模式在实际开发中的应用">
+                <i class="fa fa-chevron-left"></i> 设计模式在实际开发中的应用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/09/08/etcd入门/" rel="prev" title="etcd入门">
+                etcd入门 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">caopengflying</p>
+              <p class="site-description motion-element" itemprop="description">CaoPengFei的技术博客</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">78</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">28</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">87</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#设计原则在实际开发中的应用"><span class="nav-number">1.</span> <span class="nav-text">设计原则在实际开发中的应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是设计原则？"><span class="nav-number">2.</span> <span class="nav-text">什么是设计原则？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设计原则有哪些"><span class="nav-number">3.</span> <span class="nav-text">设计原则有哪些</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-开闭原则"><span class="nav-number">3.1.</span> <span class="nav-text">1. 开闭原则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-单一职能原则"><span class="nav-number">3.2.</span> <span class="nav-text">2. 单一职能原则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-里氏替换原则"><span class="nav-number">3.3.</span> <span class="nav-text">3. 里氏替换原则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-最小知识原则（迪米特法则）"><span class="nav-number">3.4.</span> <span class="nav-text">4. 最小知识原则（迪米特法则）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-接口隔离原则"><span class="nav-number">3.5.</span> <span class="nav-text">5. 接口隔离原则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-依赖倒置原则"><span class="nav-number">3.6.</span> <span class="nav-text">6. 依赖倒置原则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-DRY原则"><span class="nav-number">3.7.</span> <span class="nav-text">7. DRY原则</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何写出符合原则的代码"><span class="nav-number">4.</span> <span class="nav-text">如何写出符合原则的代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何编写单元测试"><span class="nav-number">5.</span> <span class="nav-text">如何编写单元测试</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">caopengflying</span>
+
+  
+</div>
+
+
+  <div class="powered-by">CaoPengflying</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">博客 &mdash; </div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("QvYPT7ysHmIcKhVJCaBfoul8-gzGzoHsz", "3tXLKBWxENoj3lseRo7fjJ1d");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+<!-- 页面点击小红心 --> 
+<script type="text/javascript" src="/js/src/love.js"></script>
+</html>
