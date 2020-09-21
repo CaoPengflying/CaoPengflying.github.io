@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="网络并发编程​        并发编程是指程序在运行期间，可以同时的执行多任务，充分利用资源达到节省时间的目的。实现并发编程的三种方式：进程，线程，协程。这里不过多解释他们之中的基本含义。进程和线程都是基于计算机操作系统的内核的方式，涉及到了上下文的切换。也就是用户核和系统内核之间的切换，这个的成本是比较高的。而协程都是用户级的。所以说协程的效率会更好。 协程​        不管是进程，线程还是">
+<meta name="description" content="网络并发编程​        并发编程是指程序在运行期间，可以同时的执行多任务，充分利用资源达到节省时间的目的。实现I/O并发编程的三种方式：进程，线程，协程，异步。这里不过多解释他们之中的基本含义。进程和线程都是基于计算机操作系统的内核的方式，涉及到了上下文的切换。也就是用户核和系统内核之间的切换，这个的成本是比较高的。而协程都是用户级切换，系统内核无感知。所以说协程的效率会更好。 协程​">
 <meta name="keywords" content="并发编程">
 <meta property="og:type" content="article">
 <meta property="og:title" content="网络并发编程">
 <meta property="og:url" content="http://www.lmcpf.com/2020/09/17/网络并发编程/index.html">
 <meta property="og:site_name" content="caopengflying&#39;s blog">
-<meta property="og:description" content="网络并发编程​        并发编程是指程序在运行期间，可以同时的执行多任务，充分利用资源达到节省时间的目的。实现并发编程的三种方式：进程，线程，协程。这里不过多解释他们之中的基本含义。进程和线程都是基于计算机操作系统的内核的方式，涉及到了上下文的切换。也就是用户核和系统内核之间的切换，这个的成本是比较高的。而协程都是用户级的。所以说协程的效率会更好。 协程​        不管是进程，线程还是">
+<meta property="og:description" content="网络并发编程​        并发编程是指程序在运行期间，可以同时的执行多任务，充分利用资源达到节省时间的目的。实现I/O并发编程的三种方式：进程，线程，协程，异步。这里不过多解释他们之中的基本含义。进程和线程都是基于计算机操作系统的内核的方式，涉及到了上下文的切换。也就是用户核和系统内核之间的切换，这个的成本是比较高的。而协程都是用户级切换，系统内核无感知。所以说协程的效率会更好。 协程​">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-09-18T07:17:34.847Z">
+<meta property="og:updated_time" content="2020-09-21T01:12:27.761Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="网络并发编程">
-<meta name="twitter:description" content="网络并发编程​        并发编程是指程序在运行期间，可以同时的执行多任务，充分利用资源达到节省时间的目的。实现并发编程的三种方式：进程，线程，协程。这里不过多解释他们之中的基本含义。进程和线程都是基于计算机操作系统的内核的方式，涉及到了上下文的切换。也就是用户核和系统内核之间的切换，这个的成本是比较高的。而协程都是用户级的。所以说协程的效率会更好。 协程​        不管是进程，线程还是">
+<meta name="twitter:description" content="网络并发编程​        并发编程是指程序在运行期间，可以同时的执行多任务，充分利用资源达到节省时间的目的。实现I/O并发编程的三种方式：进程，线程，协程，异步。这里不过多解释他们之中的基本含义。进程和线程都是基于计算机操作系统的内核的方式，涉及到了上下文的切换。也就是用户核和系统内核之间的切换，这个的成本是比较高的。而协程都是用户级切换，系统内核无感知。所以说协程的效率会更好。 协程​">
 
 
 
@@ -363,14 +363,14 @@
       
 
       
-        <h1 id="网络并发编程"><a href="#网络并发编程" class="headerlink" title="网络并发编程"></a>网络并发编程</h1><p>​        并发编程是指程序在运行期间，可以同时的执行多任务，充分利用资源达到节省时间的目的。实现并发编程的三种方式：进程，线程，协程。这里不过多解释他们之中的基本含义。进程和线程都是基于计算机操作系统的内核的方式，涉及到了上下文的切换。也就是用户核和系统内核之间的切换，这个的成本是比较高的。而协程都是用户级的。所以说协程的效率会更好。</p>
-<h2 id="协程"><a href="#协程" class="headerlink" title="协程"></a>协程</h2><p>​        不管是进程，线程还是协程，最终都是由cpu进行调度的。调度的模型分为三种</p>
+        <h1 id="网络并发编程"><a href="#网络并发编程" class="headerlink" title="网络并发编程"></a>网络并发编程</h1><p>​        并发编程是指程序在运行期间，可以同时的执行多任务，充分利用资源达到节省时间的目的。实现I/O并发编程的三种方式：进程，线程，协程，异步。这里不过多解释他们之中的基本含义。进程和线程都是基于计算机操作系统的内核的方式，涉及到了上下文的切换。也就是用户核和系统内核之间的切换，这个的成本是比较高的。而协程都是用户级切换，系统内核无感知。所以说协程的效率会更好。</p>
+<h2 id="协程"><a href="#协程" class="headerlink" title="协程"></a>协程</h2><p>​        线程分为用户线程和内核线程，内核线程对应到的是操作系统上。cpu来调度内核线程，内核线程上执行用户线程，也就是说用户线程需要和内核线程进行绑定，此时就涉及到了绑定的方式，也称为线程的调度模型。总共有一下三种。</p>
 <ol>
-<li><p>M:1 -&gt; 多个用户空间线程在1个内核空间线程上运行。优势是上下文切换非常快，因为这些线程都在内核态运行，但是无法利用多核系统的优点。</p>
+<li><p>M:1 -&gt; 多个用户空间线程在1个内核空间线程上运行。优势是上下文切换非常快，因为这些用户线程一个内核线程上绑定，但是无法利用多核系统的优点。比如python采用的就是该模型。</p>
 </li>
 <li><p>M:M -&gt; 1个内核空间线程运行一个用户空间线程。这种充分利用了多核系统的优势但是上下文切换非常慢，因为每一次调度都会在用户态和内核态之间切换。POSIX线程模型(pthread)就是这么做的。</p>
 </li>
-<li><p>M:N -&gt; 内核空间开启多个内核线程，一个内核空间线程对应多个用户空间线程。效率非常高，但是管理复杂。</p>
+<li><p>M:N -&gt; 内核空间开启多个内核线程，每个内核空间线程可以对应多个用户空间线程。具体的比例由实际的情况决定。效率非常高，但是管理复杂。</p>
 <p>Go语言中的goroutine采用了协程，并且使用了M:N模型。go使用MPG管理协程。可以去查看下go的MGP原理。总结一句话就是go针对于并发而生的语言。</p>
 </li>
 </ol>
@@ -383,7 +383,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sequenceDiagram</span><br><span class="line">    应用程序 -&gt;&gt; 系统内核 : 1</span><br><span class="line">    系统内核--&gt;&gt; + 应用程序 : 2</span><br><span class="line">     应用程序 -&gt;&gt; 系统内核 : 轮询查询 </span><br><span class="line">    系统内核 -&gt;&gt; + I/O外设 : 3</span><br><span class="line">    I/O外设 --&gt;&gt; + 系统内核 : 4</span><br><span class="line">   系统内核--&gt;&gt; + 应用程序 : 应用程序copy数据</span><br></pre></td></tr></table></figure>
 <p>同步非阻塞式I/O，常用I/O多路复用。linux的epoll采用的就是同步非阻塞I/O多路复用的模型。异步I/O如下图所示：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sequenceDiagram</span><br><span class="line">    应用程序 -&gt;&gt; 系统内核 : 1</span><br><span class="line">    系统内核--&gt;&gt; + 应用程序 : 2</span><br><span class="line">    系统内核 -&gt;&gt; + I/O外设 : 3</span><br><span class="line">    I/O外设 --&gt;&gt; + 系统内核 : 4</span><br><span class="line">   系统内核--&gt;&gt; + 应用程序 : 系统内核调用应用程序</span><br></pre></td></tr></table></figure>
-<p>Node Js就是采用异步I/O模型。一般能称为事件驱动，回调机制都属于异步I/O。</p>
+<p>Node Js就是采用异步I/O模型。一般能称为”基于事件驱动的回调机制”的都属于异步I/O。</p>
 
       
     </div>
