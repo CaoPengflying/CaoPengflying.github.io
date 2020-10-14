@@ -87,10 +87,13 @@
 <meta property="og:site_name" content="caopengflying&#39;s blog">
 <meta property="og:description" content="设计模式在实际开发中的应用什么是设计模式​        设计模式和设计原则类似，也是由程序员的前辈们总结出来，写出高质量代码的总结。 设计模式的说明及实际应用创建者模式1. 单例模式​         同一个类型的对象，在全局范围内只有一个。 ​         单例模式的用途：（1）解决线程安全的问题。在并发当中我们常采用锁去解决线程安全问题。在java中有synchizoned的关键字，他是">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-08-31T08:54:38.735Z">
+<meta property="og:image" content="http://www.lmcpf.com/Users/caopengfei/Library/Application%20Support/typora-user-images/image-20201010105931372.png">
+<meta property="og:image" content="http://www.lmcpf.com/Users/caopengfei/Library/Application%20Support/typora-user-images/image-20201012112214408.png">
+<meta property="og:updated_time" content="2020-10-12T03:22:46.998Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="设计模式在实际开发中的应用">
 <meta name="twitter:description" content="设计模式在实际开发中的应用什么是设计模式​        设计模式和设计原则类似，也是由程序员的前辈们总结出来，写出高质量代码的总结。 设计模式的说明及实际应用创建者模式1. 单例模式​         同一个类型的对象，在全局范围内只有一个。 ​         单例模式的用途：（1）解决线程安全的问题。在并发当中我们常采用锁去解决线程安全问题。在java中有synchizoned的关键字，他是">
+<meta name="twitter:image" content="http://www.lmcpf.com/Users/caopengfei/Library/Application%20Support/typora-user-images/image-20201010105931372.png">
 
 
 
@@ -408,7 +411,28 @@
 <h3 id="行为型模式"><a href="#行为型模式" class="headerlink" title="行为型模式"></a>行为型模式</h3><ol>
 <li>观察者模式</li>
 </ol>
-<p>​        </p>
+<ol start="2">
+<li><p>模版模式</p>
+<p>模版方法通过定义好一个算法的骨架，细节的实现推迟到子类中。模版方法可以让子类在不改变框架的整体结构下重新定义结构中的步骤。</p>
+<p>javaweb中的servlet和junit testCase都采用了该模式</p>
+<p>Junit TestCase</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">TestCase</span> <span class="keyword">extends</span> <span class="title">Assert</span> <span class="keyword">implements</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">runBare</span><span class="params">()</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">    Throwable exception = <span class="keyword">null</span>;</span><br><span class="line">    setUp();</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      runTest();</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Throwable running) &#123;</span><br><span class="line">      exception = running;</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">        tearDown();</span><br><span class="line">      &#125; <span class="keyword">catch</span> (Throwable tearingDown) &#123;</span><br><span class="line">        <span class="keyword">if</span> (exception == <span class="keyword">null</span>) exception = tearingDown;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (exception != <span class="keyword">null</span>) <span class="keyword">throw</span> exception;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">  * Sets up the fixture, for example, open a network connection.</span></span><br><span class="line"><span class="comment">  * This method is called before a test is executed.</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line">  <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">setUp</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">  * Tears down the fixture, for example, close a network connection.</span></span><br><span class="line"><span class="comment">  * This method is called after a test is executed.</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line">  <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">tearDown</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在执行单元测试时，每个单元测试的方法的细节是不一样的，但是但是所有的单元测试方法的流程都是 setUp(). Test() . tearDown()，所以junit将这个流程固定下来，每个方法的细节都有子类去具体实现。</p>
+<p>同步回调和模版模式非常类似，从应用场景上看，回调与模版模式基本一致。都是在一个大的算法骨架当中，自由替换某个步骤。起到复用和扩展的作用。从代码实现上看，模版模式采用继承，回调采用的是组合</p>
+</li>
+<li><p>策略模式</p>
+<p>策略模式定义一族算法类，他们之间可以相互替换。策略模式非常常用，可以替换掉冗余的if/else分支的代码。通过使用工厂模式进行解藕。</p>
+</li>
+<li><p>职责链模式</p>
+<p>一个请求需要多个对象进行处理，将这些对象放到一个链上，顺着链每个对象去处理请求。此处有两种方式，一种是某个对象处理异常则直接返回，另外一种必须走到链尾。</p>
+</li>
+<li><p>状态模式</p>
+<p><img src="/Users/caopengfei/Library/Application Support/typora-user-images/image-20201010105931372.png" alt="image-20201010105931372"></p>
+</li>
+<li><p>迭代器模式</p>
+<p><img src="/Users/caopengfei/Library/Application Support/typora-user-images/image-20201012112214408.png" alt="image-20201012112214408"></p>
+</li>
+</ol>
 
       
     </div>
@@ -476,8 +500,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/08/26/设计原则在实际开发中的应用/" rel="next" title="设计原则在实际开发中的应用">
-                <i class="fa fa-chevron-left"></i> 设计原则在实际开发中的应用
+              <a href="/2020/08/20/EDAS学习总结/" rel="next" title="EDAS学习总结">
+                <i class="fa fa-chevron-left"></i> EDAS学习总结
               </a>
             
           </div>
@@ -486,8 +510,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2020/09/08/etcd入门/" rel="prev" title="etcd入门">
-                etcd入门 <i class="fa fa-chevron-right"></i>
+              <a href="/2020/08/26/设计原则在实际开发中的应用/" rel="prev" title="设计原则在实际开发中的应用">
+                设计原则在实际开发中的应用 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -591,7 +615,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">80</span>
+                  <span class="site-state-item-count">86</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -602,7 +626,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-count">30</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -613,7 +637,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">88</span>
+                  <span class="site-state-item-count">89</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

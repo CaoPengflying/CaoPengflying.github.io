@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="MongoDB," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="MongoDB学习(二)​        MongoDB作为一个nosql，经常会被认为，使用MongoDB不需要设计，使用一个大文档组织所有的数据，MongoDB不支持事务并且只适用于边缘化的逻辑。这些都是对MongoDB错误的理解 Json文档模型设计​        建模一般会经历三个阶段，概念模型 -&amp;gt; 逻辑模型 -&amp;gt;物理模型(文档模型)。尤其是传统的数据建模，有非常明确的规定">
+<meta name="keywords" content="MongoDB">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MongoDB学习(二)">
+<meta property="og:url" content="http://www.lmcpf.com/2020/09/17/MongoDB学习(二)/index.html">
+<meta property="og:site_name" content="caopengflying&#39;s blog">
+<meta property="og:description" content="MongoDB学习(二)​        MongoDB作为一个nosql，经常会被认为，使用MongoDB不需要设计，使用一个大文档组织所有的数据，MongoDB不支持事务并且只适用于边缘化的逻辑。这些都是对MongoDB错误的理解 Json文档模型设计​        建模一般会经历三个阶段，概念模型 -&amp;gt; 逻辑模型 -&amp;gt;物理模型(文档模型)。尤其是传统的数据建模，有非常明确的规定">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-09-24T09:18:38.589Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MongoDB学习(二)">
+<meta name="twitter:description" content="MongoDB学习(二)​        MongoDB作为一个nosql，经常会被认为，使用MongoDB不需要设计，使用一个大文档组织所有的数据，MongoDB不支持事务并且只适用于边缘化的逻辑。这些都是对MongoDB错误的理解 Json文档模型设计​        建模一般会经历三个阶段，概念模型 -&amp;gt; 逻辑模型 -&amp;gt;物理模型(文档模型)。尤其是传统的数据建模，有非常明确的规定">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.lmcpf.com/2020/09/17/MongoDB学习(二)/"/>
+
+
+
+
+
+  <title>MongoDB学习(二) | caopengflying's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">caopengflying's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">编程，学的是思维，写的是人生。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.lmcpf.com/2020/09/17/MongoDB学习(二)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="caopengflying">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="caopengflying's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">MongoDB学习(二)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-09-17T22:12:04+08:00">
+                2020-09-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MongoDB/" itemprop="url" rel="index">
+                    <span itemprop="name">MongoDB</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2020/09/17/MongoDB学习(二)/" class="leancloud_visitors" data-flag-title="MongoDB学习(二)">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="MongoDB学习-二"><a href="#MongoDB学习-二" class="headerlink" title="MongoDB学习(二)"></a>MongoDB学习(二)</h1><p>​        MongoDB作为一个nosql，经常会被认为，使用MongoDB不需要设计，使用一个大文档组织所有的数据，MongoDB不支持事务并且只适用于边缘化的逻辑。这些都是对MongoDB错误的理解</p>
+<h2 id="Json文档模型设计"><a href="#Json文档模型设计" class="headerlink" title="Json文档模型设计"></a>Json文档模型设计</h2><p>​        建模一般会经历三个阶段，概念模型 -&gt; 逻辑模型 -&gt;物理模型(文档模型)。尤其是传统的数据建模，有非常明确的规定，满足第三范式的要求。由于MongoDB使用Json表示的特性，可以省略掉文档模型建模，但是起码要经过概念模型到逻辑模型，所以MongoDB肯定是要设计的。与传统的区别就是没有了明确的标准，只需要从易用性和性能角度去设计即可。这样有好处也是有坏处的。在这里总结下如何设计一个好的MongoDB文档模型。总结为以下三步</p>
+<h3 id="基础建模"><a href="#基础建模" class="headerlink" title="基础建模"></a>基础建模</h3><p>​        还是要根据概念模型 -&gt; 逻辑模型，然后书写e-r图，找清楚对象的关系。1:1 、1:N、N:N。三种关系都首先以内嵌为准，但是要注意文档大小不能超过16MB。MongDB逻辑建模即文档建模，像1:N和N:N的关系中可以使用内嵌类型的方法。如下内容所示，一个会员的设计，会员包括会员的基本属性，同时包括积分信息，积分信息与会员是一对一的关系，会员中还包括着会员的变动流水1对多关系，以及会员曾经在哪个门店消费过，多对多的关系。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">Vip:&#123;</span><br><span class="line">  ename:"张三",</span><br><span class="line">  mobile:"000000",</span><br><span class="line">  vip_no:"88888888",</span><br><span class="line">  integral:&#123; // 1:1</span><br><span class="line">    	left_inte:100,</span><br><span class="line">    	sum_inte:100,</span><br><span class="line">    	deadline_date:"2020-09-30"</span><br><span class="line">  &#125;,</span><br><span class="line">  change_flows:[ // 1:N</span><br><span class="line">    &#123;</span><br><span class="line">      change_time:"2020-10-01",</span><br><span class="line">      change_info:"将名称由张三改为李四"</span><br><span class="line">    &#125;</span><br><span class="line">  ],</span><br><span class="line">  area:[ //N:N</span><br><span class="line">    &#123;provice:"浙江",city:"杭州",address:"杭州门店"&#125;,</span><br><span class="line">    &#123;provice:"北京",city:"北京",adderss:"北京门店"&#125;,</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="工况细化"><a href="#工况细化" class="headerlink" title="工况细化"></a>工况细化</h3><p>​        虽然MongoDB支持内嵌类型，但是不是说所有的情况都适合这种设计。比如：</p>
+<ul>
+<li><p>文档经常被读取，但其中包含了一些很少被访问的数据。嵌入这样的数据只会增加集合的内存需求（工作集）。</p>
+</li>
+<li><p>文档的一部分经常被更新，并且不断增大大小，而文档的其余部分则相对静态。</p>
+</li>
+<li><p>组合到一起的文档大小将超过MongoDB的16MB限制，例如在对像产品评论这样的多对一关系进行建模时。</p>
+</li>
+</ul>
+<p>​        我们在设计文档时也可以采用关系型数据库中的引用关联来设计。比如上述说的会员和消费门店的多对多关系，这种都是冗余存储的，如果需要修改门店信息要修改则所有的会员文档都要修改，明显这种时候不可取的此时就应该将上述设计改为只存储门店的id标示。在使用了这种引用关联设计时，MongoDB提供了lookup的查询类似于mysql当中的join，来实现一次查询多个集合。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Vip:&#123;</span><br><span class="line">  ...</span><br><span class="line">  area:[ //N:N</span><br><span class="line">    1,2</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br><span class="line">Area:</span><br><span class="line">  &#123;id:1,provice:"浙江",city:"杭州",address:"杭州门店"&#125;</span><br></pre></td></tr></table></figure>
+<p>​        使用引用关联也可以提高效率，类似于mysql当中的分表概念，将常用的查询的字段放入一个集合中，将其他的字段剥离出来放入到引用关联的集合中，这样能显著提高查询性能。</p>
+<h3 id="套用设计模式"><a href="#套用设计模式" class="headerlink" title="套用设计模式"></a>套用设计模式</h3><p>​        好的文档设计一定是查询效率好，并且空间占比少。通过一些常用的设计模式来优化设计。</p>
+<ol>
+<li><p>多态模式</p>
+<p>当文档中出现相似而不是差异时，可以使用该模式。比如说有一个集合时记录运动员信息的，但是运动员有足球运动员，篮球运动员等等，不同的科目的运动员之间有相似也有不同。如果拆分成多个集合，存储不同的运动员，那么当需求中有将所有运动员汇总时就遇到了麻烦。我们可以将运动员放入到一个集合中，至于他们的业务区分可以放入到代码中去实现它们的差异。</p>
+<p>这种模式设计的典型用例：</p>
+<ul>
+<li>单一视图应用程序</li>
+<li>内容管理</li>
+<li>移动应用程序</li>
+<li>产品目录</li>
+</ul>
+</li>
+<li><p>属性模式(The Attribute pattern)</p>
+<p>属性模式也有人称为行转列模式。该模式适用于文档中出现多个相似的字段，并且需要对该字段进行排序或者查询。正常情况下我们遇到进场查询的字段会给该字段设置索引，但是像上述这种情况，为所有的字段都设置索引会降低性能。举个例子，假设有一个电影的集合，需要存储该电影的上映日期，但是一个电影在不同的国家有不同的上映日期，那怎么存储，如何设置索引呢？</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    title: "Star Wars",</span><br><span class="line">    director: "George Lucas",</span><br><span class="line">    ...</span><br><span class="line">    release_US: ISODate("1977-05-20T01:00:00+01:00"),</span><br><span class="line">    release_France: ISODate("1977-10-19T01:00:00+01:00"),</span><br><span class="line">    release_Italy: ISODate("1977-10-20T01:00:00+01:00"),</span><br><span class="line">    release_UK: ISODate("1977-12-27T01:00:00+01:00"),</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>世界两百多个国家和地区，这里如果要加上这么多字段并且全部设置上索引，可见性能和空间是极度不合理的。使用属性模式可以解决这一问题</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    title: "Star Wars",</span><br><span class="line">    director: "George Lucas",</span><br><span class="line">    …</span><br><span class="line">    releases: [</span><br><span class="line">        &#123;</span><br><span class="line">        location: "USA",</span><br><span class="line">        date: ISODate("1977-05-20T01:00:00+01:00")</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">        location: "France",</span><br><span class="line">        date: ISODate("1977-10-19T01:00:00+01:00")</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">        location: "Italy",</span><br><span class="line">        date: ISODate("1977-10-20T01:00:00+01:00")</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">        location: "UK",</span><br><span class="line">        date: ISODate("1977-12-27T01:00:00+01:00")</span><br><span class="line">        &#125;,</span><br><span class="line">        … </span><br><span class="line">    ],</span><br><span class="line">    … </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>改成这种模式，索引只需要加上一个<code>{ “releases.location”: 1, “releases.date”: 1}</code>非常的易于管理。属性模式针对每个文档中许多类似字段提供了更简单的文档索引。通过将这个数据子集移动到一个键值子文档中，我们可以使用不确定的字段名，为信息添加额外的限定符，并更清楚地说明原始字段和值的关系。当我们使用属性模式时，由于需要的索引更少，查询变得更简单更快。</p>
+</li>
+<li><p>桶模式(The Bucket Pattern)</p>
+<p>应用场景：以时间序列数据时采用该模式非常有效，尤其是物联网中的实时监控，比如车辆的监控，也有用于银行的交易。</p>
+<p>以车辆监控举例，假设有500辆车，每辆车每分钟需要监控一条数据，数据要保存一年，此时产生的数据量就是500 <em> 60 </em> 24 * 365，假设每个文档的大小为 50B，并且需要建立索引。这样统计下来数据存储大小大概在10TB左右。数据存储之后常用的查询不仅仅是按照分钟查，更多的是按照小时查，天数查。此时采用分桶设计能有效缩小占用空间，并且也能提高查询效率。存储的格式有没分钟一条数据改为每小时一条数据，将每分钟的数据作为子集存储到小时中，这样增加了每条文档的大小，但是减小了整体的数据量，同时也就减小了索引的空间，并且查询时的效率也会更好</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[&#123;</span><br><span class="line">  timestamp:"2020-09-23-00:00:00" </span><br><span class="line">&#125;,&#123;</span><br><span class="line">  timestamp:"2020-09-23-00:01:00" </span><br><span class="line">&#125;] =&gt;</span><br><span class="line">[</span><br><span class="line">  &#123;</span><br><span class="line">    timestamp:"2020-09-23-01:00:00",</span><br><span class="line">    details:[</span><br><span class="line">      &#123;"timestamp":"2020-09-23-01:00:00"&#125;,</span><br><span class="line">      &#123;<span class="attr">"timestamp"</span>:<span class="string">"2020-09-23-01:01:00"</span>&#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol start="4">
+<li><p>异常值设计模式（the qutlier pattern）</p>
+<p>设计是为了大多数情况而设计，但是不免总会有一些特殊情况，我们将这些特殊情况称为异常值，针对异常的情况单独处理。比如现在有一个图书系统，我们想查询有哪些人购买了某本特定的书，这对于推荐系统非常有用，我们将购买的人的id作为子集存储到图书中，如果有一本书销量非常好，有上百万的销售量，此时MongoDB的16M的大小限制就很容易达到了。但是又不能根据这个特殊情况而推翻整体的设计。我们可以将这种情况视为异常情况。针对于异常的文档我们增加一个字段has_extras，当着个字段为true时程序需要额外的检索信息，为false时则表示不需要。这种方式既能方便常规的使用，也能处理特殊情况。</p>
+<p>异常值模式所要解决的问题是防止以少量文档或查询来确定应用程序的解决方案，尤其是当该解决方案对大多数用例来说不是最佳的时候。我们可以利用MongoDB的灵活数据模型在文档中添加一个字段来将其标记为异常值。然后在应用程序内部，我们对异常值的处理会略有不同。通过为典型的文档或查询定制模式，应用程序的性能将会针对那些正常的用例进行优化，而那些异常值仍将得到处理。</p>
+</li>
+<li><p>计算模式</p>
+<p>我们存储了数据之后经常会有一些聚合计算，这种聚合计算当数据量大的时候，效率时非常低的，并且会给CPU带来很大的负担。此时可以考虑不实时聚合全部的数据，比如可以设置定时任务和时间戳，提前计算好今日之前的聚合值，业务中有需要查询聚合，只需要将今日的数据聚合并和聚合好的值进行运算即可得到最终值。这种模式适用于所有对数据进行计算的需求。</p>
+<p>这一强大的设计模式可以减少CPU工作负载并提高应用程序性能。它可以用于对集合中的数据进行计算或操作，并将结果存储在文档中，以避免重复进行相同的计算。当你的系统在重复执行相同的计算，并且具有较高的读写比时，请考虑使用计算模式。</p>
+</li>
+<li><p>子集模式</p>
+<p>此模式用来解决工作集超出RAM，从而导致信息从内存中被删除的问题。这通常是由拥有大量数据的大型文档引起的，这些数据实际上并没有被应用程序使用。</p>
+<p>MongoDB将频繁访问的数据（称为<a href="https://docs.mongodb.com/manual/reference/glossary/?_ga=2.60772906.627645384.1553429492-1197570158.1502203710#term-working-set" target="_blank" rel="noopener">工作集</a>）保存在RAM中。当数据和索引的工作集超过分配的物理RAM时，随着磁盘访问的发生以及数据从RAM中转出，性能会开始下降。</p>
+<p>在评论有关的产品当中会使用到该模式，一般情况下在应用中都是只展现前10条评论或者10条置顶的评论，那我们可以将10条评论使用内嵌的方式放入到主表中，其余的数据或者全量数据均放入另外一个集合中，当涉及到其他操作时再使用逻辑去处理子集数据。</p>
+<p>当我们的文档拥有大量数据而其并不常用时，子集模式就非常有用。产品评论、文章评论、电影中的演员信息都是这个模式的应用场景案例。每当文档大小对工作集的大小产生压力并导致工作集超过计算机的RAM容量时，子集模式便成为一个可以考虑的选项。</p>
+<p>通过使用包含有频繁访问数据的较小文档，我们减少了工作集的总体大小。这使得应用程序所需要的最常用信息的磁盘访问时间更短。在使用子集模式时必须做的一个权衡是，我们必须管理子集，而且如果我们需要引入更旧的评论或所有信息，则需要额外的数据库访问才能做到这一点。子集模式也是当前常说的”分库分表”中的分表。</p>
+</li>
+<li><p>扩展引用模式</p>
+<p>扩展引用模式是通过冗余常用的字段来减少join，从而实现提高数据库的性能。</p>
+<p>有时我们将数据放置在一个集合中时有道理的，比如说一个电商系统肯定会包含订单，会员，商品，导购等信息，每次查询订单时展示的会员，商品和导购都是部分信息，如果每次查询都需要join，这样性能肯定会大大降低。此时可以将会员的名称，商品的名称，导购的名称等信息直接存储到订单表中，这样的冗余可以避免全部join，但是这样也会引起数据的不一致问题，所以冗余的字段应该是经常不会变动，并且即使不一致不能有很大的影响。</p>
+</li>
+<li><p>近似值模式</p>
+<p>有一些数字是量级话的，不需要非常准确，只需要足够好即可满足业务要求。比如说人口统计，一个城市每天都在有人出生和去世，频繁的变动每次都需要访问数据库进行修改，此时会给数据库造成很大的压力。而且我们去形容一个城市的人口时也是说这是个大概值，比如说百万人口城市。遇到这种场景使用近似值模式就能大大的提高数据库的性能。针对人口这个问题，我们可以将每个人的变动修改数据库改为每100次变动则修改一次数据库。可以设置一个随机函数为0-100之间，获取到0的概率就是百分之一，理论上每有一百次调用则得到一次0，只要随机函数返回的是0就给人口直接增加100。这样的设计理论上减少了99%的写请求，大大提高了效率。</p>
+<p><em>近似值模式</em>对于处理难以计算和/或计算成本高昂的数据，并且这些数字的精确度不太关键的应用程序是一个很好的解决方案。我们可以减少对数据库的写入，从而提高性能，并且保持数字仍然在统计上是有效的。然而，使用这种模式的代价是精确的数字无法被表示出来，并且必须在应用程序本身中实现。</p>
+</li>
+<li><p>树形模式</p>
+<p>树形结构是我们在开发当中常用的结构，比如说组织树，商品分类等。传统的解决方案有两种：</p>
+<ul>
+<li>每个节点列出自己的父节点</li>
+<li>每个节点列出自己的字节点</li>
+</ul>
+<p>传统的解决方案都是要多次访问到才能得到某一个节点的树结构。在MongoDB我们可以增加一个字段直接将该节点的树形结构存储好。再用一个字段用来存储自己的父节点。存储父节点往往是非常方便的。树形模式能提高易用性，简化查询逻辑，但是带来的问题就是当结构发生变动时，每个节点中的树结构都需要重构。使用这种模式需要好好的权衡。</p>
+</li>
+<li><p>文档版本模式(the schema version pattern)</p>
+<p>在MongoDB中由于字段属性是动态的，文档和文档之间的字段是允许不一致的。在实际使用过程当中由于业务的变化，常常需要增加字段。此时使用该模式就非常有效。尤其是面临的几个问题：</p>
+</li>
+</ol>
+<ul>
+<li>老数据需要增加字段需要很久</li>
+<li>老数据没有必要更新到新版本</li>
+<li>不允许应用程序停机</li>
+</ul>
+<p>方法很简单，专门增加一个字段为schema_version，这样拿到数据时可以根据该字段的值进行业务开发。</p>
+<p>这里的模式是简单的总结，<a href="https://mongoing.com/translation-blogs" target="_blank" rel="noopener">详情请看官网文章之使用模式系列</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+<div>
+
+<div>
+
+    <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+
+</div>
+
+</div>
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创，您的支持将鼓励我继续创作</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="caopengflying 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="caopengflying 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/MongoDB/" rel="tag"># MongoDB</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/09/17/网络并发编程/" rel="next" title="网络并发编程">
+                <i class="fa fa-chevron-left"></i> 网络并发编程
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/09/17/MongoDB学习(一)/" rel="prev" title="MongoDB学习(一)">
+                MongoDB学习(一) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">caopengflying</p>
+              <p class="site-description motion-element" itemprop="description">CaoPengFei的技术博客</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">86</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">30</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">89</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#MongoDB学习-二"><span class="nav-number">1.</span> <span class="nav-text">MongoDB学习(二)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Json文档模型设计"><span class="nav-number">1.1.</span> <span class="nav-text">Json文档模型设计</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基础建模"><span class="nav-number">1.1.1.</span> <span class="nav-text">基础建模</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#工况细化"><span class="nav-number">1.1.2.</span> <span class="nav-text">工况细化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#套用设计模式"><span class="nav-number">1.1.3.</span> <span class="nav-text">套用设计模式</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">caopengflying</span>
+
+  
+</div>
+
+
+  <div class="powered-by">CaoPengflying</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">博客 &mdash; </div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("QvYPT7ysHmIcKhVJCaBfoul8-gzGzoHsz", "3tXLKBWxENoj3lseRo7fjJ1d");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+<!-- 页面点击小红心 --> 
+<script type="text/javascript" src="/js/src/love.js"></script>
+</html>
