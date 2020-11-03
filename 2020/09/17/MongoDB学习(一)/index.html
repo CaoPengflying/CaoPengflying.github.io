@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="caopengflying&#39;s blog">
 <meta property="og:description" content="MongoDB学习(一)​        MongoDB是目前非常流行的nosql，尤其是在MongoDB4.0以后支持了事务操作，让MongoDB适应了更多的场景。目前我们在使用MongDB时，都会采用集群部署，主从结构(一主多从)。 MongoDB集群MongoDB数据同步原理​        MongoDB主节点接受所有的写请求，在发生新增，修改，删除操作时会向oplog中写入日志，Mong">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-09-21T09:24:25.609Z">
+<meta property="og:updated_time" content="2020-10-30T06:38:48.284Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MongoDB学习(一)">
 <meta name="twitter:description" content="MongoDB学习(一)​        MongoDB是目前非常流行的nosql，尤其是在MongoDB4.0以后支持了事务操作，让MongoDB适应了更多的场景。目前我们在使用MongDB时，都会采用集群部署，主从结构(一主多从)。 MongoDB集群MongoDB数据同步原理​        MongoDB主节点接受所有的写请求，在发生新增，修改，删除操作时会向oplog中写入日志，Mong">
@@ -383,7 +383,16 @@
 <li>隐藏，会复制数据但是对应用不可见。他也可以拥有选举权但是优先级必须为0</li>
 <li>同步延迟，可以设定该节点保持与主节点的时间差。如果出现数据错误等问题，可以使用该节点数据，降低影响。</li>
 </ol>
-<p>​     </p>
+<h2 id="MongoDB的集群类型"><a href="#MongoDB的集群类型" class="headerlink" title="MongoDB的集群类型"></a>MongoDB的集群类型</h2><h3 id="副本集群"><a href="#副本集群" class="headerlink" title="副本集群"></a>副本集群</h3><p>建议为一主两从</p>
+<h3 id="分片集群"><a href="#分片集群" class="headerlink" title="分片集群"></a>分片集群</h3><p>从数据库层实现了分库分表。使用分片集群要注意在部署mongos，configserver和shard必须在不同的机器上面。尤其是configServer，机器必须要稳定。其次就是片键的选择，要根据适合的场景选择片键</p>
+<ol>
+<li><p>hash片键</p>
+<p>数据分布均匀但是范围查询性能很差</p>
+</li>
+<li><p>range片键</p>
+<p>可能会有热点数据产生成</p>
+</li>
+</ol>
 
       
     </div>
@@ -621,7 +630,7 @@ var jiathis_config={
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#MongoDB学习-一"><span class="nav-number">1.</span> <span class="nav-text">MongoDB学习(一)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#MongoDB集群"><span class="nav-number">1.1.</span> <span class="nav-text">MongoDB集群</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#MongoDB数据同步原理"><span class="nav-number">1.1.1.</span> <span class="nav-text">MongoDB数据同步原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MongoDB高可用"><span class="nav-number">1.1.2.</span> <span class="nav-text">MongoDB高可用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MongoDB从节点参数"><span class="nav-number">1.1.3.</span> <span class="nav-text">MongoDB从节点参数</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#MongoDB学习-一"><span class="nav-number">1.</span> <span class="nav-text">MongoDB学习(一)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#MongoDB集群"><span class="nav-number">1.1.</span> <span class="nav-text">MongoDB集群</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#MongoDB数据同步原理"><span class="nav-number">1.1.1.</span> <span class="nav-text">MongoDB数据同步原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MongoDB高可用"><span class="nav-number">1.1.2.</span> <span class="nav-text">MongoDB高可用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MongoDB从节点参数"><span class="nav-number">1.1.3.</span> <span class="nav-text">MongoDB从节点参数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MongoDB的集群类型"><span class="nav-number">1.2.</span> <span class="nav-text">MongoDB的集群类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#副本集群"><span class="nav-number">1.2.1.</span> <span class="nav-text">副本集群</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分片集群"><span class="nav-number">1.2.2.</span> <span class="nav-text">分片集群</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
