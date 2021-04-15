@@ -263,7 +263,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.lmcpf.com/2018/11/18/TKMapper-设置主键返回到插入的对象中/">
+    <link itemprop="mainEntityOfPage" href="http://www.lmcpf.com/2019/03/20/tk.mybatis.mapper.provider.base.BaseInsertProvider.init()/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="caopengflying">
@@ -282,7 +282,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/11/18/TKMapper-设置主键返回到插入的对象中/" itemprop="url">TKMapper 设置主键返回到插入的对象中</a></h1>
+                <a class="post-title-link" href="/2019/03/20/tk.mybatis.mapper.provider.base.BaseInsertProvider.init()/" itemprop="url">tk.mybatis.mapper.provider.base.BaseInsertProvider.<init>()</a></h1>
         
 
         <div class="post-meta">
@@ -294,8 +294,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-18T23:57:20+08:00">
-                2018-11-18
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-20T23:57:20+08:00">
+                2019-03-20
               </time>
             
 
@@ -312,7 +312,7 @@
 
           
           
-             <span id="/2018/11/18/TKMapper-设置主键返回到插入的对象中/" class="leancloud_visitors" data-flag-title="TKMapper 设置主键返回到插入的对象中">
+             <span id="/2019/03/20/tk.mybatis.mapper.provider.base.BaseInsertProvider.init()/" class="leancloud_visitors" data-flag-title="tk.mybatis.mapper.provider.base.BaseInsertProvider.<init>()">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -345,12 +345,15 @@
       
         
           
-          介绍tkMapper是mybatis的一个工具，他简化了数据库的单表操作。开发人员不需要编写sql，不需要去配置文件书写sql语句。只要写好实体类就可以支持对应的增删改查的方法。
-使用Insert的时候，有时候需要将插入成功后原对象中没有主键问题在使用mybatis的时候可以采用 selectKey
+          tk.mybatis.mapper.provider.base.BaseInsertProvider.()出现这个错误是通用Mapper初始化的错误，排查的方向就是往这个方向，可能的情况有以下几种：
+
+1.jar包冲突
+
+MapperCan 扫包配置错误我的错误就是扫描包错误。我的项目是采用spri
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/11/18/TKMapper-设置主键返回到插入的对象中/#more" rel="contents">
+            <a class="btn" href="/2019/03/20/tk.mybatis.mapper.provider.base.BaseInsertProvider.init()/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -403,7 +406,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.lmcpf.com/2018/11/12/项目管理-知识体系交流/">
+    <link itemprop="mainEntityOfPage" href="http://www.lmcpf.com/2019/01/04/Non-terminating-decimal-expansion-no-exact-representable-decimal-result/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="caopengflying">
@@ -422,7 +425,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/11/12/项目管理-知识体系交流/" itemprop="url">项目管理-知识体系交流</a></h1>
+                <a class="post-title-link" href="/2019/01/04/Non-terminating-decimal-expansion-no-exact-representable-decimal-result/" itemprop="url">Non-terminating decimal expansion; no exact representable decimal result</a></h1>
         
 
         <div class="post-meta">
@@ -434,8 +437,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-12T18:59:08+08:00">
-                2018-11-12
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-04T19:46:31+08:00">
+                2019-01-04
               </time>
             
 
@@ -457,8 +460,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/项目管理/" itemprop="url" rel="index">
-                    <span itemprop="name">项目管理</span>
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
                   </a>
                 </span>
 
@@ -474,7 +477,7 @@
 
           
           
-             <span id="/2018/11/12/项目管理-知识体系交流/" class="leancloud_visitors" data-flag-title="项目管理-知识体系交流">
+             <span id="/2019/01/04/Non-terminating-decimal-expansion-no-exact-representable-decimal-result/" class="leancloud_visitors" data-flag-title="Non-terminating decimal expansion; no exact representable decimal result">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -507,14 +510,12 @@
       
         
           
-          #什么是项目
-在项目经理的眼里，所有的要完成的事都是一个项目，这个非常的类似，在我们Java程序员眼中万事万物皆对象。项目：简单说就是在特定的时间范围内，某些人要完成特定的一系列任务。
-#什么是项目管理
-项目这个东西加了非常多的限制条件，时间，人力，很多任务。项目管理就是如何按照指定的时间，用最少的
+          BigDecimal是一种比Double更加浮点数更加精确的类，在使用的过程中尤其要注意除法的使用。除法的的调用方法：1BigDecimal.One.divide(BigDecimal.Three);//1/3
+使用除法时，可能会产生一种无限不循环小数，如果使用的BigDecimal时如果不处理就会
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/11/12/项目管理-知识体系交流/#more" rel="contents">
+            <a class="btn" href="/2019/01/04/Non-terminating-decimal-expansion-no-exact-representable-decimal-result/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -567,7 +568,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.lmcpf.com/2018/11/10/git放弃本地修改/">
+    <link itemprop="mainEntityOfPage" href="http://www.lmcpf.com/2018/12/16/java使用对象某个属性进行过滤/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="caopengflying">
@@ -586,7 +587,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/11/10/git放弃本地修改/" itemprop="url">git放弃本地修改</a></h1>
+                <a class="post-title-link" href="/2018/12/16/java使用对象某个属性进行过滤/" itemprop="url">java使用对象某个属性进行过滤</a></h1>
         
 
         <div class="post-meta">
@@ -598,8 +599,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-10T16:01:23+08:00">
-                2018-11-10
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-16T23:52:31+08:00">
+                2018-12-16
               </time>
             
 
@@ -609,28 +610,6 @@
           </span>
 
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/git/" itemprop="url" rel="index">
-                    <span itemprop="name">git</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
 
           
             
@@ -638,7 +617,7 @@
 
           
           
-             <span id="/2018/11/10/git放弃本地修改/" class="leancloud_visitors" data-flag-title="git放弃本地修改">
+             <span id="/2018/12/16/java使用对象某个属性进行过滤/" class="leancloud_visitors" data-flag-title="java使用对象某个属性进行过滤">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -671,12 +650,11 @@
       
         
           
-          本地修改了文件之后，包括增删改。现在不想要了想要丢弃。使用命令：12git fetch --allgit reset --hard origin/feature/分支
-或者12git checkout -- file  //改错了某个文件的内容 所有文件的话用 .代替 --filegit reset
-          ...
+          
+          
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/11/10/git放弃本地修改/#more" rel="contents">
+            <a class="btn" href="/2018/12/16/java使用对象某个属性进行过滤/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -729,7 +707,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.lmcpf.com/2018/10/30/使用链表实现LRU缓存淘汰算法/">
+    <link itemprop="mainEntityOfPage" href="http://www.lmcpf.com/2018/12/13/TDD-Junit单元测试/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="caopengflying">
@@ -748,7 +726,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/10/30/使用链表实现LRU缓存淘汰算法/" itemprop="url">使用链表实现LRU缓存淘汰算法</a></h1>
+                <a class="post-title-link" href="/2018/12/13/TDD-Junit单元测试/" itemprop="url">Junit单元测试-TDD</a></h1>
         
 
         <div class="post-meta">
@@ -760,8 +738,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-30T21:05:38+08:00">
-                2018-10-30
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-13T23:47:28+08:00">
+                2018-12-13
               </time>
             
 
@@ -783,8 +761,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/数据结构与算法/" itemprop="url" rel="index">
-                    <span itemprop="name">数据结构与算法</span>
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
                   </a>
                 </span>
 
@@ -800,7 +778,7 @@
 
           
           
-             <span id="/2018/10/30/使用链表实现LRU缓存淘汰算法/" class="leancloud_visitors" data-flag-title="使用链表实现LRU缓存淘汰算法">
+             <span id="/2018/12/13/TDD-Junit单元测试/" class="leancloud_visitors" data-flag-title="Junit单元测试-TDD">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -833,11 +811,19 @@
       
         
           
-          #缓存缓存是非常常见的东西，比如cpu缓存，内存缓存。所有的缓存都是为了提高效率的。实际上就是当用户访问时可以直接从缓存中读取数据。缓存总会有数据存满的时候，那么缓存满了之后如何去删除老的数据呢。这个时候的算法常见的有三种FIFO:first in first out 先进先出。先存储进来的先删除L
+          Junit单元测试-TDD单元测试是什么?单元测试，有单元和测试两个词组成。单元就是最小单位，测试就验证正确性。合起来就是针对程序的最小单位进行正确性检验的测试工作。
+为什么要单元测试?
+减少bug
+快速定位bug
+提高代码质量
+减少调试时间
+
+…….
+一个机器，由各种细小的零件组成，如果其中某件零
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/10/30/使用链表实现LRU缓存淘汰算法/#more" rel="contents">
+            <a class="btn" href="/2018/12/13/TDD-Junit单元测试/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -890,7 +876,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.lmcpf.com/2018/10/29/synchronized和volatile两个关键字的区别/">
+    <link itemprop="mainEntityOfPage" href="http://www.lmcpf.com/2018/11/26/redis缓存在实际中踩过的坑/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="caopengflying">
@@ -909,7 +895,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/10/29/synchronized和volatile两个关键字的区别/" itemprop="url">synchronized和volatile两个关键字的区别</a></h1>
+                <a class="post-title-link" href="/2018/11/26/redis缓存在实际中踩过的坑/" itemprop="url">redis缓存在实际中踩过的坑</a></h1>
         
 
         <div class="post-meta">
@@ -921,8 +907,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-29T20:46:42+08:00">
-                2018-10-29
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-26T23:50:24+08:00">
+                2018-11-26
               </time>
             
 
@@ -932,28 +918,6 @@
           </span>
 
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/javaBase/" itemprop="url" rel="index">
-                    <span itemprop="name">javaBase</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
 
           
             
@@ -961,7 +925,7 @@
 
           
           
-             <span id="/2018/10/29/synchronized和volatile两个关键字的区别/" class="leancloud_visitors" data-flag-title="synchronized和volatile两个关键字的区别">
+             <span id="/2018/11/26/redis缓存在实际中踩过的坑/" class="leancloud_visitors" data-flag-title="redis缓存在实际中踩过的坑">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -994,12 +958,11 @@
       
         
           
-          synchronized和volatile两个关键字的区别synchronized同步锁这是线程同步锁，确保代码中只有一个线程能修改。
-volatile共享变量修饰词，使用volatile修饰过后的变量，会拥有可见性，即在一个线程将该值修改后，立刻写入到主存中，其他的线程读取就能读到修改后的值。vo
-          ...
+          
+          
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/10/29/synchronized和volatile两个关键字的区别/#more" rel="contents">
+            <a class="btn" href="/2018/11/26/redis缓存在实际中踩过的坑/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1052,7 +1015,7 @@ volatile共享变量修饰词，使用volatile修饰过后的变量，会拥有�
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.lmcpf.com/2018/10/29/线程的状态/">
+    <link itemprop="mainEntityOfPage" href="http://www.lmcpf.com/2018/11/21/java-8在实际中的应用/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="caopengflying">
@@ -1071,7 +1034,7 @@ volatile共享变量修饰词，使用volatile修饰过后的变量，会拥有�
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/10/29/线程的状态/" itemprop="url">线程的状态</a></h1>
+                <a class="post-title-link" href="/2018/11/21/java-8在实际中的应用/" itemprop="url">java 8在实际发开中的应用</a></h1>
         
 
         <div class="post-meta">
@@ -1083,8 +1046,8 @@ volatile共享变量修饰词，使用volatile修饰过后的变量，会拥有�
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-29T20:06:26+08:00">
-                2018-10-29
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-21T23:48:27+08:00">
+                2018-11-21
               </time>
             
 
@@ -1094,28 +1057,6 @@ volatile共享变量修饰词，使用volatile修饰过后的变量，会拥有�
           </span>
 
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/javaBase/" itemprop="url" rel="index">
-                    <span itemprop="name">javaBase</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
 
           
             
@@ -1123,7 +1064,7 @@ volatile共享变量修饰词，使用volatile修饰过后的变量，会拥有�
 
           
           
-             <span id="/2018/10/29/线程的状态/" class="leancloud_visitors" data-flag-title="线程的状态">
+             <span id="/2018/11/21/java-8在实际中的应用/" class="leancloud_visitors" data-flag-title="java 8在实际发开中的应用">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1156,11 +1097,11 @@ volatile共享变量修饰词，使用volatile修饰过后的变量，会拥有�
       
         
           
-          线程的状态1.新建状态：当线程在创建的时候2.就绪状态：调用了start方法，就进入了就绪状态3.运行状态: cpu调用的时候就是运行状态4.阻塞状态：阻塞状态分为几种，使用同步锁阻塞、等待阻塞：在调用了wait方法后进入阻塞状态。其他阻塞：调用sleep阻塞，延迟阻塞，调用了join方法，就是等待
+          #java 8新增的内容现在很多公司都在使用java 8，但是工作一段时间发现很多同事还是没有使用java 8。java 8就跟java 5一样是java版本中里程碑的一个版本。相信没有多久大家都会使用java 8来进行实际开发。java 8中新增的几个重要的功能。（1）lambda表达式（2）st
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/10/29/线程的状态/#more" rel="contents">
+            <a class="btn" href="/2018/11/21/java-8在实际中的应用/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1213,7 +1154,7 @@ volatile共享变量修饰词，使用volatile修饰过后的变量，会拥有�
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.lmcpf.com/2018/10/29/Java中常见的Exception/">
+    <link itemprop="mainEntityOfPage" href="http://www.lmcpf.com/2018/11/21/mysql根据字段查询和删除重复数据/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="caopengflying">
@@ -1232,7 +1173,7 @@ volatile共享变量修饰词，使用volatile修饰过后的变量，会拥有�
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/10/29/Java中常见的Exception/" itemprop="url">Java中常见的Exception</a></h1>
+                <a class="post-title-link" href="/2018/11/21/mysql根据字段查询和删除重复数据/" itemprop="url">根据某个字段查询重复数据并删除</a></h1>
         
 
         <div class="post-meta">
@@ -1244,8 +1185,8 @@ volatile共享变量修饰词，使用volatile修饰过后的变量，会拥有�
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-29T20:00:26+08:00">
-                2018-10-29
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-21T23:48:27+08:00">
+                2018-11-21
               </time>
             
 
@@ -1267,8 +1208,8 @@ volatile共享变量修饰词，使用volatile修饰过后的变量，会拥有�
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/javaBase/" itemprop="url" rel="index">
-                    <span itemprop="name">javaBase</span>
+                  <a href="/categories/mysql/" itemprop="url" rel="index">
+                    <span itemprop="name">mysql</span>
                   </a>
                 </span>
 
@@ -1284,7 +1225,7 @@ volatile共享变量修饰词，使用volatile修饰过后的变量，会拥有�
 
           
           
-             <span id="/2018/10/29/Java中常见的Exception/" class="leancloud_visitors" data-flag-title="Java中常见的Exception">
+             <span id="/2018/11/21/mysql根据字段查询和删除重复数据/" class="leancloud_visitors" data-flag-title="根据某个字段查询重复数据并删除">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1317,11 +1258,12 @@ volatile共享变量修饰词，使用volatile修饰过后的变量，会拥有�
       
         
           
-          父类Exception子类：RunTimeException、IOException、ClassNotFoundExceptionRunTimeException: NullPointException、IllegalmentArgumentException、IndexOutOfBoundsExc
+          实际开发中遇到一个问题，线上系统报错，需要手动向库里插入数据，然后点了两次手动发送按钮，导致库中有重复的数据。需求：根据某个字段查询重复数据并删除1.查询出所有数据进行分组之后，和重复数据的重复次数的查询数据，先列下：
+1select * from table1 t1 where (t1.usern
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/10/29/Java中常见的Exception/#more" rel="contents">
+            <a class="btn" href="/2018/11/21/mysql根据字段查询和删除重复数据/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1374,7 +1316,7 @@ volatile共享变量修饰词，使用volatile修饰过后的变量，会拥有�
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.lmcpf.com/2018/10/29/Java发生OOM怎么办？/">
+    <link itemprop="mainEntityOfPage" href="http://www.lmcpf.com/2018/11/21/代码清洁之道一/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="caopengflying">
@@ -1393,7 +1335,7 @@ volatile共享变量修饰词，使用volatile修饰过后的变量，会拥有�
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/10/29/Java发生OOM怎么办？/" itemprop="url">Java发生OOM怎么办</a></h1>
+                <a class="post-title-link" href="/2018/11/21/代码清洁之道一/" itemprop="url">代码清洁之道一</a></h1>
         
 
         <div class="post-meta">
@@ -1405,8 +1347,8 @@ volatile共享变量修饰词，使用volatile修饰过后的变量，会拥有�
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-29T19:30:24+08:00">
-                2018-10-29
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-21T23:48:27+08:00">
+                2018-11-21
               </time>
             
 
@@ -1428,8 +1370,8 @@ volatile共享变量修饰词，使用volatile修饰过后的变量，会拥有�
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/javaBase/" itemprop="url" rel="index">
-                    <span itemprop="name">javaBase</span>
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
                   </a>
                 </span>
 
@@ -1445,7 +1387,7 @@ volatile共享变量修饰词，使用volatile修饰过后的变量，会拥有�
 
           
           
-             <span id="/2018/10/29/Java发生OOM怎么办？/" class="leancloud_visitors" data-flag-title="Java发生OOM怎么办">
+             <span id="/2018/11/21/代码清洁之道一/" class="leancloud_visitors" data-flag-title="代码清洁之道一">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1478,12 +1420,11 @@ volatile共享变量修饰词，使用volatile修饰过后的变量，会拥有�
       
         
           
-          Java发生OOM怎么办？当java中出现了oom，首先应该定位是那个区域发生了oom。java.lang.OutOfMemoryError异常后面会跟着不同的值，对应不同的区域发生oom
-堆发生oom1Exception in thread "main" java.lang.OutOfMemory
-          ...
+          代码清洁之道
+          
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/10/29/Java发生OOM怎么办？/#more" rel="contents">
+            <a class="btn" href="/2018/11/21/代码清洁之道一/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1536,7 +1477,7 @@ volatile共享变量修饰词，使用volatile修饰过后的变量，会拥有�
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.lmcpf.com/2018/10/29/hashSet去重/">
+    <link itemprop="mainEntityOfPage" href="http://www.lmcpf.com/2018/11/21/如何识别排序的优劣/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="caopengflying">
@@ -1555,7 +1496,7 @@ volatile共享变量修饰词，使用volatile修饰过后的变量，会拥有�
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/10/29/hashSet去重/" itemprop="url">hashSet去重</a></h1>
+                <a class="post-title-link" href="/2018/11/21/如何识别排序的优劣/" itemprop="url">如何识别排序的优劣</a></h1>
         
 
         <div class="post-meta">
@@ -1567,8 +1508,8 @@ volatile共享变量修饰词，使用volatile修饰过后的变量，会拥有�
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-29T19:30:24+08:00">
-                2018-10-29
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-21T23:48:27+08:00">
+                2018-11-21
               </time>
             
 
@@ -1590,8 +1531,8 @@ volatile共享变量修饰词，使用volatile修饰过后的变量，会拥有�
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/javaBase/" itemprop="url" rel="index">
-                    <span itemprop="name">javaBase</span>
+                  <a href="/categories/数据结构/" itemprop="url" rel="index">
+                    <span itemprop="name">数据结构</span>
                   </a>
                 </span>
 
@@ -1607,7 +1548,7 @@ volatile共享变量修饰词，使用volatile修饰过后的变量，会拥有�
 
           
           
-             <span id="/2018/10/29/hashSet去重/" class="leancloud_visitors" data-flag-title="hashSet去重">
+             <span id="/2018/11/21/如何识别排序的优劣/" class="leancloud_visitors" data-flag-title="如何识别排序的优劣">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1640,11 +1581,14 @@ volatile共享变量修饰词，使用volatile修饰过后的变量，会拥有�
       
         
           
-          hashSet存储的原理hashSet的存储结构与hashMap基本保持一致。向hashset中插入数据的时候采用的公式是 使用该对象的hashcode值对hashset的大小取余并+1。然后判断该位置是否有对象，如果有就判断equals方法是否相同。如果相同就不插入，如果不相同就换个地方插入。如果
+          如何识别排序的优劣&emsp;&emsp;所有的排序都需要两个过程；
+
+比较大小 每个类型都有其对应的比较大小的方法
+交换顺序 两个数交换位置需要用到中间临时变量，就像一杯可乐和一杯雪碧如何将他们杯中的饮料互换，肯定要借用一个杯子，将可乐先放进去然后再把雪碧放入到可乐杯中，最后把借用杯子中的可乐倒入
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/10/29/hashSet去重/#more" rel="contents">
+            <a class="btn" href="/2018/11/21/如何识别排序的优劣/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1697,7 +1641,7 @@ volatile共享变量修饰词，使用volatile修饰过后的变量，会拥有�
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.lmcpf.com/2018/09/28/复杂度分析/">
+    <link itemprop="mainEntityOfPage" href="http://www.lmcpf.com/2018/11/21/队列在线程池中的使用/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="caopengflying">
@@ -1716,7 +1660,7 @@ volatile共享变量修饰词，使用volatile修饰过后的变量，会拥有�
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/09/28/复杂度分析/" itemprop="url">复杂度分析</a></h1>
+                <a class="post-title-link" href="/2018/11/21/队列在线程池中的使用/" itemprop="url">队列在线程池中得应用</a></h1>
         
 
         <div class="post-meta">
@@ -1728,8 +1672,8 @@ volatile共享变量修饰词，使用volatile修饰过后的变量，会拥有�
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-28T09:32:52+08:00">
-                2018-09-28
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-21T23:48:27+08:00">
+                2018-11-21
               </time>
             
 
@@ -1751,8 +1695,8 @@ volatile共享变量修饰词，使用volatile修饰过后的变量，会拥有�
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/数据结构与算法/" itemprop="url" rel="index">
-                    <span itemprop="name">数据结构与算法</span>
+                  <a href="/categories/并发编程/" itemprop="url" rel="index">
+                    <span itemprop="name">并发编程</span>
                   </a>
                 </span>
 
@@ -1768,7 +1712,7 @@ volatile共享变量修饰词，使用volatile修饰过后的变量，会拥有�
 
           
           
-             <span id="/2018/09/28/复杂度分析/" class="leancloud_visitors" data-flag-title="复杂度分析">
+             <span id="/2018/11/21/队列在线程池中的使用/" class="leancloud_visitors" data-flag-title="队列在线程池中得应用">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1801,11 +1745,12 @@ volatile共享变量修饰词，使用volatile修饰过后的变量，会拥有�
       
         
           
-          我们知道，代码是一行一行运行的。那么运行每一行代码的时间基本保持一致，我们可以把运行一行代码的时间称为单位时间（unitTime）。那么下面的代码耗费的时间为 (3n+1) * unitTime1234567public int fun(int n)&#123;       int sum = 0;
+          队列&emsp;&emsp;队列是一种非常常见的数据结构。具体说是操作操作受限的线性表数据结构。队列经常会与栈一起提到，两者是非常相似的，只不过他们的操作受限不同。 队列的受限是先进先出。而栈是先进后出。举个例子，队列就是买票排队，先排队先买票。而栈就是大枪的压子弹，先压进来的子弹最后发射出去。
+队
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/09/28/复杂度分析/#more" rel="contents">
+            <a class="btn" href="/2018/11/21/队列在线程池中的使用/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1849,7 +1794,7 @@ volatile共享变量修饰词，使用volatile修饰过后的变量，会拥有�
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1895,7 +1840,7 @@ volatile共享变量修饰词，使用volatile修饰过后的变量，会拥有�
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">86</span>
+                  <span class="site-state-item-count">97</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1906,7 +1851,7 @@ volatile共享变量修饰词，使用volatile修饰过后的变量，会拥有�
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">30</span>
+                  <span class="site-state-item-count">33</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -1917,7 +1862,7 @@ volatile共享变量修饰词，使用volatile修饰过后的变量，会拥有�
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">90</span>
+                  <span class="site-state-item-count">103</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -1954,7 +1899,7 @@ volatile共享变量修饰词，使用volatile修饰过后的变量，会拥有�
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

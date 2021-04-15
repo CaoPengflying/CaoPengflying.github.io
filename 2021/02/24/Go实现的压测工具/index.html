@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="压测,go-stress-testing," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Go实现的压测工具​        压测是用来确定系统稳定性的一种测试方法，主要检测服务器的承受能力，包括用户承受能力。这样可以对未来可能达到用户数量以及活动时高流量时有一个预估，可以提前准备机器来保证项目稳定运行。 压测名词及服务器指标名词 QPS：服务器每秒钟处理请求数量 (req/sec 请求数/秒 一段时间内总请求数/请求时间) 错误率：在压测中，请求成功的数量与请求失败数量的比率 平均响">
+<meta name="keywords" content="压测,go-stress-testing">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Go实现的压测工具">
+<meta property="og:url" content="http://www.lmcpf.com/2021/02/24/Go实现的压测工具/index.html">
+<meta property="og:site_name" content="caopengflying&#39;s blog">
+<meta property="og:description" content="Go实现的压测工具​        压测是用来确定系统稳定性的一种测试方法，主要检测服务器的承受能力，包括用户承受能力。这样可以对未来可能达到用户数量以及活动时高流量时有一个预估，可以提前准备机器来保证项目稳定运行。 压测名词及服务器指标名词 QPS：服务器每秒钟处理请求数量 (req/sec 请求数/秒 一段时间内总请求数/请求时间) 错误率：在压测中，请求成功的数量与请求失败数量的比率 平均响">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://www.lmcpf.com/Users/caopengfei/Library/Application%20Support/typora-user-images/image-20210225151134571.png">
+<meta property="og:image" content="http://www.lmcpf.com/Users/caopengfei/Library/Application%20Support/typora-user-images/image-20210225151150351.png">
+<meta property="og:image" content="http://www.lmcpf.com/Users/caopengfei/Library/Application%20Support/typora-user-images/image-20210225151247582.png">
+<meta property="og:updated_time" content="2021-03-17T06:11:59.117Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Go实现的压测工具">
+<meta name="twitter:description" content="Go实现的压测工具​        压测是用来确定系统稳定性的一种测试方法，主要检测服务器的承受能力，包括用户承受能力。这样可以对未来可能达到用户数量以及活动时高流量时有一个预估，可以提前准备机器来保证项目稳定运行。 压测名词及服务器指标名词 QPS：服务器每秒钟处理请求数量 (req/sec 请求数/秒 一段时间内总请求数/请求时间) 错误率：在压测中，请求成功的数量与请求失败数量的比率 平均响">
+<meta name="twitter:image" content="http://www.lmcpf.com/Users/caopengfei/Library/Application%20Support/typora-user-images/image-20210225151134571.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.lmcpf.com/2021/02/24/Go实现的压测工具/"/>
+
+
+
+
+
+  <title>Go实现的压测工具 | caopengflying's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">caopengflying's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">编程，学的是思维，写的是人生。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.lmcpf.com/2021/02/24/Go实现的压测工具/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="caopengflying">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="caopengflying's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Go实现的压测工具</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-02-24T22:12:04+08:00">
+                2021-02-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/压测/" itemprop="url" rel="index">
+                    <span itemprop="name">压测</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2021/02/24/Go实现的压测工具/" class="leancloud_visitors" data-flag-title="Go实现的压测工具">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Go实现的压测工具"><a href="#Go实现的压测工具" class="headerlink" title="Go实现的压测工具"></a>Go实现的压测工具</h1><p>​        压测是用来确定系统稳定性的一种测试方法，主要检测服务器的承受能力，包括用户承受能力。这样可以对未来可能达到用户数量以及活动时高流量时有一个预估，可以提前准备机器来保证项目稳定运行。</p>
+<h2 id="压测名词及服务器指标名词"><a href="#压测名词及服务器指标名词" class="headerlink" title="压测名词及服务器指标名词"></a>压测名词及服务器指标名词</h2><ol>
+<li>QPS：服务器每秒钟处理请求数量 (req/sec 请求数/秒 一段时间内总请求数/请求时间)</li>
+<li>错误率：在压测中，请求成功的数量与请求失败数量的比率</li>
+<li>平均响应时间：在一次压测中，从发出请求或指令系统做出的反映(响应)的平均时间</li>
+<li>cpu的利用率：CUP 利用率分用户态、系统态和空闲态，CPU利用率是指:CPU执行非系统空闲进程的时间与CPU总执行时间的比率</li>
+<li>内存的使用率：内存使用率指的是此进程所开销的内存。</li>
+<li>网卡负载：网卡的进出带宽,包量</li>
+</ol>
+<h2 id="压测的指标"><a href="#压测的指标" class="headerlink" title="压测的指标"></a>压测的指标</h2><ul>
+<li>压测我们需要有目的性的压测，这次压测我们需要达到什么目标(如:单台机器的性能为 100QPS?网站能同时满足100W人同时在线)</li>
+<li>可以通过以下计算方法来进行计算:</li>
+<li>压测原则:每天80%的访问量集中在20%的时间里，这20%的时间就叫做峰值</li>
+<li>公式: ( 总PV数<code>*</code>80% ) / ( 每天的秒数<code>*</code>20% ) = 峰值时间每秒钟请求数(QPS)</li>
+<li>机器: 峰值时间每秒钟请求数(QPS) / 单台机器的QPS = 需要的机器的数量</li>
+<li>假设:网站每天的用户数(100W)，每天的用户的访问量约为3000W PV，这台机器的需要多少QPS?</li>
+</ul>
+<blockquote>
+<p>( 30000000<em>0.8 ) / (86400 </em> 0.2) ≈ 1389 (QPS)</p>
+</blockquote>
+<ul>
+<li>假设:单台机器的的QPS是69，需要需要多少台机器来支撑？</li>
+</ul>
+<blockquote>
+<p>1389 / 69 ≈ 20</p>
+</blockquote>
+<h2 id="压测的工具"><a href="#压测的工具" class="headerlink" title="压测的工具"></a>压测的工具</h2><p>​        本文使用go实现的压测工具 <a href="https://github.com/link1st/go-stress-testing/releases" target="_blank" rel="noopener">go-stress-testing</a></p>
+<p>​        参数说明:</p>
+<pre><code>Usage of ./go-stress-testing-mac:
+-c uint
+    并发数 (default 1)
+-n uint
+    请求数(单个并发/协程) (default 1)
+-u string
+    压测地址
+-d string
+    调试模式 (default &quot;false&quot;)
+-H value
+    自定义头信息传递给服务器 示例:-H &apos;Content-Type: application/json&apos;
+-data string
+    HTTP POST方式传送数据
+-v string
+    验证方法 http 支持:statusCode、json webSocket支持:json
+-p string
+    curl文件路径
+</code></pre><p>​        运行 以mac为示例</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./go-stress-testing-mac -c 1 -n 100 -u https://www.baidu.com/</span><br></pre></td></tr></table></figure>
+<h2 id="压测go、nodejs、java框架的性能对比"><a href="#压测go、nodejs、java框架的性能对比" class="headerlink" title="压测go、nodejs、java框架的性能对比"></a>压测go、nodejs、java框架的性能对比</h2><p>使用go、nodejs、java开发一个web应用。同时连接一个mongo数据库进行一次查询。</p>
+<p>go使用gin，mgo框架。</p>
+<p><img src="/Users/caopengfei/Library/Application Support/typora-user-images/image-20210225151134571.png" alt="image-20210225151134571"></p>
+<p>nodejs使用egg,mongoose框架</p>
+<p><img src="/Users/caopengfei/Library/Application Support/typora-user-images/image-20210225151150351.png" alt="image-20210225151150351"></p>
+<p>java使用springboot,java-mongo-driver框架</p>
+<p><img src="/Users/caopengfei/Library/Application Support/typora-user-images/image-20210225151247582.png" alt="image-20210225151247582"></p>
+<p><strong>压测结果 go &gt; nodejs &gt; java</strong></p>
+<h2 id="别踩坑"><a href="#别踩坑" class="headerlink" title="别踩坑"></a>别踩坑</h2><p>cannot assign requested address</p>
+<p>不能够分配请求地址，该错误是压测的机器出了问题，每个请求都会占用测试机器的一个端口号。而机器的端口号是数量限制的。</p>
+<p>linux的端口号为1024-65535，当端口不能及时释放时就会报cannot assign requested address错误</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sysctl -w net.ipv4.tcp_fin_timeout=30  #修改系統默认的TIMEOUT时间，默认为60s </span><br><span class="line">sysctl -w net.ipv4.tcp_timestamps=1    #修改tcp/ip协议配置， 通过配置/proc/sys/net/ipv4/tcp_tw_resue, 默认为0，修改为1，释放TIME_WAIT端口给新连接使用</span><br><span class="line">sysctl -w net.ipv4.tcp_tw_recycle=1     #修改tcp/ip协议配置，快速回收socket资源，默认为0，修改为1：</span><br><span class="line">sysctl -w net.ipv4.tcp_tw_reuse = 1     #允许端口重用</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+<div>
+
+<div>
+
+    <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+
+</div>
+
+</div>
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创，您的支持将鼓励我继续创作</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="caopengflying 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="caopengflying 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/压测/" rel="tag"># 压测</a>
+          
+            <a href="/tags/go-stress-testing/" rel="tag"># go-stress-testing</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2021/02/19/Go并发编程-Once/" rel="next" title="Go并发编程-Once">
+                <i class="fa fa-chevron-left"></i> Go并发编程-Once
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2021/02/25/Go并发编程-map/" rel="prev" title="Go并发编程-map">
+                Go并发编程-map <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">caopengflying</p>
+              <p class="site-description motion-element" itemprop="description">CaoPengFei的技术博客</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">97</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">33</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">103</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Go实现的压测工具"><span class="nav-number">1.</span> <span class="nav-text">Go实现的压测工具</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#压测名词及服务器指标名词"><span class="nav-number">1.1.</span> <span class="nav-text">压测名词及服务器指标名词</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#压测的指标"><span class="nav-number">1.2.</span> <span class="nav-text">压测的指标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#压测的工具"><span class="nav-number">1.3.</span> <span class="nav-text">压测的工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#压测go、nodejs、java框架的性能对比"><span class="nav-number">1.4.</span> <span class="nav-text">压测go、nodejs、java框架的性能对比</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#别踩坑"><span class="nav-number">1.5.</span> <span class="nav-text">别踩坑</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">caopengflying</span>
+
+  
+</div>
+
+
+  <div class="powered-by">CaoPengflying</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">博客 &mdash; </div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("QvYPT7ysHmIcKhVJCaBfoul8-gzGzoHsz", "3tXLKBWxENoj3lseRo7fjJ1d");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+<!-- 页面点击小红心 --> 
+<script type="text/javascript" src="/js/src/love.js"></script>
+</html>

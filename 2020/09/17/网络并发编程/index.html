@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="caopengflying&#39;s blog">
 <meta property="og:description" content="网络并发编程​        并发编程是指程序在运行期间，可以同时的执行多任务，充分利用资源达到节省时间的目的。实现I/O并发编程的三种方式：进程，线程，协程，异步。这里不过多解释他们之中的基本含义。进程和线程都是基于计算机操作系统的内核的方式，涉及到了上下文的切换。也就是用户核和系统内核之间的切换，这个的成本是比较高的。而协程都是用户级切换，系统内核无感知。所以说协程的效率会更好。 协程​">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-09-21T01:12:27.761Z">
+<meta property="og:updated_time" content="2021-01-05T03:49:30.873Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="网络并发编程">
 <meta name="twitter:description" content="网络并发编程​        并发编程是指程序在运行期间，可以同时的执行多任务，充分利用资源达到节省时间的目的。实现I/O并发编程的三种方式：进程，线程，协程，异步。这里不过多解释他们之中的基本含义。进程和线程都是基于计算机操作系统的内核的方式，涉及到了上下文的切换。也就是用户核和系统内核之间的切换，这个的成本是比较高的。而协程都是用户级切换，系统内核无感知。所以说协程的效率会更好。 协程​">
@@ -376,7 +376,7 @@
 </ol>
 <h2 id="阻塞、非阻塞、同步、异步的关系和区别"><a href="#阻塞、非阻塞、同步、异步的关系和区别" class="headerlink" title="阻塞、非阻塞、同步、异步的关系和区别"></a>阻塞、非阻塞、同步、异步的关系和区别</h2><p>​        我们经常会听到，同步阻塞i/o，异步i/o…想搞清楚他们之间的区别和联系，首先要明白这几个词语是用来描述什么的。这几个词语用来描述应用程序和计算机之间是怎么协调工作的。</p>
 <p>​        一般我们把这个过程分为三个角色：应用程序，系统内核，I/O外设。流程如下图所示</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sequenceDiagram</span><br><span class="line">    应用程序 -&gt;&gt; 系统内核 : 1</span><br><span class="line">    系统内核 -&gt;&gt; + I/O外设 : 2</span><br><span class="line">    I/O外设 --&gt;&gt; + 系统内核 : 3</span><br><span class="line">    系统内核--&gt;&gt; + 应用程序 : 4</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sequenceDiagram</span><br><span class="line">title: </span><br><span class="line">    应用程序 -&gt;&gt; 系统内核 : 1</span><br><span class="line">    系统内核 -&gt;&gt; + I/O外设 : 2</span><br><span class="line">    I/O外设 --&gt;&gt; + 系统内核 : 3</span><br><span class="line">    系统内核--&gt;&gt; + 应用程序 : 4</span><br></pre></td></tr></table></figure>
 <p>​        流程中，系统内核和I/O外设之间的过程，对应用程序是不可见的。阻塞、非阻塞、同步与异步都是用来描述应用程序和系统内核之间的关系，角度不太一样而已。阻塞与非阻塞说的是应用程序向系统内核发起请求后，应用程序是否会挂起，如果此时应用程序可以做其他事情则为非阻塞，如果挂起等着系统内核响应则为阻塞。同步与异步指的是系统内核拿到数据后与应用程序传递的方式。如果是应用程序轮询询问系统内核为同步，如果是系统内核通知应用程序则为异步。</p>
 <p>​        常用的模型有三种 同步阻塞I/O，同步非阻塞I/O，异步I/O(异步非阻塞I/O)</p>
 <p>同步阻塞I/O也是传统的模型，如上图所示。同步非阻塞时I/O如下图所示：</p>
@@ -566,7 +566,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">86</span>
+                  <span class="site-state-item-count">97</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -577,7 +577,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">30</span>
+                  <span class="site-state-item-count">33</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -588,7 +588,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">90</span>
+                  <span class="site-state-item-count">103</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -641,7 +641,7 @@ var jiathis_config={
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

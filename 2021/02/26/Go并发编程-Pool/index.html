@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Go并发编程,Pool," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Go并发编程-Pool​        支持并发编程的池子，通过pool可以临时缓存一批对象，从而达到无需重新创建并且复用的效果。提高系统的性能。临时缓存的一批意思是说连接池中的对象是会在未来某一时刻回收的。 简单使用注意事项：  Sync.Pool是线程安全的，多个goroutine可以并发存取对象  sync.Pool不可以在使用之后复制使用。   使用方法：New、Get、Put New：一">
+<meta name="keywords" content="Go并发编程,Pool">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Go并发编程-Pool">
+<meta property="og:url" content="http://www.lmcpf.com/2021/02/26/Go并发编程-Pool/index.html">
+<meta property="og:site_name" content="caopengflying&#39;s blog">
+<meta property="og:description" content="Go并发编程-Pool​        支持并发编程的池子，通过pool可以临时缓存一批对象，从而达到无需重新创建并且复用的效果。提高系统的性能。临时缓存的一批意思是说连接池中的对象是会在未来某一时刻回收的。 简单使用注意事项：  Sync.Pool是线程安全的，多个goroutine可以并发存取对象  sync.Pool不可以在使用之后复制使用。   使用方法：New、Get、Put New：一">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2021-03-26T10:10:34.817Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Go并发编程-Pool">
+<meta name="twitter:description" content="Go并发编程-Pool​        支持并发编程的池子，通过pool可以临时缓存一批对象，从而达到无需重新创建并且复用的效果。提高系统的性能。临时缓存的一批意思是说连接池中的对象是会在未来某一时刻回收的。 简单使用注意事项：  Sync.Pool是线程安全的，多个goroutine可以并发存取对象  sync.Pool不可以在使用之后复制使用。   使用方法：New、Get、Put New：一">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.lmcpf.com/2021/02/26/Go并发编程-Pool/"/>
+
+
+
+
+
+  <title>Go并发编程-Pool | caopengflying's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">caopengflying's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">编程，学的是思维，写的是人生。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.lmcpf.com/2021/02/26/Go并发编程-Pool/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="caopengflying">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="caopengflying's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Go并发编程-Pool</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-02-26T22:12:04+08:00">
+                2021-02-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Go并发编程/" itemprop="url" rel="index">
+                    <span itemprop="name">Go并发编程</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2021/02/26/Go并发编程-Pool/" class="leancloud_visitors" data-flag-title="Go并发编程-Pool">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Go并发编程-Pool"><a href="#Go并发编程-Pool" class="headerlink" title="Go并发编程-Pool"></a>Go并发编程-Pool</h1><p>​        支持并发编程的池子，通过pool可以临时缓存一批对象，从而达到无需重新创建并且复用的效果。提高系统的性能。临时缓存的一批意思是说连接池中的对象是会在未来某一时刻回收的。</p>
+<h2 id="简单使用"><a href="#简单使用" class="headerlink" title="简单使用"></a>简单使用</h2><p>注意事项：</p>
+<ol>
+<li><p>Sync.Pool是线程安全的，多个goroutine可以并发存取对象</p>
+</li>
+<li><p>sync.Pool不可以在使用之后复制使用。</p>
+</li>
+</ol>
+<p>使用方法：New、Get、Put</p>
+<p>New：一个创建函数，当调用Get时池子中没有对象时会使用New创建并返回</p>
+<p>Get：返回池子中的对象</p>
+<p>Put: 向池子中放入对象</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//实现一个byte slice缓冲池</span></span><br><span class="line"><span class="keyword">var</span> buffers = sync.Pool&#123;</span><br><span class="line">	New: <span class="function"><span class="keyword">func</span><span class="params">()</span> <span class="title">interface</span></span>&#123;&#125; &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="built_in">new</span>(bytes.Buffer)</span><br><span class="line">	&#125;,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">GetBuffer</span><span class="params">()</span> *<span class="title">bytes</span>.<span class="title">Buffer</span></span> &#123;</span><br><span class="line">	<span class="keyword">return</span> buffers.Get().(*bytes.Buffer)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">PutBuffer</span><span class="params">(buf *bytes.Buffer)</span></span> &#123;</span><br><span class="line">	buf.Reset()</span><br><span class="line">	buffers.Put(buf)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="看实现"><a href="#看实现" class="headerlink" title="看实现"></a>看实现</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//pool核心有两部分local和victim。他们都是用来存储空闲的元素</span></span><br><span class="line"><span class="comment">//垃圾回收的时候victim会被移除，然后local会数据给到victim，local会被清除掉。而victim可能会被清除可能会捡回来重新使用</span></span><br><span class="line"><span class="comment">//Get方法如果是从victim中取出，该元素就被复活了</span></span><br><span class="line"><span class="keyword">type</span> Pool <span class="keyword">struct</span> &#123;</span><br><span class="line">	noCopy noCopy <span class="comment">//不允许复制使用</span></span><br><span class="line"></span><br><span class="line">	local     unsafe.Pointer </span><br><span class="line">	localSize <span class="keyword">uintptr</span>        </span><br><span class="line"></span><br><span class="line">	victim     unsafe.Pointer </span><br><span class="line">	victimSize <span class="keyword">uintptr</span>       </span><br><span class="line"></span><br><span class="line">	New <span class="function"><span class="keyword">func</span><span class="params">()</span> <span class="title">interface</span></span>&#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 通过使用poolLocalInternal实现cpu缓存对齐，避免出现false sharing</span></span><br><span class="line"><span class="keyword">type</span> poolLocalInternal <span class="keyword">struct</span> &#123;</span><br><span class="line">	private <span class="keyword">interface</span>&#123;&#125; <span class="comment">// 私有的，只能有对应的P存取</span></span><br><span class="line">	shared  poolChain   <span class="comment">//共享的，可以由任意的 P 访问，但是只有本地的 P 才能 pushHead/popHead，其它 P 可以 popTail，相当于只有一个本地的 P 作为生产者（Producer），多个 P 作为消费者 （Consumer）</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> poolLocal <span class="keyword">struct</span> &#123;</span><br><span class="line">	poolLocalInternal</span><br><span class="line"></span><br><span class="line">	pad [<span class="number">128</span> - unsafe.Sizeof(poolLocalInternal&#123;&#125;)%<span class="number">128</span>]<span class="keyword">byte</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Get方法的核心实现"><a href="#Get方法的核心实现" class="headerlink" title="Get方法的核心实现"></a>Get方法的核心实现</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//get的实现的逻辑：优先从local中获取，如果local中没有，就从shared取出一个，就会使用</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(p *Pool)</span> <span class="title">Get</span><span class="params">()</span> <span class="title">interface</span></span>&#123;&#125; &#123;</span><br><span class="line">	l, pid := p.pin()</span><br><span class="line">	x := l.private</span><br><span class="line">	l.private = <span class="literal">nil</span></span><br><span class="line">	<span class="keyword">if</span> x == <span class="literal">nil</span> &#123;</span><br><span class="line">		x, _ = l.shared.popHead()</span><br><span class="line">		<span class="keyword">if</span> x == <span class="literal">nil</span> &#123;</span><br><span class="line">			x = p.getSlow(pid)</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	runtime_procUnpin()</span><br><span class="line">	<span class="keyword">if</span> x == <span class="literal">nil</span> &amp;&amp; p.New != <span class="literal">nil</span> &#123;</span><br><span class="line">		x = p.New()</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> x</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(p *Pool)</span> <span class="title">getSlow</span><span class="params">(pid <span class="keyword">int</span>)</span> <span class="title">interface</span></span>&#123;&#125; &#123;</span><br><span class="line">	size := atomic.LoadUintptr(&amp;p.localSize) </span><br><span class="line">	locals := p.local                       </span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="keyword">int</span>(size); i++ &#123;</span><br><span class="line">		l := indexLocal(locals, (pid+i+<span class="number">1</span>)%<span class="keyword">int</span>(size))</span><br><span class="line">		<span class="keyword">if</span> x, _ := l.shared.popTail(); x != <span class="literal">nil</span> &#123;</span><br><span class="line">			<span class="keyword">return</span> x</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	size = atomic.LoadUintptr(&amp;p.victimSize)</span><br><span class="line">	<span class="keyword">if</span> <span class="keyword">uintptr</span>(pid) &gt;= size &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">	&#125;</span><br><span class="line">	locals = p.victim</span><br><span class="line">	l := indexLocal(locals, pid)</span><br><span class="line">	<span class="keyword">if</span> x := l.private; x != <span class="literal">nil</span> &#123;</span><br><span class="line">		l.private = <span class="literal">nil</span></span><br><span class="line">		<span class="keyword">return</span> x</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="keyword">int</span>(size); i++ &#123;</span><br><span class="line">		l := indexLocal(locals, (pid+i)%<span class="keyword">int</span>(size))</span><br><span class="line">		<span class="keyword">if</span> x, _ := l.shared.popTail(); x != <span class="literal">nil</span> &#123;</span><br><span class="line">			<span class="keyword">return</span> x</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	atomic.StoreUintptr(&amp;p.victimSize, <span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="更高效的并发map-分片加锁"><a href="#更高效的并发map-分片加锁" class="headerlink" title="更高效的并发map-分片加锁"></a>更高效的并发map-分片加锁</h2><p>​    锁是性能下降的万恶之源，想要提高性能就要减少锁的竞争。可以通过分片的方式减少map的竞争锁从而提高性能。推荐使用 <a href="https://github.com/orcaman/concurrent-map/blob/master/concurrent_map.go" target="_blank" rel="noopener">concurrent-map</a></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">type</span> ConcurrentMap []*ConcurrentMapShard</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> SHARD_COUNT = <span class="number">32</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> ConcurrentMapShard <span class="keyword">struct</span> &#123;</span><br><span class="line">	sync.RWMutex</span><br><span class="line">	items <span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">interface</span>&#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">New</span><span class="params">()</span> <span class="title">ConcurrentMap</span></span> &#123;</span><br><span class="line">	m := <span class="built_in">make</span>(ConcurrentMap, SHARD_COUNT)</span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; SHARD_COUNT; i++ &#123;</span><br><span class="line">		m[i] = &amp;ConcurrentMapShard&#123;items: <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">interface</span>&#123;&#125;)&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> m</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(m ConcurrentMap)</span> <span class="title">GetShard</span><span class="params">(key <span class="keyword">string</span>)</span> *<span class="title">ConcurrentMapShard</span></span> &#123;</span><br><span class="line">	<span class="keyword">return</span> m[<span class="keyword">uint</span>(fnv32(key))%<span class="keyword">uint</span>(SHARD_COUNT)]</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(m ConcurrentMap)</span> <span class="title">Set</span><span class="params">(key <span class="keyword">string</span>, value <span class="keyword">interface</span>&#123;&#125;)</span></span> &#123;</span><br><span class="line">	shard := m.GetShard(key)</span><br><span class="line">	shard.Lock()</span><br><span class="line">	<span class="keyword">defer</span> shard.Unlock()</span><br><span class="line"></span><br><span class="line">	shard.items[key] = value</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(m ConcurrentMap)</span> <span class="title">Get</span><span class="params">(key <span class="keyword">string</span>)</span> <span class="params">(<span class="keyword">interface</span>&#123;&#125;, <span class="keyword">bool</span>)</span></span> &#123;</span><br><span class="line">	shard := m.GetShard(key)</span><br><span class="line">	shard.RLock()</span><br><span class="line">	<span class="keyword">defer</span> shard.RUnlock()</span><br><span class="line">	value, exist := shard.items[key]</span><br><span class="line">	<span class="keyword">return</span> value, exist</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">fnv32</span><span class="params">(key <span class="keyword">string</span>)</span> <span class="title">uint32</span></span> &#123;</span><br><span class="line">	hash := <span class="keyword">uint32</span>(<span class="number">2166136261</span>)</span><br><span class="line">	<span class="keyword">const</span> prime32 = <span class="keyword">uint32</span>(<span class="number">16777619</span>)</span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="built_in">len</span>(key); i++ &#123;</span><br><span class="line">		hash *= prime32</span><br><span class="line">		hash ^= <span class="keyword">uint32</span>(key[i])</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> hash</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="go-内置的sync-Map"><a href="#go-内置的sync-Map" class="headerlink" title="go 内置的sync.Map"></a>go 内置的sync.Map</h2><p>​    Go 1.9增加了一个线程安全的sync.Map，在特殊的场景中他的性能比RWMutex+map的方式好的多。场景：</p>
+<ol>
+<li><p>只会增长的缓存系统，一个key只写入一次而被读很多次</p>
+</li>
+<li><p>多个goroutine为不相交的键集读、写和重写键值对 </p>
+<p>定义很模糊，其实这种方式的场景要经过性能评测再决定是否使用。实际中他的使用场景还是比较少的。</p>
+</li>
+</ol>
+<h3 id="看实现-1"><a href="#看实现-1" class="headerlink" title="看实现"></a>看实现</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// sync.Map使用了冗余的字段，其中read字段是不需要加锁的，并且优先从read中读取、更新、删除。</span></span><br><span class="line"><span class="comment">// miss次数多了之后，将dirty数据提升为read并把dirty设置为nil.</span></span><br><span class="line"><span class="comment">// read和dirty指向同一个指针，read修改后dirty自动会修改</span></span><br><span class="line"><span class="keyword">type</span> Map <span class="keyword">struct</span> &#123;</span><br><span class="line">	mu Mutex</span><br><span class="line">	read atomic.Value <span class="comment">// readOnly</span></span><br><span class="line">	dirty <span class="keyword">map</span>[<span class="keyword">interface</span>&#123;&#125;]*entry</span><br><span class="line">	misses <span class="keyword">int</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// store同时实现了新增和修改。当read中存在时，就是更新的read不会用到锁，直接cas赋值，性能比较好，但是如果read中没有则会使用到锁，性能就会下降。Load和Delete大概的思路一致。只要都是操作read，性能就会非常好</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(m *Map)</span> <span class="title">Store</span><span class="params">(key, value <span class="keyword">interface</span>&#123;&#125;)</span></span> &#123;</span><br><span class="line">	read, _ := m.read.Load().(readOnly)</span><br><span class="line">	<span class="keyword">if</span> e, ok := read.m[key]; ok &amp;&amp; e.tryStore(&amp;value) &#123;</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	m.mu.Lock()</span><br><span class="line">	read, _ = m.read.Load().(readOnly)</span><br><span class="line">	<span class="keyword">if</span> e, ok := read.m[key]; ok &#123;</span><br><span class="line">		<span class="keyword">if</span> e.unexpungeLocked() &#123;</span><br><span class="line">			</span><br><span class="line">			m.dirty[key] = e</span><br><span class="line">		&#125;</span><br><span class="line">		e.storeLocked(&amp;value)</span><br><span class="line">	&#125; <span class="keyword">else</span> <span class="keyword">if</span> e, ok := m.dirty[key]; ok &#123;</span><br><span class="line">		e.storeLocked(&amp;value)</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		<span class="keyword">if</span> !read.amended &#123;</span><br><span class="line">			m.dirtyLocked()</span><br><span class="line">			m.read.Store(readOnly&#123;m: read.m, amended: <span class="literal">true</span>&#125;)</span><br><span class="line">		&#125;</span><br><span class="line">		m.dirty[key] = newEntry(value)</span><br><span class="line">	&#125;</span><br><span class="line">	m.mu.Unlock()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+<div>
+
+<div>
+
+    <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+
+</div>
+
+</div>
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创，您的支持将鼓励我继续创作</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="caopengflying 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="caopengflying 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Go并发编程/" rel="tag"># Go并发编程</a>
+          
+            <a href="/tags/Pool/" rel="tag"># Pool</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2021/02/26/Go并发编程-Semaphore/" rel="next" title="Go并发编程-Semaphore">
+                <i class="fa fa-chevron-left"></i> Go并发编程-Semaphore
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2021/03/04/Go并发编程-Context/" rel="prev" title="Go并发编程-Context">
+                Go并发编程-Context <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">caopengflying</p>
+              <p class="site-description motion-element" itemprop="description">CaoPengFei的技术博客</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">97</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">33</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">103</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Go并发编程-Pool"><span class="nav-number">1.</span> <span class="nav-text">Go并发编程-Pool</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#简单使用"><span class="nav-number">1.1.</span> <span class="nav-text">简单使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#看实现"><span class="nav-number">1.2.</span> <span class="nav-text">看实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Get方法的核心实现"><span class="nav-number">1.2.1.</span> <span class="nav-text">Get方法的核心实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#更高效的并发map-分片加锁"><span class="nav-number">1.3.</span> <span class="nav-text">更高效的并发map-分片加锁</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#go-内置的sync-Map"><span class="nav-number">1.4.</span> <span class="nav-text">go 内置的sync.Map</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#看实现-1"><span class="nav-number">1.4.1.</span> <span class="nav-text">看实现</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">caopengflying</span>
+
+  
+</div>
+
+
+  <div class="powered-by">CaoPengflying</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">博客 &mdash; </div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("QvYPT7ysHmIcKhVJCaBfoul8-gzGzoHsz", "3tXLKBWxENoj3lseRo7fjJ1d");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+<!-- 页面点击小红心 --> 
+<script type="text/javascript" src="/js/src/love.js"></script>
+</html>

@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Go并发编程,Semaphore," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Go并发编程-Semaphore​        信号量就是用一个变量来控制并发能力。在高并发的情况下，资源是有限的，多个线程对于资源的申请和使用，当资源不足时需要阻塞等待，当有资源释放出来时需要通知阻塞等待的线程获取资源继续处理。 P/V操作​        在信号量中有两个操作。P操作(descrease, wait, acquire)是减小信号量的值。V操作(increase, signal">
+<meta name="keywords" content="Go并发编程,Semaphore">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Go并发编程-Semaphore">
+<meta property="og:url" content="http://www.lmcpf.com/2021/02/26/Go并发编程-Semaphore/index.html">
+<meta property="og:site_name" content="caopengflying&#39;s blog">
+<meta property="og:description" content="Go并发编程-Semaphore​        信号量就是用一个变量来控制并发能力。在高并发的情况下，资源是有限的，多个线程对于资源的申请和使用，当资源不足时需要阻塞等待，当有资源释放出来时需要通知阻塞等待的线程获取资源继续处理。 P/V操作​        在信号量中有两个操作。P操作(descrease, wait, acquire)是减小信号量的值。V操作(increase, signal">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2021-04-13T12:04:32.258Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Go并发编程-Semaphore">
+<meta name="twitter:description" content="Go并发编程-Semaphore​        信号量就是用一个变量来控制并发能力。在高并发的情况下，资源是有限的，多个线程对于资源的申请和使用，当资源不足时需要阻塞等待，当有资源释放出来时需要通知阻塞等待的线程获取资源继续处理。 P/V操作​        在信号量中有两个操作。P操作(descrease, wait, acquire)是减小信号量的值。V操作(increase, signal">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.lmcpf.com/2021/02/26/Go并发编程-Semaphore/"/>
+
+
+
+
+
+  <title>Go并发编程-Semaphore | caopengflying's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">caopengflying's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">编程，学的是思维，写的是人生。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.lmcpf.com/2021/02/26/Go并发编程-Semaphore/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="caopengflying">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="caopengflying's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Go并发编程-Semaphore</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-02-26T22:12:04+08:00">
+                2021-02-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Go并发编程/" itemprop="url" rel="index">
+                    <span itemprop="name">Go并发编程</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2021/02/26/Go并发编程-Semaphore/" class="leancloud_visitors" data-flag-title="Go并发编程-Semaphore">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Go并发编程-Semaphore"><a href="#Go并发编程-Semaphore" class="headerlink" title="Go并发编程-Semaphore"></a>Go并发编程-Semaphore</h1><p>​        信号量就是用一个变量来控制并发能力。在高并发的情况下，资源是有限的，多个线程对于资源的申请和使用，当资源不足时需要阻塞等待，当有资源释放出来时需要通知阻塞等待的线程获取资源继续处理。</p>
+<h2 id="P-V操作"><a href="#P-V操作" class="headerlink" title="P/V操作"></a>P/V操作</h2><p>​        在信号量中有两个操作。P操作(descrease, wait, acquire)是减小信号量的值。V操作(increase, signal, release)增加信号量的计数值。信号量更像一个资源池，p是从池子中获取资源，v就是将资源返还给池子。当池子中的资源用光时，新来的线程进入到等待队列，为了保证公平性，让队列去实现先进先出，以解决饥饿问题。</p>
+<h2 id="信号量"><a href="#信号量" class="headerlink" title="信号量"></a>信号量</h2><p>​        信号量可以分为计数信号量和二进制信号量。二进制信号量是一种特殊的计数信号量，计数值只能是0或者1。二进制信号量更像是一个互斥锁。</p>
+<h2 id="Go官方扩展实现"><a href="#Go官方扩展实现" class="headerlink" title="Go官方扩展实现"></a>Go官方扩展实现</h2><p>​        Go内部也是使用信号量来控制goroutine的阻塞和唤醒。在Mutex互斥锁实现的就是使用的信号量。第二个属性，他是使用一个二进制信号量来做的。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Mutex <span class="keyword">struct</span> &#123;</span><br><span class="line">  state <span class="keyword">int32</span></span><br><span class="line">  sema <span class="keyword">uint32</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>​        信号量的 P/V 操作是通过函数实现的</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">runtime_Semacquire</span><span class="params">(s *<span class="keyword">uint32</span>)</span></span></span><br><span class="line"><span class="function"><span class="title">func</span> <span class="title">runtime_SemacquireMutex</span><span class="params">(s *<span class="keyword">uint32</span>, lifo <span class="keyword">bool</span>, skipframes <span class="keyword">int</span>)</span></span></span><br><span class="line"><span class="function"><span class="title">func</span> <span class="title">runtime_SemaRelease</span><span class="params">(s *<span class="keyword">uint32</span>, handoff <span class="keyword">bool</span>, skipframes <span class="keyword">int</span>)</span></span></span><br></pre></td></tr></table></figure>
+<p>​        这个是Go内部运行时调用的，并没有暴露出来信号量的并发原语。但是Go在扩展包里面提供了信号量Weighted。在初始化的时候可以设置权重(初始化的资源数)。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">NewWeighted</span><span class="params">(n <span class="keyword">int64</span>)</span> *<span class="title">Weighted</span> //初始化一个信号量</span></span><br><span class="line"><span class="function"><span class="title">func</span> <span class="params">(s *Weighted)</span> <span class="title">Acquire</span><span class="params">(ctx context.Context, n <span class="keyword">int64</span>)</span> <span class="title">error</span> //相当于<span class="title">P</span>操作，可以使用<span class="title">context</span>进行超时和取消</span></span><br><span class="line"><span class="function"><span class="title">func</span> <span class="params">(s *Weighted)</span> <span class="title">TryAcquire</span><span class="params">(n <span class="keyword">int64</span>)</span> <span class="title">bool</span> // 尝试获取资源</span></span><br><span class="line"><span class="function"><span class="title">func</span> <span class="params">(s *Weighted)</span> <span class="title">Release</span><span class="params">(n <span class="keyword">int64</span>)</span> //相当于<span class="title">V</span>操作</span></span><br></pre></td></tr></table></figure>
+<h3 id="使用信号量实现一个使用与cpu核数一样多的worker，去处理一个slice"><a href="#使用信号量实现一个使用与cpu核数一样多的worker，去处理一个slice" class="headerlink" title="使用信号量实现一个使用与cpu核数一样多的worker，去处理一个slice"></a>使用信号量实现一个使用与cpu核数一样多的worker，去处理一个slice</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> (</span><br><span class="line">	maxWorkers = runtime.GOMAXPROCS(<span class="number">0</span>)</span><br><span class="line">	sema       = semaphore.NewWeighted(<span class="keyword">int64</span>(maxWorkers))</span><br><span class="line">	task       = <span class="built_in">make</span>([]<span class="keyword">int</span>, maxWorkers*<span class="number">4</span>)</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">TestWeighted</span><span class="params">(t *testing.T)</span></span> &#123;</span><br><span class="line">	ctx := context.Background()</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> i := <span class="keyword">range</span> task &#123;</span><br><span class="line">		<span class="keyword">if</span> err := sema.Acquire(ctx, <span class="number">1</span>); err != <span class="literal">nil</span> &#123;</span><br><span class="line">			<span class="keyword">break</span></span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">(i <span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line">			<span class="keyword">defer</span> sema.Release(<span class="number">1</span>)</span><br><span class="line">			task[i] = i + <span class="number">1</span></span><br><span class="line">		&#125;(i)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">//通过获取全部数量的信号量，来保证所有的worker全部处理完</span></span><br><span class="line">	<span class="keyword">if</span> err := sema.Acquire(ctx, <span class="keyword">int64</span>(maxWorkers)); err != <span class="literal">nil</span> &#123;</span><br><span class="line">		t.Error(<span class="string">"获取所有的worker失败"</span>)</span><br><span class="line">	&#125;</span><br><span class="line">	t.Log(task)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="看实现"><a href="#看实现" class="headerlink" title="看实现"></a>看实现</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Weighted <span class="keyword">struct</span> &#123;</span><br><span class="line">	size    <span class="keyword">int64</span>  <span class="comment">//资源全部数量</span></span><br><span class="line">	cur     <span class="keyword">int64</span>  <span class="comment">//使用资源的数量</span></span><br><span class="line">	mu      sync.Mutex <span class="comment">// 互斥锁</span></span><br><span class="line">	waiters list.List <span class="comment">// 等待队列</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="P操作"><a href="#P操作" class="headerlink" title="P操作"></a>P操作</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(s *Weighted)</span> <span class="title">Acquire</span><span class="params">(ctx context.Context, n <span class="keyword">int64</span>)</span> <span class="title">error</span></span> &#123;</span><br><span class="line">	s.mu.Lock()</span><br><span class="line">	<span class="keyword">if</span> s.size-s.cur &gt;= n &amp;&amp; s.waiters.Len() == <span class="number">0</span> &#123; <span class="comment">// 当资源足够时，不需要考虑context.Done状态，直接给cur加上使用的数量</span></span><br><span class="line">		s.cur += n</span><br><span class="line">		s.mu.Unlock()</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> n &gt; s.size &#123; <span class="comment">// 申请的资源数量超过了本身最大值，是不可能完成的任务，依赖ctx的状态返回，否则一直阻塞。有返回时返回错误。</span></span><br><span class="line">		<span class="comment">// Don't make other Acquire calls block on one that's doomed to fail.</span></span><br><span class="line">		s.mu.Unlock()</span><br><span class="line">		&lt;-ctx.Done()</span><br><span class="line">		<span class="keyword">return</span> ctx.Err()</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	ready := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">struct</span>&#123;&#125;)<span class="comment">//资源不足时，查u你更加爱你一个chan方便通知。并且增加一个等待着加入到等待队列中</span></span><br><span class="line">	w := waiter&#123;n: n, ready: ready&#125;</span><br><span class="line">	elem := s.waiters.PushBack(w)</span><br><span class="line">	s.mu.Unlock()</span><br><span class="line"></span><br><span class="line">	<span class="keyword">select</span> &#123;</span><br><span class="line">	<span class="keyword">case</span> &lt;-ctx.Done():</span><br><span class="line">		err := ctx.Err()</span><br><span class="line">		s.mu.Lock()</span><br><span class="line">		<span class="keyword">select</span> &#123;</span><br><span class="line">		<span class="keyword">case</span> &lt;-ready:</span><br><span class="line">			err = <span class="literal">nil</span></span><br><span class="line">		<span class="keyword">default</span>:</span><br><span class="line">			isFront := s.waiters.Front() == elem</span><br><span class="line">			s.waiters.Remove(elem)</span><br><span class="line"></span><br><span class="line">			<span class="keyword">if</span> isFront &amp;&amp; s.size &gt; s.cur &#123;</span><br><span class="line">				s.notifyWaiters()</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		s.mu.Unlock()</span><br><span class="line">		<span class="keyword">return</span> err</span><br><span class="line"></span><br><span class="line">	<span class="keyword">case</span> &lt;-ready:</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="V操作"><a href="#V操作" class="headerlink" title="V操作"></a>V操作</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(s *Weighted)</span> <span class="title">Release</span><span class="params">(n <span class="keyword">int64</span>)</span></span> &#123;</span><br><span class="line">	s.mu.Lock()</span><br><span class="line">	s.cur -= n  <span class="comment">//使用数量减少</span></span><br><span class="line">	<span class="keyword">if</span> s.cur &lt; <span class="number">0</span> &#123;</span><br><span class="line">		s.mu.Unlock()</span><br><span class="line">		<span class="built_in">panic</span>(<span class="string">"semaphore: released more than held"</span>)</span><br><span class="line">	&#125;</span><br><span class="line">	s.notifyWaiters() <span class="comment">//通知其他等待着</span></span><br><span class="line">	s.mu.Unlock()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="通知"><a href="#通知" class="headerlink" title="通知"></a>通知</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(s *Weighted)</span> <span class="title">notifyWaiters</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="keyword">for</span> &#123;</span><br><span class="line">		next := s.waiters.Front()</span><br><span class="line">		<span class="keyword">if</span> next == <span class="literal">nil</span> &#123;</span><br><span class="line">			<span class="keyword">break</span> <span class="comment">// No more waiters blocked.</span></span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		w := next.Value.(waiter)</span><br><span class="line">		<span class="keyword">if</span> s.size-s.cur &lt; w.n &#123;</span><br><span class="line">			<span class="comment">//避免饥饿，这里还是按照先入先出的方式处理</span></span><br><span class="line">			<span class="keyword">break</span></span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		s.cur += w.n</span><br><span class="line">		s.waiters.Remove(next)</span><br><span class="line">		<span class="built_in">close</span>(w.ready)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="使用信号量常见的错误"><a href="#使用信号量常见的错误" class="headerlink" title="使用信号量常见的错误"></a>使用信号量常见的错误</h2><ol>
+<li>请求了资源没有释放</li>
+<li>释放了从未请求的资源</li>
+<li>长时间持有一个资源，即使不使用它</li>
+<li>不持有一个资源，直接使用它</li>
+</ol>
+<h2 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h2><p>​        对于信号量的实现，也是可以使用channel来实现，但是channel只能实现一个二进制信号量。在选择信号量时，如果是一次性获取多个资源时可以选择官方扩展的信号量。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+<div>
+
+<div>
+
+    <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+
+</div>
+
+</div>
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创，您的支持将鼓励我继续创作</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="caopengflying 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="caopengflying 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Go并发编程/" rel="tag"># Go并发编程</a>
+          
+            <a href="/tags/Semaphore/" rel="tag"># Semaphore</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2021/02/25/Go并发编程-map/" rel="next" title="Go并发编程-map">
+                <i class="fa fa-chevron-left"></i> Go并发编程-map
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2021/02/26/Go并发编程-Pool/" rel="prev" title="Go并发编程-Pool">
+                Go并发编程-Pool <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">caopengflying</p>
+              <p class="site-description motion-element" itemprop="description">CaoPengFei的技术博客</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">97</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">33</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">103</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Go并发编程-Semaphore"><span class="nav-number">1.</span> <span class="nav-text">Go并发编程-Semaphore</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#P-V操作"><span class="nav-number">1.1.</span> <span class="nav-text">P/V操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#信号量"><span class="nav-number">1.2.</span> <span class="nav-text">信号量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Go官方扩展实现"><span class="nav-number">1.3.</span> <span class="nav-text">Go官方扩展实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用信号量实现一个使用与cpu核数一样多的worker，去处理一个slice"><span class="nav-number">1.3.1.</span> <span class="nav-text">使用信号量实现一个使用与cpu核数一样多的worker，去处理一个slice</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#看实现"><span class="nav-number">1.4.</span> <span class="nav-text">看实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#P操作"><span class="nav-number">1.4.1.</span> <span class="nav-text">P操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#V操作"><span class="nav-number">1.4.2.</span> <span class="nav-text">V操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通知"><span class="nav-number">1.4.3.</span> <span class="nav-text">通知</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用信号量常见的错误"><span class="nav-number">1.5.</span> <span class="nav-text">使用信号量常见的错误</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#扩展"><span class="nav-number">1.6.</span> <span class="nav-text">扩展</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">caopengflying</span>
+
+  
+</div>
+
+
+  <div class="powered-by">CaoPengflying</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">博客 &mdash; </div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("QvYPT7ysHmIcKhVJCaBfoul8-gzGzoHsz", "3tXLKBWxENoj3lseRo7fjJ1d");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+<!-- 页面点击小红心 --> 
+<script type="text/javascript" src="/js/src/love.js"></script>
+</html>
